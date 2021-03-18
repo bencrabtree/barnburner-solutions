@@ -1,0 +1,26 @@
+@import '../../assets/sass/colors.scss';
+
+.non-home-body {
+    .non-home-status h1 {
+        position: absolute;
+        top: 0;
+        right: 40vw;
+        color: $notFullyBlack;
+        font-size: 40rem;
+    }
+
+    .non-home-message {
+        z-index: 2;
+        margin-left: 30vw;
+        margin-right: 10vw;
+        margin-top: 20vh;
+
+        h1 {
+            font-size: 5rem;
+        }
+
+        h2 {
+            font-size: 3rem;
+        }
+    }
+}

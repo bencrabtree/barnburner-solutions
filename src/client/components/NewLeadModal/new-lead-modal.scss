@@ -1,0 +1,71 @@
+@import '../../assets/sass/colors.scss';
+
+.new-lead-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 1rem 2rem;
+    padding-top: 0;
+    height: 80%;
+    overflow: auto;
+
+    &.two-columns {
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        & > div {
+            width: 45%;
+        }
+    }
+}
+
+.new-lead-inputs {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+
+.newlead-content {
+    width: 30vw;
+    height: 60vh;
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.new-lead-tabs {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+
+    .tab-content {
+        flex-grow: 1;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: $notFullyBlack;
+        background-color: $backgroundGrey;
+        border: 2px solid $backgroundDarkGrey;
+        padding: 1.5rem 1rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+
+        &:first-child {
+            border-top-left-radius: 6px;
+        }
+        &:last-child {
+            border-top-right-radius: 6px;
+        }
+
+        &.active {
+            background-color: $backgroundLightGrey;
+            border: none;
+            color: black;
+        }
+
+        &.invalid {
+            color: $errorRed;
+        }
+    }
+}

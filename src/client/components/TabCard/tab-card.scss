@@ -1,0 +1,38 @@
+@import '../../assets/sass/colors.scss';
+
+.tab-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+    .tab-container {
+        display: flex;
+        border-bottom: 2px solid $backgroundGrey;
+
+        .tab {
+            margin-right: 1rem;
+            cursor: pointer;
+            padding: 1rem;
+
+            &:hover h2 {
+                color: black;
+            }
+
+            h2 {
+                color: $notFullyBlack;
+            }
+
+            &.active {
+                border-bottom: 4px solid $surfGreen;
+
+                h2 {
+                    color: black;
+                }
+            }
+        }
+    }
+
+    .tab-card-content {
+        padding: 1rem;
+    }
+}

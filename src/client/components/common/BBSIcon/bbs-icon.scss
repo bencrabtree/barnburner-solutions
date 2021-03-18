@@ -1,0 +1,55 @@
+@import '../../../assets/sass/colors.scss';
+
+@mixin bbsIcon($name, $height:2, $width:2) {
+    background-image: url("../../../assets/images/#{$name}.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: #{$height}rem;
+    width: #{$width}rem;
+}
+
+@mixin bbsLogo($color) {
+    width: 9rem;
+    height: 5rem;
+    background-image: url("../../../assets/images/mtg-logo-#{$color}.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bbs-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &.round {
+        border-radius: 50%;
+    }
+
+    .under-construction {
+        @include bbsIcon('under-construction', 5, 5)
+    }
+    .mtg-logo-black {
+        @include bbsLogo('black');
+    }
+    .mtg-logo-green {
+        @include bbsLogo('green');
+    }
+    .search-icon {
+        @include bbsIcon('search-icon');
+    }
+    .default-avatar {
+        @include bbsIcon('default-avatar');
+    }
+    .settings {
+        @include bbsIcon('settings');
+    }
+    .add-icon {
+        @include bbsIcon('add-icon')
+    }
+    .google-small {
+        @include bbsIcon('google-small');
+    }
+    .info {
+        @include bbsIcon('info-icon', 1.5, 1.5);
+    }
+}

@@ -1,0 +1,16 @@
+@import '../../../assets/sass/colors.scss';
+
+.bbs-logo {
+    .bbs-logo-svg {
+        width: 7rem;
+        height: 4rem;
+        background: url('../../../assets/images/mtg-logo-black.svg') center center no-repeat;
+
+        // &:hover {
+        //     background: url('../../assets/images/mtg-logo-green.svg') center center no-repeat;
+        // }
+    }
+    &.clickable {
+        cursor: pointer;
+    }
+}

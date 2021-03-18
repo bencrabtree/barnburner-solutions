@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.json",
+    "references": [
+      { "path": "src/shared" }
+    ],
+    "exclude": [
+      "src/client"
+    ]
+  }

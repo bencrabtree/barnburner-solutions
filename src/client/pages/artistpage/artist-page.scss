@@ -1,0 +1,115 @@
+@import '../../assets/sass/colors.scss';
+
+.artist-page {
+    .divider-bar {
+        margin: 0rem 3rem;
+    }
+
+    .top-content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .artist-header {
+        padding: 1rem 2rem;
+
+        .artist-name {
+            span {
+                display: flex;
+                align-items: center;
+
+                .bbs-icon {
+                    margin-left: .5rem;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .lead-content {
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-start;
+    }
+
+    .artist-profile {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .artist-picture {
+            width: 5rem;
+        }
+
+        .artist-name {
+            display: flex;
+            flex-direction: column;
+            margin-left: 1rem;
+
+            h2 {
+                font-weight: normal;
+            }
+        }
+    }
+
+    .lead-status {
+        display: flex;
+        flex-direction: row;
+        width: 40%;
+        align-items: center;
+        justify-content: center;
+
+        .progress-stepper {
+            width: 100%;
+        }
+    }
+
+    .lead-actions {
+        display: flex;
+        flex-direction: row;
+
+        .bbs-button {
+            margin: 0;
+            margin-left: 1rem;
+        }
+    }
+
+    ////////
+    .bottom-content {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px solid $backgroundGrey;
+    }
+
+    .artist-stat {
+        display: flex;
+        flex-direction: column;
+        margin-right: 3rem;
+
+        .artist-stat-label {
+            margin-bottom: .5rem;
+        }
+
+        .artist-stat-label, .artist-stat-value {
+            font-weight: normal;
+        }
+    }
+}
+
+.artist-content {
+    display: flex;
+    flex-direction: row;
+
+    .tab-card:first-child {
+        width: 66%;
+    }
+
+    .tab-card:last-child {
+        width: 33%;
+    }
+}

@@ -1,0 +1,24 @@
+@import '../../assets/sass/colors.scss';
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    border: 1px solid $backgroundDarkGrey;
+    align-items: center;
+    border-radius: 6px;
+    padding: .5rem;
+    background-color: white;
+
+    .bbs-icon {
+        margin-right: 1rem;
+    }
+
+    .MuiAutocomplete-root input {
+        border: none;
+        outline: none;
+        font-size: 1.25rem;
+        padding: 1rem;
+        width: 24rem;
+    }
+}

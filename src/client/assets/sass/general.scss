@@ -1,0 +1,45 @@
+@import './colors.scss';
+
+html, body, #root, .app {
+    height: 100%;
+    width: 100%;
+    font-size: 1rem;
+    background: $lightsurfGreen;
+    margin: 0;
+}
+
+.main-app {
+    padding-top: 5rem;
+}
+
+html, body, textarea {
+    font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;;
+}
+
+h1, h2, h3, h4, h5, p {
+    margin: 0;
+}
+
+a:hover {
+    color: $surfGreen;
+}
+
+:focus {
+    outline: none;
+}
+
+.card {
+    box-shadow: 0px 4px 10px 1px rgba(0,0,0,.25);
+    background-color: white;
+    border-radius: 6px;
+    margin: 1rem;
+}
+
+.divider-bar {
+    border: 2px solid $backgroundGrey;
+    background-color: $backgroundGrey;
+    height: 4rem;
+    width: 0px;
+    border-radius: 6px;
+    margin: 0rem 1rem
+}

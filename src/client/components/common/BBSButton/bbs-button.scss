@@ -1,0 +1,51 @@
+@import '../../../assets/sass/colors.scss';
+
+.bbs-button {
+    margin: .5rem 1rem;
+    white-space: nowrap;
+
+    .MuiButton-root {
+        padding: .5rem 1rem;
+        text-transform: none;
+        font-size: 1rem;
+        min-width: 5rem;
+    }
+
+    &.primary .MuiButton-root {
+        cursor: pointer;
+        color: white;
+        background-color: $surfGreen;
+        border: 2px solid $surfGreen;
+
+        &:hover {
+            background-color: darken($surfGreen, 5%);
+        }
+    }
+
+    &.secondary .MuiButton-root {
+        cursor: pointer;
+        color: $notFullyBlack;
+        background-color: transparent;
+        border: 2px solid $backgroundDarkGrey;
+
+        &:hover {
+            background-color: rgba(0,0,0,.04) !important;
+        }
+    }
+
+    &.tertiary .MuiButton-root {
+        cursor: pointer;
+        color: white;
+        background-color: $statusBlue;
+        border: 2px solid $statusBlue;
+
+        &:hover {
+            background-color: darken($statusBlue, 5%);
+        }
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}

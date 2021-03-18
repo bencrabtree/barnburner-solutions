@@ -1,0 +1,48 @@
+@import '../../assets/sass/colors.scss';
+
+.non-home-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: radial-gradient($backgroundLightGrey, darken($backgroundGrey, 20));
+
+    .non-home-body {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        justify-content: center;
+        align-items: center;
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        .bbs-icon {
+            padding: 2rem;
+
+            .under-construction {
+                height: 12rem;
+                width: 12rem;
+            }
+        }
+    }
+}
+
+.home-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 4rem;
+    padding: 2rem;
+    border: 4px solid black;
+    border-radius: .2rem;
+    text-align: center;
+    width: 40vw;
+
+    .bbs-icon {
+        padding: 2rem;
+        cursor: pointer;
+    }
+}

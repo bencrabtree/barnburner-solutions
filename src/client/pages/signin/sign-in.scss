@@ -1,0 +1,68 @@
+@import '../../assets/sass/colors.scss';
+
+.sign-in {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    .sign-in-content {
+        height: 50vh;
+        width: 30vw;
+        padding: 4rem;
+        padding-bottom: 1rem;
+        position: relative;
+    }
+
+    .sign-in-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .sign-in-title {
+            font-weight: normal;
+            margin-bottom: 2rem;
+        }
+
+        .bbs-logo-svg {
+            height: 7rem;
+            width: 13rem;
+        }
+    }
+
+    .sign-in-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 4rem;
+        margin-bottom: 8rem;
+
+        & > div {
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            border-radius: 6px;
+
+            h3 {
+                font-weight: normal;
+                margin-left: .5rem;
+            }
+        }
+    }
+
+    .sign-in-footer {
+        position: absolute;
+        bottom: 2rem;
+    }
+}
+
+.continue-with-google {
+    background-color: $backgroundLightGrey;
+    color: $notFullyBlack;
+    &:hover {
+        background-color: darken($backgroundLightGrey, 5%);
+    }
+}

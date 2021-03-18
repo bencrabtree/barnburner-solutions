@@ -1,0 +1,31 @@
+@import "../../../assets/sass/colors.scss";
+
+.bbs-dropzone {
+    margin: .5rem 0rem;
+
+    .dropzone-area {
+        border: 2px solid $backgroundDarkGrey;
+        border-radius: 6px;
+        background-color: $backgroundGrey;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    label {
+        font-size: .85rem;
+    }
+
+    .uploaded-files {
+        display: flex;
+        flex-direction: row;
+
+        span {
+            cursor: pointer;
+            margin-right: .5rem;
+        }
+    }
+}

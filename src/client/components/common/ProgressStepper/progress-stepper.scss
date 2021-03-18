@@ -1,0 +1,71 @@
+@import '../../../assets/sass/colors.scss';
+
+.progress-stepper {
+    display: flex;
+    z-index: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0rem 1rem;
+    position: relative;
+    border-radius: 2rem;
+}
+.progress-stepper div:first-child {
+    margin-left: -5%;
+    padding-left: 1.5rem;
+}
+
+.step {
+    display: flex;
+    flex-grow: 1;
+    margin:0;
+    margin-left: 0.25rem;
+    position: relative;
+    text-align: center;
+    padding: .75rem .25rem;
+    justify-content: center;
+
+    &.active, &.complete {
+        h1 {
+            color: white;
+        }
+    }
+
+    h1 {
+        z-index: 1;
+        font-weight: normal;
+        font-size: 1rem;
+    }
+}
+
+.step:before,
+.step:after {
+    content: "";
+    position: absolute;
+}
+.step:before {
+    height: 50%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    -webkit-transform: skew(45deg);
+    -moz-transform: skew(45deg);
+    transform: skew(45deg);
+}
+.step:after {
+    height: 50%;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    -webkit-transform: skew(-45deg);
+    -moz-transform: skew(-45deg);
+    transform: skew(-45deg);
+}
+.step.active:before, .step.active:after {
+    background: $statusBlue;
+}
+.step.complete:before, .step.complete:after {
+    background: $surfGreen;
+}
+.step.todo:before, .step.todo:after {
+    background: $backgroundGrey;
+}
