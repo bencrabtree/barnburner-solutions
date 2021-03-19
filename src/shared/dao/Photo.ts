@@ -4,7 +4,7 @@ import { Client, Tag } from ".";
 @Entity()
 export class Photo extends BaseEntity {
 
-    constructor(key, client_id, alt_text?) {
+    constructor(key, client_id?, alt_text?) {
         super();
 
         this.key = key;

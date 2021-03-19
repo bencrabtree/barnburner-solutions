@@ -1,7 +1,7 @@
-import { User, Client, Lead } from '../../shared/dao';
+import { User, Client, Lead } from "../../shared/dao";
 import { getRepository } from "typeorm";
-import { s3Service } from './s3.service';
-import { Photo } from '../../shared/dao';
+import { fileService } from "./file.service";
+import { Photo } from "../../shared/dao";
 
 class ClientService {
     constructor() {}
@@ -12,7 +12,7 @@ class ClientService {
             let roster = await getRepository(Client).find();
             return roster;
         } catch (error) {
-            console.log("ClientService: GetAll:", error);
+            console.log("[ClientService] GetAll:", error);
             return null;
         }
     }
@@ -23,7 +23,7 @@ class ClientService {
             let client = await getRepository(Client).findOne(id);
             return client;
         } catch (error) {
-            console.log('ClientService: GetClientById:', error);
+            console.log("[ClientService] GetClientById:", error);
             return null;
         }
     }
@@ -34,7 +34,7 @@ class ClientService {
             let client = await getRepository(Client).findOne({ full_name: fullName });
             return client;
         } catch (error) {
-            console.log('ClientService: GetClientByName:', error);
+            console.log("[ClientService] GetClientByName:", error);
             return null;
         }
     }
@@ -45,7 +45,7 @@ class ClientService {
             let client = await getRepository(Client).findOne(id);
             await getRepository(Client).remove(client);
         } catch (error) {
-            console.log("ClientService: RemoveClientById:", error);
+            console.log("[ClientService] RemoveClientById:", error);
             return null;
         }
     }
@@ -53,14 +53,16 @@ class ClientService {
     //
     addClient = async (client: Client, photo_uri: object[]): Promise<Client> => {
         try {
-            let uri = await s3Service.uploadPhoto(photo_uri[0], client.full_name);
+            let uri = await fileService.uploadPhoto(photo_uri[0], client.full_name);
             let artistPhoto = new Photo(uri);
             let clientToAdd = new Client(client);
             clientToAdd.photo_uri = artistPhoto.key;
-            await getRepository(Client).save(clientToAdd);
-            return clientToAdd;
+            let newClient = await getRepository(Client).save(clientToAdd);
+            artistPhoto.client_id = newClient.id;
+            await getRepository(Photo).save(artistPhoto);
+            return newClient;
         } catch (error) {
-            console.log('ClientService: AddClient:', error);
+            console.log("[ClientService] AddClient:", error);
             return null;
         }
     }
@@ -75,7 +77,7 @@ class ClientService {
             await getRepository(Client).save(client);
             return client;
         } catch (error) {
-            console.log('ClientService: UpdateClient:', error)
+            console.log("[ClientService] UpdateClient:", error)
         }
     }
 
@@ -85,7 +87,7 @@ class ClientService {
             let clientModel = new Client();
             return clientModel.toEditableArray()
         } catch (error) {
-            console.log("ClientService: GetModel:", error);
+            console.log("[ClientService] GetModel:", error);
             return null;
         }
     }

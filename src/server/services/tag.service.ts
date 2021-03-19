@@ -1,5 +1,5 @@
-import { getRepository } from 'typeorm';
-import { Tags } from '../../shared/util/types';
+import { getRepository } from "typeorm";
+import { Tags } from "../../shared/util/types";
 
 class TagService {
     tags: string[];
@@ -13,7 +13,7 @@ class TagService {
             let allTags = this.tags;
             return allTags;
         } catch (error) {
-            console.log("TagService: GetAll:", error);
+            console.log("[TagService] GetAll:", error);
             return null;
         }
     }
@@ -24,7 +24,7 @@ class TagService {
             this.tags.push(tag);
             return this.tags;
         } catch (error) {
-            console.log('TagService: CreateNewTags:', error);
+            console.log("[TagService] CreateNewTags:", error);
             return null;
         }
     }

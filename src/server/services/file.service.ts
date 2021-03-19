@@ -1,6 +1,6 @@
 import { S3, ListObjectsCommand, PutObjectCommand, S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 
-class S3Service {
+class FileService {
     s3: S3;
     bucketName: string;
     urlPrefix: string;
@@ -31,7 +31,7 @@ class S3Service {
             const data = await this.s3.listObjects(uploadParams);
             return data;
         } catch (error) {
-            console.log('[S3.Service]', error)
+            console.log('[FileService] getArtistPhotos:', error)
         }
     }
 
@@ -40,12 +40,11 @@ class S3Service {
             let uploadParams = {
                 Key: key,
                 Bucket: this.bucketName,
-              }
+            }
             const data = await this.s3.getObject(uploadParams);
-            console.log('data is...')
-            console.log(data)
+            return data;
         } catch (error) {
-            console.log('[S3.Service]', error)
+            console.log('[FileService] getPhoto:', error)
         }
     }
 
@@ -60,7 +59,7 @@ class S3Service {
             await this.s3.putObject(uploadParams);
             return this.urlPrefix + uploadParams.Key;
         } catch (error) {
-            console.log('[S3.Service]', error)
+            console.log('[FileService] uploadPhoto:', error)
         }
     }
 
@@ -74,4 +73,4 @@ class S3Service {
 
 }
 
-export const s3Service = new S3Service();
+export const fileService = new FileService();

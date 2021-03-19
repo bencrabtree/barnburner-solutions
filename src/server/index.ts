@@ -5,7 +5,7 @@ import settings from './config/settings.json';
 import "reflect-metadata";
 import { createConnection, ConnectionOptions, getRepository, createQueryBuilder } from "typeorm";
 import { Client, Photo, Tag, User, Notes, Lead, File } from "../shared/dao";
-import { s3Service } from './services/s3.service';
+import { fileService } from './services/file.service';
 
 const start = async () => {
     let session = expressSession({
@@ -27,7 +27,7 @@ const start = async () => {
         synchronize: true
     } as ConnectionOptions);
 
-    await s3Service.initialize(settings.s3)
+    await fileService.initialize(settings.s3)
 
     const _app = app(settings, session);
     const server = http.createServer(_app);

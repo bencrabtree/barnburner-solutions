@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
-import { User, Client, Lead } from '../../shared/dao';
-const jwt = require('jsonwebtoken');
+import { Request, Response } from "express";
+import { getRepository } from "typeorm";
+import { User, Client, Lead } from "../../shared/dao";
+const jwt = require("jsonwebtoken");
 
 class UserService {
     constructor() {}
@@ -9,13 +9,13 @@ class UserService {
     getLoggedInUser = async (req: Request): Promise<User> => {
         try {
             if (req.cookies.token) {
-                const decrypt = await jwt.verify(req.cookies.token, 'my-secret-key');
+                const decrypt = await jwt.verify(req.cookies.token, "my-secret-key");
                 let user: User = await getRepository(User).findOne({ email: decrypt.email });
                 return user;
             }
             return null;
         } catch (error) {
-            console.log('UserService, getLoggedInUser:', error)
+            console.log("[UserService] getLoggedInUser:", error)
         }
     }
 
@@ -25,7 +25,7 @@ class UserService {
             let user: User = await getRepository(User).findOne({ email });
             return user;
         } catch (err) {
-            console.log('UserService, getUserByEmail:', err)
+            console.log("[UserService] getUserByEmail:", err)
         }
     }
 
@@ -35,7 +35,7 @@ class UserService {
             let user: User = await getRepository(User).findOne(id);
             return user;
         } catch (err) {
-            console.log('UserService, getUserById:', err)
+            console.log("[UserService] getUserById:", err)
         }
     }
 
@@ -46,7 +46,7 @@ class UserService {
             await getRepository(User).save(user);
             return user;
         } catch (error) {
-            console.log('UserService, createUser:', error)
+            console.log("[UserService] createUser:", error)
         }
     }
 
