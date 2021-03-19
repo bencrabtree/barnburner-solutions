@@ -7,16 +7,17 @@ export class Client extends BaseEntity {
     constructor(params?) {
         super();
 
+        this.created_on = new Date();
+
         if (params) {
             this.full_name = params.full_name;
+            this.status = params.status;
             this.photo_uri = params.photo_uri;
             this.description = params.description;
             this.manager_name = params.manager_name;
             this.manager_email = params.manager_email;
             this.manager_phone = params.manager_phone;
-            this.account_owners = params.account_owners;
-            // params.collection?.map(photo => new Photo(photo).id) || 
-            this.description_short = params.description_short;
+            this.account_owners = params.account_owners || [];
             this.website = params.website;
             this.twitter = params.twitter;
             this.facebook = params.facebook;
@@ -37,6 +38,24 @@ export class Client extends BaseEntity {
     @Column({ nullable: false, type: "character varying" })
     full_name: string;
 
+    @Column({ nullable: false, type: "character varying"})
+    status: string;
+
+    @Column({ nullable: true, type: "character varying" })
+    @OneToOne(type => Photo, photo => photo.key)
+    photo_uri: string;
+
+    @Column({ nullable: true, type: "character varying" })
+    description: string;
+
+    @Column("timestamp without time zone", { nullable: false })
+    created_on;
+
+    @Column("timestamp without time zone", { nullable: false })
+    updated_on;
+
+    ///
+
     @Column({ nullable: true, type: "character varying" })
     manager_name: string;
 
@@ -46,19 +65,11 @@ export class Client extends BaseEntity {
     @Column({ nullable: true, type: "character varying" })
     manager_phone: string;
 
-    @Column({ nullable: true, type: "character varying" })
-    @OneToOne(type => Photo, photo => photo.key)
-    photo_uri: string;
-
-    @Column("integer", { nullable: true, array: true })
-    @ManyToOne(type => User, user => user.id)
+    @Column("character varying", { nullable: true, array: true })
+    @ManyToOne(type => User, user => user.email)
     account_owners: string[];
 
-    @Column({ nullable: true, type: "character varying" })
-    description: string;
-
-    @Column({ nullable: true, type: "character varying" })
-    description_short: string;
+    ///
 
     @Column({ nullable: true, type: "character varying" })
     website: string;
@@ -93,6 +104,12 @@ export class Client extends BaseEntity {
     @Column("character varying", { nullable: true, array: true })
     @OneToMany(type => Tag, tag => tag.name)
     tags: string[];
+
+    update() {
+        this.updated_on = new Date();
+        this.save();
+        return this;
+    }
 
     toEditableArray() {
         const values = Object.keys(this);

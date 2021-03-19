@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import '../common/BBSModal/bbs-modal.scss';
 import './new-lead-modal.scss';
 import { useAppState } from '../../store';
-import { Modal, TextField, Chip } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Modal } from '@material-ui/core';
 import BBSButton from '../common/BBSButton/BBSButton';
 import BBSLoading from '../common/BBSLoading/BBSLoading';
 import BBSInput from '../common/BBSInput/BBSInput';
 import BBSDropzone from '../common/BBSDropzone/BBSDropzone';
+import BBSPills from '../common/BBSPills/BBSPills';
 import { cloneDeep } from 'lodash';
 import { getSocial, getLabel } from '../../../shared/util/constants';
 import { Client } from '../../../shared/dto';
@@ -148,20 +148,11 @@ const NewLeadModal = ({
                 case 2:
                     return (
                         <div className='new-lead-form'>
-                            <Autocomplete
-                                multiple freeSolo
-                                id="tags"
+                            <BBSPills
                                 options={allTags}
-                                onChange={(e, val) => handleInputChange('tags', val)}
+                                onChange={ handleInputChange }
                                 defaultValue={newLead.tags}
-                                renderTags={(value, getTagProps) =>
-                                    value.map((option, index) => (
-                                        <Chip variant="outlined" label={option} {...getTagProps({ index })} />
-                                    ))
-                                }
-                                renderInput={(params) => (
-                                    <TextField {...params} variant="filled" placeholder="Artist Tags" />
-                                )}
+                                placeholder="Artist Tags"
                             />
                             <BBSInput
                                 id="notes"

@@ -7,6 +7,7 @@ const AppContextProvider = ({ children }) => {
     const [ state, setState ] = useState({
         loading: true,
         userProfile: {},
+        allUsers: [],
         fullRoster: [],
         allTags: [],
         selectedArtist: null
@@ -19,11 +20,13 @@ const AppContextProvider = ({ children }) => {
                 const { data: user } = await http.get('/user/current');
                 const { data: roster } = await http.get('/roster/all');
                 const { data: tags } = await http.get('/tags/all');
+                const { data: allUsers } = await http.get('/user/all');
 
                 setState({
                     userProfile: user,
                     fullRoster: roster,
                     allTags: tags,
+                    allUsers: allUsers,
                     selectedArtist: null,
                     loading: false
                 })

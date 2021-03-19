@@ -6,6 +6,15 @@ const jwt = require("jsonwebtoken");
 class UserService {
     constructor() {}
 
+    //
+    getAll = async (): Promise<User[]> => {
+        try {
+            return await getRepository(User).find();
+        } catch (error) {
+            console.log("[UserService] getAll:", error)
+        }
+    }
+
     getLoggedInUser = async (req: Request): Promise<User> => {
         try {
             if (req.cookies.token) {

@@ -8,6 +8,22 @@
     .tab-container {
         display: flex;
         border-bottom: 2px solid $backgroundGrey;
+        justify-content: space-between;
+
+        .tab-labels {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .tab-actions {
+            display: flex;
+            flex-direction: row;
+
+            .tab-action {
+                cursor: pointer;
+                padding: 1rem;
+            }
+        }
 
         .tab {
             margin-right: 1rem;

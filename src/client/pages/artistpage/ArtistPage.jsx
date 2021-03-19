@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './artist-page.scss';
-import BBSButton from '../../components/common/BBSButton/BBSButton';
 import BBSLoading from '../../components/common/BBSLoading/BBSLoading';
 import { artistService } from '../../services';
 import { useAppState } from '../../store';
 import TabCard from '../../components/TabCard/TabCard';
 import ArtistHeader from './components/ArtistHeader';
+import ArtistInfoForm from './components/ArtistInfoForm';
+import { http } from '../../util/api';
 
 const ArtistPage = ({
     match
 }) => {
+    const artistInfoRef = useRef();
     const { fullRoster } = useAppState();
     const [ selectedArtist, setSelectedArtist ] = useState();
     const [ selectedTab, setSelectedTab ] = useState('account');
@@ -45,6 +47,34 @@ const ArtistPage = ({
         alert(`You are now updating the lead status of ${selectedArtist.full_name}`)
     }
 
+    const handleArtistContentSubmit = async () => {
+        try {
+            let newInfo = artistInfoRef.current.getNewInfo();
+            console.log(newInfo)
+            const { data, status } = await http.put(`/roster/${selectedArtist.full_name}`, newInfo);
+            if (data && status === 200) {
+                setIsEditing(false);
+                setSelectedArtist(data);
+                console.log('UpdateArtist: Success:', status);
+            } else {
+                console.log('UpdateArtist: BadResponse:', status)
+            }
+        } catch (error) {
+            console.log('UpdateArtist:', error);
+        }
+    }
+
+    const generateArtistContentTabActions = () => {
+        switch (selectedTab) {
+            case 'account':
+                return isEditing ? [
+                    { name: 'save', onClick: handleArtistContentSubmit, title: 'Save Content' }
+                ] : [
+                    { name: 'edit', onClick: () => setIsEditing(true), title: 'Edit Content' }
+                ];
+        }
+    }
+
     const renderArtistHeader = () => {
         return (
             <ArtistHeader
@@ -52,6 +82,7 @@ const ArtistPage = ({
                 onEditClick={handleEditSelect}
                 onUpdateClick={handleUpdateSelect}
                 onWatchClick={handleWatchSelect}
+                updateArtist={setSelectedArtist}
             />
         )
     }
@@ -65,11 +96,29 @@ const ArtistPage = ({
                     { id: 'team', label: 'Team', onClick: () => setSelectedTab('team') },
                     { id: 'dash', label: 'Dashboard', onClick: () => setSelectedTab('dash') }
                 ]}
+                actions={
+                    generateArtistContentTabActions()
+                }
                 activeTab={selectedTab}
             >
-                Hey My Man { selectedTab }
+                { generateAritstContent() }
             </TabCard>
         )
+    }
+
+    const generateAritstContent = () => {
+        switch (selectedTab) {
+            case 'account':
+                return (
+                    <ArtistInfoForm
+                        artistName={selectedArtist?.full_name}
+                        disabled={!isEditing}
+                        ref={artistInfoRef}
+                    />
+                )
+            default:
+                return `Selected ${selectedTab}`
+        }
     }
 
     const renderArtistPosts = () => {

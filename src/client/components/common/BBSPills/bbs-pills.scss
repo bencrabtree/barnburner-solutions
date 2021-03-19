@@ -1,0 +1,11 @@
+@import '../../../assets/sass/colors.scss';
+
+.bbs-pills {
+    display: flex;
+    flex-direction: column;
+    
+    label {
+        font-size: 1rem;
+        margin-bottom: .5rem;
+    }
+}

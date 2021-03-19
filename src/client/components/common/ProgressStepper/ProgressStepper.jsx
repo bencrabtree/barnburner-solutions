@@ -4,16 +4,22 @@ import './progress-stepper.scss';
 
 const ProgressStepper = ({
     steps,
-    currentStep
+    currentStep,
+    onStepClick
 }) => {
+    const [ selectedStep, setSelectedStep ] = useState(currentStep);
+
+    useEffect(() => {
+        setSelectedStep(currentStep);
+    }, [ currentStep ]);
 
     const generateSteps = () => {
         return steps.map((step, key) => {
-            const activeIdx = steps.findIndex(x => x.id === currentStep);
+            const activeIdx = steps.findIndex(x => x.id === selectedStep);
             let status = activeIdx === key ? 'active' : activeIdx > key ? 'complete' : 'todo';
 
             return (
-                <div className={`step ${status}`} key={key}>
+                <div className={`step ${status}`} key={key} onClick={() => onStepClick(step)}>
                     <h1>{ step.label }</h1>
                 </div>
             )

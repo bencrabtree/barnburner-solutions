@@ -52,4 +52,10 @@
     .info {
         @include bbsIcon('info-icon', 1.5, 1.5);
     }
+    .save {
+        @include bbsIcon('save-black')
+    }
+    .edit {
+        @include bbsIcon('edit-black');
+    }
 }

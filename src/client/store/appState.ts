@@ -16,10 +16,10 @@ const useAppState = () => {
                 if (key === 'photo_uri') {
                     formData.append(key, client[key][0], client[key][0].name)
                 } else {
-                    formData.append(key, client[key])
+                    formData.append(key, client[key] || undefined)
                 }
             })
-            const { data, status } = await http.put('/roster/new', formData);
+            const { data, status } = await http.post('/roster/new', formData);
             if (status === 200) {
                 console.log("AddNewClient: Success:", status);
                 let tempRoster = cloneDeep(state.fullRoster);
@@ -49,6 +49,7 @@ const useAppState = () => {
         loading: state.loading,
         setLoading,
         userProfile: state.userProfile,
+        allUsers: state.allUsers,
         fullRoster: state.fullRoster,
         allTags: state.allTags,
         addNewClient,

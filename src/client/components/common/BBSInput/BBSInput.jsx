@@ -13,7 +13,7 @@ const BBSInput = ({
     isDisabled,
     rows
 }) => {
-    const [ input, setInput ] = useState("");
+    const [ input, setInput ] = useState(value || "");
 
     useEffect(() => {
         handleValueChange(id, value);

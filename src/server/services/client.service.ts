@@ -57,7 +57,7 @@ class ClientService {
             let artistPhoto = new Photo(uri);
             let clientToAdd = new Client(client);
             clientToAdd.photo_uri = artistPhoto.key;
-            let newClient = await getRepository(Client).save(clientToAdd);
+            let newClient = (await getRepository(Client).save(clientToAdd)).update();
             artistPhoto.client_id = newClient.id;
             await getRepository(Photo).save(artistPhoto);
             return newClient;
@@ -74,7 +74,8 @@ class ClientService {
             Object.keys(updates).forEach(update => {
                 client[update] = updates[update];
             });
-            await getRepository(Client).save(client);
+            await getRepository(Client).update(client.id, client);
+            client = client.update();
             return client;
         } catch (error) {
             console.log("[ClientService] UpdateClient:", error)

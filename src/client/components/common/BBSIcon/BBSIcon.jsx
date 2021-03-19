@@ -21,7 +21,9 @@ BBSIcon.propTypes = {
         'default-avatar',
         'settings',
         'under-construction',
-        'info'
+        'info',
+        'save',
+        'edit'
     ]).isRequired,
     style: PropTypes.oneOf([
         "round",

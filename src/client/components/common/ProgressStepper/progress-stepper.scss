@@ -23,6 +23,7 @@
     text-align: center;
     padding: .75rem .25rem;
     justify-content: center;
+    cursor: pointer;
 
     &.active, &.complete {
         h1 {

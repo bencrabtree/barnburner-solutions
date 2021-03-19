@@ -33,12 +33,14 @@ export default (app, passport, settings) => {
     ////////////////////////////
 
     router.get('/roster/all', ClientController.getFullRoster);
-    router.put('/roster/new', passport.authenticate('jwt', { session: false }), upload.fields([{ name: 'photo_uri', maxCount: 1 }]), ClientController.addClient);
+    router.post('/roster/new', passport.authenticate('jwt', { session: false }), upload.fields([{ name: 'photo_uri', maxCount: 1 }]), ClientController.addClient);
     router.get('/roster/new-lead-model', passport.authenticate('jwt', { session: false }), ClientController.getNewLeadModel);
     router.get('/roster/:artistName', ClientController.getByName);
+    router.put('/roster/:artistName', passport.authenticate('jwt', { session: false }), ClientController.updateArtist);
 
     router.get('/tags/all', TagController.getAll);
 
+    router.get('/user/all', UserController.getAll);
     router.get('/user/current', UserController.getLoggedInUser);
 
     ////////////////////////////

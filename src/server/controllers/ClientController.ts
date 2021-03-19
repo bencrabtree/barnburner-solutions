@@ -22,6 +22,16 @@ const addClient = async (req: Request, res: Response) => {
     }
 }
 
+const updateArtist = async (req:Request, res: Response) => {
+    try {
+        let client = await clientService.updateClient(req.body.full_name, req.body);
+        res.status(200).send(client);
+    } catch (error) {
+        console.log("ClientController: AddClient:", error);
+        res.status(400).send(`Unable to add ${req.body?.full_name || 'client'}`)
+    }
+}
+
 const getByName = async (req: Request, res: Response) => {
     try {
         let client = await clientService.getClientByName(req.params.artistName);
@@ -45,6 +55,7 @@ const getNewLeadModel = async (req: Request, res: Response) => {
 export default {
     getFullRoster,
     addClient,
+    updateArtist,
     getByName,
     getNewLeadModel
 }
