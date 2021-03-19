@@ -114,13 +114,24 @@
     }
 }
 
-.form-content.columns {
+.form {
+    h2 {
+        margin-bottom: 1rem;
+    }
+}
+.form-content {
     flex-wrap: wrap;
     display: flex;
     justify-content: center;
     align-items: baseline;
 
-    & > div {
+    &.tags {
+        .bbs-pills {
+            width: 80%;
+        }
+    }
+
+    &.columns > div {
         width: 45%;
         padding: .5rem;
     }

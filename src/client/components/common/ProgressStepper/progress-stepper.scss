@@ -8,6 +8,42 @@
     padding: 0rem 1rem;
     position: relative;
     border-radius: 2rem;
+
+    .step:before,
+    .step:after {
+        content: "";
+        position: absolute;
+    }
+    .step:before {
+        height: 50%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        -webkit-transform: skew(45deg);
+        -moz-transform: skew(45deg);
+        transform: skew(45deg);
+    }
+    .step:after {
+        height: 50%;
+        width: 100%;
+        top: 50%;
+        left: 0;
+        -webkit-transform: skew(-45deg);
+        -moz-transform: skew(-45deg);
+        transform: skew(-45deg);
+    }
+
+    // .step:last-child::before {
+    //     -webkit-transform: none;
+    //     -moz-transform: none;
+    //     transform: none;
+    // }
+
+    // .step:last-child::after {
+    //     -webkit-transform: none;
+    //     -moz-transform: none;
+    //     transform: none;
+    // }
 }
 .progress-stepper div:first-child {
     margin-left: -5%;
@@ -38,29 +74,6 @@
     }
 }
 
-.step:before,
-.step:after {
-    content: "";
-    position: absolute;
-}
-.step:before {
-    height: 50%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    -webkit-transform: skew(45deg);
-    -moz-transform: skew(45deg);
-    transform: skew(45deg);
-}
-.step:after {
-    height: 50%;
-    width: 100%;
-    top: 50%;
-    left: 0;
-    -webkit-transform: skew(-45deg);
-    -moz-transform: skew(-45deg);
-    transform: skew(-45deg);
-}
 .step.active:before, .step.active:after {
     background: $statusBlue;
 }

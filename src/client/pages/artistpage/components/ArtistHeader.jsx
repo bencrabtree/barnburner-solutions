@@ -75,7 +75,7 @@ const ArtistHeader = ({
                 </div>
                 <div className='lead-actions'>
                         <BBSButton
-                            label="+ Watch"
+                            label="+ Follow"
                             type="secondary"
                             onClick={ onWatchClick }
                         />

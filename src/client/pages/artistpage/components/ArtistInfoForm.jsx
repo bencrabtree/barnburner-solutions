@@ -100,18 +100,18 @@ const ArtistInfoForm = forwardRef(({
         } else {
             return (
                 <div className='artist-info-form'>
-                    <div className='form-content columns'>
+                    <div className='form-content columns general'>
                         { generateInputValues() }
                     </div>
                     <div className='form'>
                         <h2>Socials</h2>
-                        <div className='form-content columns'>
+                        <div className='form-content columns socials'>
                             { generateSocialValues() }
                         </div>
                     </div>
                     <div className='form'>
                         <h2>Artist Tags</h2>
-                        <div className='form-content'>
+                        <div className='form-content tags'>
                             <BBSPills
                                 options={allTags}
                                 onChange={ handleInputChange }
