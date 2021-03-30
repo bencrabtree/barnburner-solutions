@@ -21,14 +21,14 @@
 
             .tab-action {
                 cursor: pointer;
-                padding: 1rem;
+                padding: .5rem;
             }
         }
 
         .tab {
             margin-right: 1rem;
             cursor: pointer;
-            padding: 1rem;
+            padding: .5rem 1rem;
 
             &:hover h2 {
                 color: black;
@@ -39,7 +39,7 @@
             }
 
             &.active {
-                border-bottom: 4px solid $surfGreen;
+                border-bottom: 4px solid $baseColor;
 
                 h2 {
                     color: black;

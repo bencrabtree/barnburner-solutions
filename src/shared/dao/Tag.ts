@@ -6,7 +6,6 @@ export class Tag extends BaseEntity {
     
     constructor(name) {
         super();
-
         this.name = name;
     }
 

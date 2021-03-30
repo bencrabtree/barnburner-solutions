@@ -33,18 +33,24 @@ const SearchBar = ({ placeholder, onSubmit, onAddNewLead }) => {
      * Triggers on tag-complete or selection from dropdown
      */
     const handleChange = (e, val) => {
-        if (typeof val === 'string') {
-            if (fullRoster.find(x => x.full_name.toLowerCase() === val.toLowerCase())) {
-                onSubmit(val);
-                return;
-            } else if (isLoggedIn()) {
-                onAddNewLead(val);            
-            }
-        } else if (val && val.inputValue && isLoggedIn()) {
-            onAddNewLead(val.inputValue);
-        } else if (fullRoster.find(x => x.full_name.toLowerCase() === val?.full_name?.toLowerCase())) {
-            onSubmit(val);
-            return;
+        let foundArtist;
+        switch (typeof val) {
+            case 'string':
+                foundArtist = fullRoster.find(x => x.full_name.toLowerCase() === val.toLowerCase());
+                if (foundArtist) {
+                    onSubmit(foundArtist);
+                } else if (isLoggedIn()) {
+                    onAddNewLead(val);            
+                };
+                break;
+            case 'object':
+                foundArtist = fullRoster.find(x => x.full_name.toLowerCase() === val.full_name.toLowerCase());
+                if (val && val.inputValue && isLoggedIn()) {
+                    onAddNewLead(val.inputValue);
+                } else if (foundArtist) {
+                    onSubmit(foundArtist);
+                };
+                break;
         }
     }
 

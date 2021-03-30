@@ -3,8 +3,17 @@ import expressSession from 'express-session';
 import app from './app';
 import settings from './config/settings.json';
 import "reflect-metadata";
-import { createConnection, ConnectionOptions, getRepository, createQueryBuilder } from "typeorm";
-import { Client, Photo, Tag, User, Notes, Lead, File } from "../shared/dao";
+import { createConnection, ConnectionOptions } from "typeorm";
+import {
+    User,
+    Artist,
+    Tag,
+    File,
+    Contact,
+    Feed,
+    ArtistContact,
+    UserArtist
+} from "../shared/dao";
 import { fileService } from './services/file.service';
 
 const start = async () => {
@@ -23,7 +32,16 @@ const start = async () => {
         password: settings.db.password,
         host: settings.db.endpoint,
         entityPrefix: settings.db.schema + '.',
-        entities: [ User, Client, Lead, Photo, Notes, Tag, File ],
+        entities: [
+            User,
+            Artist,
+            Tag,
+            File,
+            Contact,
+            Feed,
+            ArtistContact,
+            UserArtist
+        ],
         synchronize: true
     } as ConnectionOptions);
 

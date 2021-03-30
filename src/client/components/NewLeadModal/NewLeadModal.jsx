@@ -72,6 +72,7 @@ const NewLeadModal = ({
             console.log('photo val', value)
         }
         tempModel[id] = value;
+        console.log(id, value)
         if (validateTab(currentTab)) setErrorMessage();
         setNewLead(tempModel);
     }
@@ -149,6 +150,7 @@ const NewLeadModal = ({
                     return (
                         <div className='new-lead-form'>
                             <BBSPills
+                                id="tags"
                                 options={allTags}
                                 onChange={ handleInputChange }
                                 defaultValue={newLead.tags}

@@ -5,7 +5,7 @@
     white-space: nowrap;
 
     .MuiButton-root {
-        padding: .5rem 1rem;
+        padding: .25rem 1rem;
         text-transform: none;
         font-size: 1rem;
         min-width: 5rem;
@@ -14,11 +14,11 @@
     &.primary .MuiButton-root {
         cursor: pointer;
         color: white;
-        background-color: $surfGreen;
-        border: 2px solid $surfGreen;
+        background-color: $baseColor;
+        border: 2px solid $baseColor;
 
         &:hover {
-            background-color: darken($surfGreen, 5%);
+            background-color: darken($baseColor, 5%);
         }
     }
 
@@ -36,11 +36,11 @@
     &.tertiary .MuiButton-root {
         cursor: pointer;
         color: white;
-        background-color: $statusBlue;
-        border: 2px solid $statusBlue;
+        background-color: $accentColor;
+        border: 2px solid $accentColor;
 
         &:hover {
-            background-color: darken($statusBlue, 5%);
+            background-color: darken($accentColor, 5%);
         }
     }
 

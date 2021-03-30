@@ -6,7 +6,7 @@ const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 import auth from './auth';
 import cors from 'cors';
-import ClientController from '../controllers/ClientController';
+import ArtistController from '../controllers/ArtistController';
 import TagController from '../controllers/TagController';
 import UserController from '../controllers/UserController';
 
@@ -32,16 +32,22 @@ export default (app, passport, settings) => {
     app.use('/auth', authRoutes);
     ////////////////////////////
 
-    router.get('/roster/all', ClientController.getFullRoster);
-    router.post('/roster/new', passport.authenticate('jwt', { session: false }), upload.fields([{ name: 'photo_uri', maxCount: 1 }]), ClientController.addClient);
-    router.get('/roster/new-lead-model', passport.authenticate('jwt', { session: false }), ClientController.getNewLeadModel);
-    router.get('/roster/:artistName', ClientController.getByName);
-    router.put('/roster/:artistName', passport.authenticate('jwt', { session: false }), ClientController.updateArtist);
+    router.get('/roster/all', ArtistController.getFullRoster);
+    router.post('/roster/new', passport.authenticate('jwt', { session: false }), upload.fields([{ name: 'photo_uri', maxCount: 1 }]), ArtistController.addArtist);
+    router.get('/roster/new-lead-model', passport.authenticate('jwt', { session: false }), ArtistController.getNewLeadModel);
+    router.post('/roster/favorite', ArtistController.favoriteArtist);
+    router.post('/roster/unfavorite', ArtistController.unfavoriteArtist);
+    router.get('/roster/relationships/:artistName', ArtistController.getRelationships)
+    router.get('/roster/:artistName', ArtistController.getByName);
+    router.put('/roster/:artistId', ArtistController.updateArtist); // authenticate me
 
     router.get('/tags/all', TagController.getAll);
 
     router.get('/user/all', UserController.getAll);
     router.get('/user/current', UserController.getLoggedInUser);
+    router.get('/user/relationships/:userId', UserController.getArtistRelationships);
+    router.get('/user/:userId', UserController.getUser)
+    router.put('/user/:userId', UserController.updateUser) // authenticate me
 
     ////////////////////////////
     app.use('/', router);

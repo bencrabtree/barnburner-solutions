@@ -7,73 +7,32 @@ import { getLabel, getSocial } from '../../../../shared/util/constants';
 import { useAppState } from '../../../store';
 import { http } from '../../../util/api';
 import { clone } from 'lodash';
-import { isDeleteExpression } from 'typescript';
 
 const ArtistInfoForm = forwardRef(({
-    artistName,
+    info,
     disabled
 }, ref) => {
     const { allTags, allUsers } = useAppState();
-    const [ loading, setLoading ] = useState(true);
-    const [ artist, setArtist ] = useState({});
+    const [ loading, setLoading ] = useState(info.loading);
+    const [ artist, setArtist ] = useState(info.data);
 
     useImperativeHandle(ref, () => ({
         getNewInfo() {
+            console.log(artist)
             return artist;
         }
     }));
 
     useEffect(() => {
-        fillArtistInfo();
-    }, []);
-
-    const fillArtistInfo = async () => {
-        try {
-            const { data, status } = await http.get(`/roster/${artistName}`);
-            if (data && status === 200) {
-                setArtist(data);
-                setLoading(false);
-                console.log('FillArtistInfo: Success:', status);
-            } else {
-                console.log('FillArtistInfo: BadResponse:', status)
-            }
-        } catch (error) {
-            console.log('FillArtistInfo:', error);
-        }
-    }
+        setLoading(info.loading);
+        setArtist(info.data)
+    }, [ info ])
 
     const handleInputChange = (id, value) => {
         let tempArtist = clone(artist);
         tempArtist[id] = value;
+        console.log(id, value)
         setArtist(tempArtist);
-    }
-
-    const generateInputValues = () => {
-        return ['manager_name', 'manager_email', 'manager_phone', 'account_owners'].map((elt, key) => {
-            if (elt === 'account_owners') {
-                return (
-                    <BBSPills
-                        id={elt}
-                        options={allUsers.map(x => x.email)}
-                        defaultValue={artist[elt] || []}
-                        onChange={ handleInputChange }
-                        placeholder="Account Owners"
-                        disabled={ disabled }
-                        label={true}
-                    />
-                )
-            }
-            return (
-                <BBSInput
-                    key={key}
-                    id={ elt }
-                    label={ getLabel[elt] }
-                    value={ artist[elt] }
-                    onChange={ handleInputChange }
-                    isDisabled={ disabled }
-                />
-            )
-        })
     }
 
     const generateSocialValues = () => {
@@ -100,8 +59,19 @@ const ArtistInfoForm = forwardRef(({
         } else {
             return (
                 <div className='artist-info-form'>
-                    <div className='form-content columns general'>
-                        { generateInputValues() }
+                    <div className='form'>
+                        <h2>About</h2>
+                        <div className='form-content about'>
+                            <BBSInput
+                                id="description"
+                                label={ getLabel["description"] }
+                                value={ artist.description }
+                                onChange={ handleInputChange }
+                                isDisabled={ disabled }
+                                type="textarea"
+                                rows={5}
+                            />
+                        </div>
                     </div>
                     <div className='form'>
                         <h2>Socials</h2>

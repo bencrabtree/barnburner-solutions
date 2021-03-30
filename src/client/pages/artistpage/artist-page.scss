@@ -15,6 +15,19 @@
     .artist-header {
         padding: 1rem 2rem;
 
+        &.New {
+            border-top: 4px solid $highlightNew;
+        }
+        &.Approached {
+            border-top: 4px solid $highlightApproached;
+        }
+        &.Negotiating {
+            border-top: 4px solid $highlightNegotiating;
+        }
+        &.Signed {
+            border-top: 4px solid $highlightSigned;
+        }
+
         .artist-name {
             span {
                 display: flex;
@@ -25,6 +38,11 @@
                     cursor: pointer;
                 }
             }
+        }
+
+        .artist-name-title {
+            display: flex;
+            flex-direction: row;
         }
     }
 
@@ -95,6 +113,10 @@
             margin-bottom: .5rem;
         }
 
+        &#relationship .artist-stat-value {
+            text-transform: capitalize;
+        }
+
         .artist-stat-label, .artist-stat-value {
             font-weight: normal;
         }
@@ -131,8 +153,41 @@
         }
     }
 
+    &.about {
+        .bbs-input {
+            width: 80%;
+        }
+    }
+
     &.columns > div {
         width: 45%;
         padding: .5rem;
+    }
+}
+
+.artist-status-pill {
+    border-radius: 20px;
+    margin-left: 1rem;
+    padding: 0rem .5rem;
+
+    &.New {
+        border: 2px solid $highlightNew;
+        background-color: $lightHighlightNew;
+        color: $highlightNew;
+    }
+    &.Approached {
+        border: 2px solid $highlightApproached;
+        background-color: $lightHighlightApproached;
+        color: $highlightApproached;
+    }
+    &.Negotiating {
+        border: 2px solid $highlightNegotiating;
+        background-color: $lightHighlightNegotiating;
+        color: $highlightNegotiating;
+    }
+    &.Signed {
+        border: 2px solid $highlightSigned;
+        background-color: $lightHighlightSigned;
+        color: $highlightSigned;
     }
 }

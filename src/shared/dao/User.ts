@@ -1,32 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, getRepository } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, getRepository, ManyToMany, OneToOne, JoinColumn } from "typeorm";
+import { File } from ".";
+import { UserRole } from "../util/types";
 
 @Entity()
 export class User extends BaseEntity {
 
-    constructor(
-        email,
-        first_name,
-        last_name,
-        photo_uri,
-        last_login=new Date(),
-        phone="N/A",
-        role="N/A",
-        title="N/A"
-    ) {
-       super();
-
-       this.email = email;
-       this.first_name = first_name;
-       this.last_name = last_name;
-       this.photo_uri = photo_uri;
-       this.last_login = last_login;
-       this.phone = phone;
-       this.role = role;
-       this.title = title;
-    }
-
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column("character varying")
     first_name: string;
@@ -37,18 +17,19 @@ export class User extends BaseEntity {
     @Column("character varying")
     email: string;
 
-    @Column("timestamp without time zone")
-    last_login;
-
-    @Column("character varying")
+    @Column("character varying", { nullable: true })
     phone: string;
 
-    @Column("character varying")
-    photo_uri: string;
+    @OneToOne(type => File, { nullable: true, cascade: true })
+    @JoinColumn({ name: "photo_id" })
+    photo: File;
 
-    @Column("character varying")
-    role: string;
+    @Column({ type: "enum", enum: UserRole, default: UserRole.Regular })
+    role: UserRole;
 
-    @Column("character varying")
+    @Column("character varying", { nullable: true })
     title: string;
+
+    @Column("timestamp without time zone", { default: new Date() })
+    last_login: Date;
 }

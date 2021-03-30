@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getArtistImageSrc, toReadableDate } from '../../../util/constants';
 import ProgressStepper from '../../../components/common/ProgressStepper/ProgressStepper';
 import BBSButton from '../../../components/common/BBSButton/BBSButton';
@@ -6,15 +6,14 @@ import { clientStatus } from '../../../../shared/util/constants';
 import BBSIcon from '../../../components/common/BBSIcon/BBSIcon';
 import { useAppState } from '../../../store';
 import { http } from '../../../util/api';
+import { UserArtistRelation } from '../../../../shared/util/types';
 
 const ArtistHeader = ({
     artist,
-    onWatchClick,
-    onEditClick,
-    onUpdateClick,
-    updateArtist
+    updateArtist,
+    relationship
 }) => {
-    const { userProfile } = useAppState();
+    const { userProfile, artistRelationships, setArtistRelationships } = useAppState();
 
     const handleInfoSelect = () => {
         alert(`Selected ${artist.full_name}`)
@@ -45,68 +44,129 @@ const ArtistHeader = ({
         }
     }
 
+    const onFollowToggle = async () => {
+        switch (relationship) {
+            case UserArtistRelation.None:
+                try {
+                    const { data, status } = await http.post('/roster/favorite', {
+                        userId: userProfile.id,
+                        artistId: artist.id
+                    });
+        
+                    if (data && status === 200) {
+                        setArtistRelationships(data);
+                        console.log('Favorited: Success:', status)
+                    } else {
+                        console.log('Favorited: BadResponse:', status)
+                    }
+                } catch (error) {
+                    console.log('Favorited:', error)
+                }
+                break;
+            case UserArtistRelation.Favorited:
+                try {
+                    const { data, status } = await http.post('/roster/unfavorite', {
+                        userId: userProfile.id,
+                        artistId: artist.id
+                    });
+        
+                    if (data && status === 200) {
+                        setArtistRelationships(data);
+                        console.log('unfavorite: Success:', status)
+                    } else {
+                        console.log('unfavorite: BadResponse:', status)
+                    }
+                } catch (error) {
+                    console.log('unfavorite:', error)
+                }
+                break;
+            case UserArtistRelation.Owner:
+            default:
+                alert('You are the account owner of this artist. You cannot unfollow')
+                break;
+        }
+    }
+
+    const generateFollowBtn = () => {
+        // make this filled in/empty heart ( or something else idk )
+        // if owner, don't let them unfollow (x when hovering with title explaining)
+        if (artistRelationships.find(x => x.id = artist.id)) {
+            return (
+                <BBSButton
+                    label="Unfollow -"
+                    type="secondary"
+                    onClick={ onFollowToggle }
+                />
+            );
+        } else {
+            return (
+                <BBSButton
+                    label="Follow +"
+                    type="secondary"
+                    onClick={ onFollowToggle }
+                />
+            );
+        }
+    }
+
+    const renderArtistStats = () => {
+        const stats = [
+            { id: 'created', label: "Created Date", value: toReadableDate(artist.created_on), nullValue: 'N/A' },
+            { id: 'updated', label: "Last Update", value: toReadableDate(artist.updated_on), nullValue: 'N/A' },
+            { id: 'relationship', label: "My Relationship", value: relationship, nullValue: 'N/A' }            
+        ];
+
+        return stats.map((elt) => {
+            return (
+                <div className='artist-stat' id={ elt.id }>
+                    <h4 className='artist-stat-label'>{ elt.label }</h4>
+                    <h3 className='artist-stat-value'>{ elt.value || elt.nullValue }</h3>
+                </div>
+            )
+        })
+    }
+
     return (
-        <div className="artist-header card">
+        <div className={`artist-header card ${artist.status}`}>
             <div className="top-content">
                 <div className='artist-profile'>
                     <img className='artist-picture'
-                        src={ getArtistImageSrc(artist.photo_uri) }
+                        src={ getArtistImageSrc(artist.photo?.file_path) }
                     />
                     <div className='artist-name'>
-                        <h2>Artist</h2>
+                        <div className='artist-name-title'>
+                            <h2>Artist</h2>
+                            <span className={`artist-status-pill ${artist.status}`}>
+                                { artist.status }
+                            </span>
+                        </div>
                         <span>
                             <h1>{ artist.full_name }</h1>
-                            <BBSIcon
+                            {/* <BBSIcon
                                 type='info'
                                 style='round'
                                 onClick={ handleInfoSelect }
                                 title="More info"
-                            />
+                            /> */}
                         </span>
                     </div>
                 </div>
                 <div className='divider-bar' />
                 <div className='lead-status'>
-                    <ProgressStepper
-                        steps={clientStatus}
-                        currentStep={ artist.status }
-                        onStepClick={ handleStepSelect }
-                    />
+                    { renderArtistStats() }
                 </div>
                 <div className='lead-actions'>
-                        <BBSButton
-                            label="+ Follow"
-                            type="secondary"
-                            onClick={ onWatchClick }
-                        />
+                        { generateFollowBtn() }
                         <BBSButton
                             label="Edit"
                             type="primary"
-                            onClick={ onEditClick }
+                            onClick={ () => {} }
                         />
                         <BBSButton
-                            label="Update"
+                            label="Public View"
                             type="tertiary"
-                            onClick={ onUpdateClick }
+                            onClick={ () => {} }
                         />
-                </div>
-            </div>
-            <div className='bottom-content'>
-                <div className='artist-stat'>
-                    <h4 className='artist-stat-label'>Current Status</h4>
-                    <h3 className='artist-stat-value'>{ clientStatus.find(x => x.id === artist.status)?.label || 'N/A' }</h3>
-                </div>
-                <div className='artist-stat'>
-                    <h4 className='artist-stat-label'>Created Date</h4>
-                    <h3 className='artist-stat-value'>{ toReadableDate(artist.created_on) }</h3>
-                </div>
-                <div className='artist-stat'>
-                    <h4 className='artist-stat-label'>Last Update</h4>
-                    <h3 className='artist-stat-value'>{ toReadableDate(artist.updated_on) } </h3>
-                </div>
-                <div className='artist-stat'>
-                    <h4 className='artist-stat-label'>Account Owner</h4>
-                    <h3 className='artist-stat-value'>{artist.account_owners}</h3>
                 </div>
             </div>
         </div>

@@ -1,4 +1,8 @@
-import { S3, ListObjectsCommand, PutObjectCommand, S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
+import {
+    S3,
+    S3ClientConfig,
+    PutObjectCommandInput
+} from "@aws-sdk/client-s3";
 
 class FileService {
     s3: S3;
@@ -50,11 +54,26 @@ class FileService {
 
     async uploadPhoto(file: any, artistName: string) {
         try {
-            let uploadParams = {
+            let uploadParams: PutObjectCommandInput = {
                 Bucket: this.bucketName,
                 Key: encodeURIComponent(artistName) + '/' + file.originalname,
                 Body: file.buffer,
                 ContentType: file.mimetype
+            }
+            await this.s3.putObject(uploadParams);
+            return this.urlPrefix + uploadParams.Key;
+        } catch (error) {
+            console.log('[FileService] uploadPhoto:', error)
+        }
+    }
+
+    async uploadUserPhoto(file: any, email: string) {
+        try {
+            let uploadParams: PutObjectCommandInput = {
+                Bucket: this.bucketName,
+                Key: 'User' + email,
+                Body: file,
+                ContentType: ""
             }
             await this.s3.putObject(uploadParams);
             return this.urlPrefix + uploadParams.Key;

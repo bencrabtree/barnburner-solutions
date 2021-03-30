@@ -46,7 +46,7 @@ const clientConfig = {
                 loader: "html-loader"
             },
             {
-                test: /\.svg$/,
+                test: /\.(jp|sv)|g$/,
                 loader: "url-loader"
             },
             {

@@ -1,23 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, OneToMany, OneToOne, ManyToMany } from "typeorm";
-import { Photo, Tag, User } from '.';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, OneToMany, OneToOne, ManyToMany, JoinTable, UpdateDateColumn, CreateDateColumn, JoinColumn, TableForeignKey, AfterInsert } from "typeorm";
+import { ArtistContact, Contact, File, Tag, User, UserArtist } from '.';
+import { ArtistStatus } from "../util/types";
 
 @Entity()
-export class Client extends BaseEntity {
+export class Artist extends BaseEntity {
 
     constructor(params?) {
         super();
 
-        this.created_on = new Date();
-
         if (params) {
             this.full_name = params.full_name;
             this.status = params.status;
-            this.photo_uri = params.photo_uri;
+            this.photo = params.photo;
             this.description = params.description;
-            this.manager_name = params.manager_name;
-            this.manager_email = params.manager_email;
-            this.manager_phone = params.manager_phone;
-            this.account_owners = params.account_owners || [];
             this.website = params.website;
             this.twitter = params.twitter;
             this.facebook = params.facebook;
@@ -28,46 +23,29 @@ export class Client extends BaseEntity {
             this.soundcloud = params.soundcloud;
             this.tiktok = params.tiktok;
             this.youtube = params.youtube;
-            this.tags = params.tags?.split(',') || []
         }
     }
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column({ nullable: false, type: "character varying" })
     full_name: string;
 
-    @Column({ nullable: false, type: "character varying"})
+    @Column({ nullable: false, type: "enum", enum: ArtistStatus, default: ArtistStatus.New })
     status: string;
 
-    @Column({ nullable: true, type: "character varying" })
-    @OneToOne(type => Photo, photo => photo.key)
-    photo_uri: string;
+    @ManyToOne(type => File, file => file.artist)
+    photo: File;
 
     @Column({ nullable: true, type: "character varying" })
     description: string;
 
-    @Column("timestamp without time zone", { nullable: false })
-    created_on;
+    @CreateDateColumn({type: "timestamp without time zone"})
+    created_on: Date;
 
-    @Column("timestamp without time zone", { nullable: false })
-    updated_on;
-
-    ///
-
-    @Column({ nullable: true, type: "character varying" })
-    manager_name: string;
-
-    @Column({ nullable: true, type: "character varying" })
-    manager_email: string;
-
-    @Column({ nullable: true, type: "character varying" })
-    manager_phone: string;
-
-    @Column("character varying", { nullable: true, array: true })
-    @ManyToOne(type => User, user => user.email)
-    account_owners: string[];
+    @UpdateDateColumn({ type: "timestamp without time zone"})
+    updated_on: Date;
 
     ///
 
@@ -101,21 +79,43 @@ export class Client extends BaseEntity {
     @Column({ nullable: true, type: "character varying" })
     youtube: string;
 
-    @Column("character varying", { nullable: true, array: true })
-    @OneToMany(type => Tag, tag => tag.name)
-    tags: string[];
+    ////
 
-    update() {
-        this.updated_on = new Date();
-        this.save();
-        return this;
+    @OneToMany(type => File, file => file.artist, {
+        cascade: true
+    })
+    files: File[];
+
+    @ManyToMany(type => Tag, {
+        cascade: true
+    })
+    @JoinTable({
+        name: "artist_tags",
+        joinColumn: {
+            name: "artist_id",
+            referencedColumnName: "id"
+        },
+        inverseJoinColumn: {
+            name: "tag_id",
+            referencedColumnName: "id"
+        }
+    })
+    tags: Tag[];
+
+    ///
+
+    @AfterInsert()
+    async uploadPhoto() {
+
     }
+
+    ////
 
     toEditableArray() {
         const values = Object.keys(this);
         return values.map(val => ({
             id: val,
-            data: this[val] || ((val === 'tags' || val === 'collection') ? [] : "")
+            data: this[val] || ""
         }));
     }
 

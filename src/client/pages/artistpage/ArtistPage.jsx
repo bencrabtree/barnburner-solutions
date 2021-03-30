@@ -9,49 +9,95 @@ import TabCard from '../../components/TabCard/TabCard';
 import ArtistHeader from './components/ArtistHeader';
 import ArtistInfoForm from './components/ArtistInfoForm';
 import { http } from '../../util/api';
+import TeamTab from '../../components/TeamTab/TeamTab';
+import { isLoggedIn } from '../../util/auth';
+import { UserArtistRelation, UserRole } from '../../../shared/util/types';
 
+
+/**
+ * 
+ * let's load all data for each tab in background on render of page
+ * have loading var tied to each one so we can dyanmically load
+ * 
+ * - css shimmer for loading data
+ * 
+ * - team, files, contact tab material ui table
+ * 
+ * - schedule integrates with bandsintown, songkick, internal (v2)
+ */
 const ArtistPage = ({
     match
 }) => {
     const artistInfoRef = useRef();
-    const { fullRoster } = useAppState();
+    const { fullRoster, userProfile, artistRelationships, setArtistRelationships } = useAppState();
     const [ selectedArtist, setSelectedArtist ] = useState();
     const [ selectedTab, setSelectedTab ] = useState('account');
     const [ isEditing, setIsEditing ] = useState(false);
+    //
+    const [ relationship, setRelationship ] = useState();
+    //
+    const [ teamsTabInfo, setTeamsTabInfo ] = useState({ data: [], loading: true });
+    const [ artistFormInfo, setArtistFormInfo ] = useState({ data: [], loading: true });
+    // const [ teamsTabInfo, setTeamsTabInfo ] = useState({ data: [], loading: true });
+
+    useEffect(() => {
+        setRelationship(artistRelationships.find(x => x.id = selectedArtist?.id)?.relation || UserArtistRelation.None)
+    }, [ artistRelationships, selectedArtist ])
 
     useEffect(() => {
         changeSelectedArtist();
+        getData();
     }, [ match.params.artistName ]);
 
-    const changeSelectedArtist = async () => {
-        if (
-            match.params.artistName && 
-            fullRoster.find(x => x.full_name === match.params.artistName)
-        ) {
-            let artist = await artistService.getArtist(match.params.artistName);
-            setSelectedArtist(artist);
+    const getData = () => {
+        fillArtistInfo();
+        getArtistRelationships();
+    }
+
+    const fillArtistInfo = async () => {
+        try {
+            // sub out match.params to find artist id in fullRoster
+            const { data, status } = await http.get(`/roster/${match.params.artistName}`);
+            if (data && status === 200) {
+                setArtistFormInfo({ data: data, loading: false });
+                console.log('FillArtistInfo: Success:', status);
+            } else {
+                console.log('FillArtistInfo: BadResponse:', status)
+            }
+        } catch (error) {
+            console.log('FillArtistInfo:', error);
         }
     }
 
-    const handleWatchSelect = () => {
-        alert(`You are now watching ${selectedArtist.full_name}`)
+    const getArtistRelationships = async () => {
+        try {
+            const { data, status } = await http.get(`/roster/relationships/${match.params.artistName}`);
+            if (data && status === 200) {
+                setTeamsTabInfo({ data: data, loading: false });
+                console.log('GetArtistRelationships: Success:', status);
+            } else {
+                console.log('GetArtistRelationships: BadResponse:', status)
+            }
+        } catch (error) {
+            console.log('GetArtistRelationships:', error);
+        } 
     }
 
-    const handleEditSelect = () => {
-        alert(`You are now editing ${selectedArtist.full_name}'s profile`);
-        setSelectedTab('account');
-        setIsEditing(true);
-    }
-
-    const handleUpdateSelect = () => {
-        alert(`You are now updating the lead status of ${selectedArtist.full_name}`)
+    const changeSelectedArtist = async () => {
+        let found = fullRoster.find(x => x.full_name.toLowerCase() === match.params.artistName.toLowerCase());
+        if (
+            match.params.artistName && 
+            found
+        ) {
+            let artist = await artistService.getArtist(found.full_name);
+            setSelectedArtist(artist);
+        }
     }
 
     const handleArtistContentSubmit = async () => {
         try {
             let newInfo = artistInfoRef.current.getNewInfo();
-            console.log(newInfo)
-            const { data, status } = await http.put(`/roster/${selectedArtist.full_name}`, newInfo);
+            const { data, status } = await http.put(`/roster/${selectedArtist.id}`, newInfo );
             if (data && status === 200) {
                 setIsEditing(false);
                 setSelectedArtist(data);
@@ -65,13 +111,18 @@ const ArtistPage = ({
     }
 
     const generateArtistContentTabActions = () => {
-        switch (selectedTab) {
-            case 'account':
-                return isEditing ? [
-                    { name: 'save', onClick: handleArtistContentSubmit, title: 'Save Content' }
-                ] : [
-                    { name: 'edit', onClick: () => setIsEditing(true), title: 'Edit Content' }
-                ];
+        if (isLoggedIn() && (
+            (!!relationship && relationship === UserArtistRelation.Owner) ||
+            (userProfile.role === UserRole.SuperAdmin)
+        )) {
+            switch (selectedTab) {
+                case 'account':
+                    return isEditing ? [
+                        { name: 'save', onClick: handleArtistContentSubmit, title: 'Save Content' }
+                    ] : [
+                        { name: 'edit', onClick: () => setIsEditing(true), title: 'Edit Content' }
+                    ];
+            }
         }
     }
 
@@ -79,10 +130,8 @@ const ArtistPage = ({
         return (
             <ArtistHeader
                 artist={selectedArtist}
-                onEditClick={handleEditSelect}
-                onUpdateClick={handleUpdateSelect}
-                onWatchClick={handleWatchSelect}
                 updateArtist={setSelectedArtist}
+                relationship={relationship}
             />
         )
     }
@@ -92,9 +141,10 @@ const ArtistPage = ({
             <TabCard
                 tabs={[
                     { id: 'account', label: 'Account', onClick: () => setSelectedTab('account') },
+                    { id: 'schedule', label: 'Schedule', onClick: () => setSelectedTab('schedule') },
+                    { id: 'contact', label: 'Contact', onClick: () => setSelectedTab('contact') },
                     { id: 'files', label: 'Files', onClick: () => setSelectedTab('files') },
                     { id: 'team', label: 'Team', onClick: () => setSelectedTab('team') },
-                    { id: 'dash', label: 'Dashboard', onClick: () => setSelectedTab('dash') }
                 ]}
                 actions={
                     generateArtistContentTabActions()
@@ -111,11 +161,18 @@ const ArtistPage = ({
             case 'account':
                 return (
                     <ArtistInfoForm
+                        info={artistFormInfo}
                         artistName={selectedArtist?.full_name}
                         disabled={!isEditing}
                         ref={artistInfoRef}
                     />
                 )
+            case 'team':
+                // return (
+                //     <TeamTab
+                //         info={teamsTabInfo}
+                //     />
+                // )
             default:
                 return `Selected ${selectedTab}`
         }

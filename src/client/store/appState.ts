@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { AppContext } from './appContext';
-import { Client } from '../../shared/dto';
 import { cloneDeep } from 'lodash';
 import { http } from '../util/api';
 import { AxiosRequestConfig } from 'axios';
@@ -45,6 +44,10 @@ const useAppState = () => {
         }
     }
 
+    const setArtistRelationships = data => {
+        setState(state => ({ ...state, artistRelationships: data }))
+    }
+
     return {
         loading: state.loading,
         setLoading,
@@ -52,6 +55,8 @@ const useAppState = () => {
         allUsers: state.allUsers,
         fullRoster: state.fullRoster,
         allTags: state.allTags,
+        artistRelationships: state.artistRelationships,
+        setArtistRelationships,
         addNewClient,
         //
         selectedArtist: state.selectedArtist,

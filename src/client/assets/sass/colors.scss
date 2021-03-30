@@ -1,5 +1,9 @@
-$surfGreen: #8DD9BF;
-$lightsurfGreen: #F8FFFC;
+$baseColor: #212856;
+$accentColor: #ef6a4d;
+
+$superLightGrey: #fbfbfb;
+
+$lightBaseColor: #596198;
 
 $backgroundLightGrey: #F2F2F2;
 $backgroundGrey: #E5E5E5;
@@ -8,4 +12,13 @@ $backgroundDarkGrey: #C4C4C4;
 $notFullyBlack: #616161;
 
 $errorRed: #DF0000;
-$statusBlue: #00A3FE;
+
+$highlightNew: #5dcddc;
+$highlightApproached: #fec043;
+$highlightNegotiating: #aea2fb;
+$highlightSigned: #3dcfa2;
+
+$lightHighlightNew: #f0fafc;
+$lightHighlightApproached: lighten($highlightApproached, 35%);
+$lightHighlightNegotiating: lighten($highlightNegotiating, 35%);
+$lightHighlightSigned: lighten($highlightSigned, 35%);

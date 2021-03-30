@@ -1,10 +1,38 @@
-export enum LeadStatus {
-    Thinking = "Thinking",
+export enum ArtistStatus {
+    New = "New",
     Approached = "Approached",
-    ContractSent = "Contract Sent",
+    Negotiating = "Negotiating",
     Signed = "Signed",
     Archived = "Archived",
     Lost = "Lost"
+}
+
+export enum UserArtistRelation {
+    Owner = "owner",
+    Favorited = "favorited",
+    None = "none"
+}
+
+export enum ArtistContactRelation {
+    Primary = "primary",
+    Secondary = "secondary",
+    Other = "other"
+}
+
+export enum UserRole {
+    SuperAdmin = "superadmin",
+    Administrator = "administrator",
+    Regular = "regular"
+}
+
+export enum FileTypes {
+    Pdf = "pdf",
+    Doc = "doc",
+    Excel = "excel",
+    Jpg = "image/jpeg",
+    Png = "image/png",
+    Svg = "image/svg",
+    Other = "other"
 }
 
 export const Tags = [

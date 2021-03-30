@@ -75,10 +75,10 @@
 }
 
 .step.active:before, .step.active:after {
-    background: $statusBlue;
+    background: $accentColor;
 }
 .step.complete:before, .step.complete:after {
-    background: $surfGreen;
+    background: $baseColor;
 }
 .step.todo:before, .step.todo:after {
     background: $backgroundGrey;

@@ -1,29 +1,34 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToOne } from "typeorm";
-import { Tag } from ".";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToOne, JoinColumn, UpdateDateColumn } from "typeorm";
+import { Artist, User } from ".";
+import { fileService } from "../../server/services/file.service";
+import { FileTypes } from "../util/types";
 
 @Entity()
 export class File extends BaseEntity {
 
-    constructor(file_path, alt_text?) {
-        super();
-
-        this.file_path = file_path;
-        this.alt_text = alt_text || "";
-    }
-
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: number;
 
     @Column("character varying")
-    alt_text: string;
+    file_path: string;
 
-    @Column("timestamp without time zone")
+    @Column({ type: "enum", enum: FileTypes, nullable: false })
+    type: FileTypes;
+
+    @UpdateDateColumn({ type: "timestamp without time zone"})
     upload_date;
 
-    @Column("character varying", { nullable: true, array: true })
-    @OneToMany(type => Tag, tag => tag.name)
-    tags: number[];
+    @ManyToOne(type => Artist, artist => (artist.files || artist.photo))
+    artist: Artist;
 
-    @Column("character varying")
-    file_path: string;
+    async upload(file: any, artistName?: string) {
+        this.type = file.mimetype;
+        this.file_path = await fileService.uploadPhoto(file, this.artist?.full_name || artistName);
+        this.save();
+    }
+
+    async uploadUserPhoto(file: any, email: string) {
+        this.file_path = await fileService.uploadUserPhoto(file, email);
+        this.save();
+    }
 }

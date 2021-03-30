@@ -2,10 +2,17 @@
 
 .bbs-logo {
     .bbs-logo-svg {
-        width: 7rem;
-        height: 4rem;
-        background: url('../../../assets/images/mtg-logo-black.svg') center center no-repeat;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        h1 {
+            font-family: Helvetica;
+            color: white;
+            font-weight: normal;
+        }
 
+        // background: url('../../../assets/images/barnburner.png') center center no-repeat;
+        // background-size: contain;
         // &:hover {
         //     background: url('../../assets/images/mtg-logo-green.svg') center center no-repeat;
         // }

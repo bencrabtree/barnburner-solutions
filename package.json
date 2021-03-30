@@ -48,6 +48,7 @@
       "jsonwebtoken": "^8.5.1",
       "lerna": "^3.22.1",
       "lodash": "^4.17.20",
+      "multer": "^1.4.2",
       "node-sass": "^5.0.0",
       "nodemon": "^2.0.7",
       "npm-run-all": "^4.1.5",
@@ -65,6 +66,7 @@
       "react-router-dom": "^5.2.0",
       "reflect-metadata": "^0.1.10",
       "request": "^2.88.2",
+      "request-promise": "^4.2.6",
       "sass-loader": "^10.1.1",
       "style-loader": "^2.0.0",
       "typeorm": "0.2.30",
@@ -78,6 +80,7 @@
       "webpack-node-externals": "^2.5.2"
    },
    "devDependencies": {
+      "@aws-sdk/client-s3": "^3.9.0",
       "@babel/core": "^7.12.10",
       "@babel/plugin-proposal-decorators": "^7.12.13",
       "@babel/plugin-proposal-optional-chaining": "^7.12.7",

@@ -5,6 +5,7 @@ import './assets/sass/general.scss';
 import MainHeader from './components/MainHeader/MainHeader';
 import { useAppState } from './store/index';
 import BBSLoading from './components/common/BBSLoading/BBSLoading';
+import MyRoster from './pages/myroster/MyRoster';
 
 const App = ({}) => {
     const { loading } = useAppState();
@@ -16,22 +17,26 @@ const App = ({}) => {
             )
         } else {
             return (
-                <div className='app'>
-                    <MainHeader />
-                    <div className='main-app'>
-                        <Router>
-                            <Switch>
-                                <Route component={ ArtistPage } path="/artist/:artistName" />
-                                <Route component={ Home } path="/" />
-                            </Switch>
-                        </Router>
-                    </div>
-                </div>
+                <Router>
+                    <Switch>
+                        <Route component={ ArtistPage } path="/artists/:artistName" />
+                        <Route exact path="/myroster" component={ MyRoster } />
+                        {/* <Route exact path="/calendar" component={ MyCalendar } /> */}
+                        <Route component={ Home } path="/" />
+                    </Switch>
+                </Router>
             )
         }
     }
 
-    return renderApp();
+    return (
+        <div className='app'>
+            <MainHeader />
+            <div className='main-app'>
+                { renderApp() }
+            </div>
+        </div>
+    );
 }
 
 export default App;

@@ -7,8 +7,7 @@
     border: 1px solid $backgroundDarkGrey;
     align-items: center;
     border-radius: 6px;
-    padding: .5rem;
-    background-color: white;
+    background-color: $lightBaseColor;
 
     .bbs-icon {
         margin-right: 1rem;
@@ -20,5 +19,6 @@
         font-size: 1.25rem;
         padding: 1rem;
         width: 24rem;
+        color: white;
     }
 }

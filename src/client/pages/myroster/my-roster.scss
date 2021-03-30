@@ -1,0 +1,76 @@
+@import '../../assets/sass/colors.scss';
+
+.my-roster-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.roster-filters {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: 30%;
+    height: 100%;
+}
+
+.roster-content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    width: 70%;
+
+    .roster-head {
+        padding: 1rem;
+        margin-bottom: 2rem;
+    }
+}
+
+.roster-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.artist-card {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+
+    img {
+        margin-bottom: 1rem;
+    }
+
+    &.New {
+        border-top: 4px solid $highlightNew;
+    }
+    &.Approached {
+        border-top: 4px solid $highlightApproached;
+    }
+    &.Negotiating {
+        border-top: 4px solid $highlightNegotiating;
+    }
+    &.Signed {
+        border-top: 4px solid $highlightSigned;
+    }
+}
+
+.artist-card-content {
+    display: flex;
+    flex-direction: column;
+
+    .artist-name {
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .artist-card-extras {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}

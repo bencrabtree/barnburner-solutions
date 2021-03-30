@@ -1,4 +1,4 @@
-import { LeadStatus } from "./types";
+import { ArtistStatus } from "./types";
 
 export const getLabel = {
     full_name: 'Full Name',
@@ -33,8 +33,8 @@ export const getSocial = [
 ];
 
 export const clientStatus = [
-    { id: 'thinking', label: LeadStatus.Thinking },
-    { id: 'approached', label: LeadStatus.Approached },
-    { id: 'contract-sent', label: LeadStatus.ContractSent },
-    { id: 'signed', label: LeadStatus.Signed }
+    { id: ArtistStatus.New, label: ArtistStatus.New },
+    { id: ArtistStatus.Approached, label: ArtistStatus.Approached },
+    { id: ArtistStatus.Negotiating, label: ArtistStatus.Negotiating },
+    { id: ArtistStatus.Signed, label: ArtistStatus.Signed }
 ]

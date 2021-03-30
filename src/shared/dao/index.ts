@@ -1,17 +1,19 @@
 import { User } from './User';
-import { Client } from './Client';
-import { Photo } from './Photo';
-import { Lead } from './Lead';
-import { Notes } from './Notes';
+import { Artist } from './Artist';
 import { Tag } from './Tag';
 import { File } from './File';
+import { Contact } from './Contact';
+import { Feed } from './Feed';
+import { ArtistContact } from './ArtistContact';
+import { UserArtist } from './UserArtist';
 
 export {
     User,
-    Client,
-    Photo,
-    Lead,
-    Notes,
+    Artist,
     Tag,
-    File
+    File,
+    Contact,
+    Feed,
+    ArtistContact,
+    UserArtist
 }
