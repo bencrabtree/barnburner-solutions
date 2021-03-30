@@ -6,9 +6,9 @@ const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 import auth from './auth';
 import cors from 'cors';
-import ArtistController from '../controllers/ArtistController';
-import TagController from '../controllers/TagController';
-import UserController from '../controllers/UserController';
+import ArtistController from '../controllers/artist.controller';
+import TagController from '../controllers/tag.controller';
+import UserController from '../controllers/user.controller';
 
 export default (app, passport, settings) => {
     const router = Router();

@@ -18,7 +18,7 @@ const MainHeader = ({ }) => {
     const [ userMenuRef, setUserMenuRef ] = useState();
     const [ searchAddArtist, setSearchAddArtist ] = useState();
     const [ newLeadModalIsOpen, setNewLeadModalIsOpen ] = useState(false);
-    const [ selectedTab, setSelectedTab ] = useState('myroster')
+    const [ selectedTab, setSelectedTab ] = useState('')
 
     const navigateBackHome = () => {
         if (history.location.pathname != "/home") {

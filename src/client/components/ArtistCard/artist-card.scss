@@ -1,0 +1,47 @@
+@import '../../assets/sass/colors.scss';
+
+.artist-card {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 1rem;
+    min-height: 23rem;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0px 8px 16px 3px rgba(0,0,0,.25);
+
+        // .artist-name {
+        //     text-decoration: underline;
+        // }
+    }
+
+    img {
+        margin-bottom: 1rem;
+    }
+
+    &.New {
+        border-top: 4px solid $highlightNew;
+    }
+    &.Approached {
+        border-top: 4px solid $highlightApproached;
+    }
+    &.Negotiating {
+        border-top: 4px solid $highlightNegotiating;
+    }
+    &.Signed {
+        border-top: 4px solid $highlightSigned;
+    }
+}
+
+.artist-card-content {
+    display: flex;
+    flex-direction: column;
+
+    .artist-card-extras {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}
