@@ -11,7 +11,7 @@ import ProtectedRoute from './util/ProtectedRoute';
 import { isLoggedIn } from './util/auth';
 
 const App = ({}) => {
-    const { loading, sideMenuOpen } = useAppState();
+    const { loading, sideMenuOpen, toggleSideMenu } = useAppState();
     const [ newLeadModalIsOpen, setNewLeadModalIsOpen ] = useState(false);
 
     const renderApp = () => {

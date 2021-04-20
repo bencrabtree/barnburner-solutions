@@ -85,7 +85,7 @@ const SearchBar = ({ placeholder, onSubmit, onAddNewLead }) => {
 
     return (
         <div className='search-bar'>
-            <BBSIcon type='search-icon' />
+            <i className="fas fa-search" />
             <Autocomplete
                 freeSolo
                 value={value}

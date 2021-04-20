@@ -43,7 +43,18 @@ const ArtistInfoForm = forwardRef(({
             return (
                 <BBSInput key={key}
                     id={ elt }
-                    label={ getLabel[elt] }
+                    label={
+                        <span>
+                            <i className={
+                                `fab fa-${
+                                    elt === 'website' ? 'desktop fas' :
+                                    elt === 'snapchat' ? elt + '-ghost' : 
+                                    elt === 'apple_music' ? 'apple' : elt}
+                                `}
+                            />
+                            {getLabel[elt]}
+                        </span>
+                    }
                     value={ artist[elt] }
                     onChange={ handleInputChange }
                     isDisabled={ disabled }

@@ -8,6 +8,44 @@
     label {
         font-size: 1rem;
         margin-bottom: .5rem;
+        display: flex;
+        align-items: center;
+
+        i {
+            font-size: 1rem;
+            margin-right: .5rem;
+
+            &.fa-desktop {
+                color: $baseColor;
+            }
+            &.fa-spotify {
+                color: #1DB954
+            }
+            &.fa-instagram {
+                color: #833AB4;
+            }
+            &.fa-facebook {
+                color: #3b5998;
+            }
+            &.fa-soundcloud {
+                color: #ff7700;
+            }
+            &.fa-tiktok {
+                color: #010101;
+            }
+            &.fa-youtube {
+                color: #FF0000;
+            }
+            &.fa-snapchat-ghost {
+                color: #FFFC00;
+            }
+            &.fa-twitter {
+                color: #1DA1F2;
+            }
+            &.fa-apple {
+                color: #fc3c44;
+            }
+        }
     }
 
     input {

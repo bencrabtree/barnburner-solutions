@@ -38,7 +38,7 @@
         margin-bottom: 8rem;
 
         & > div {
-            padding: 1rem;
+            padding: 0rem 1rem;
             cursor: pointer;
             display: flex;
             flex-direction: row;
@@ -60,9 +60,12 @@
 }
 
 .continue-with-google {
-    background-color: $backgroundLightGrey;
-    color: $notFullyBlack;
+    background: white;
+    color: #444;
+    border: thin solid #888;
+    box-shadow: 1px 1px 1px grey;
+
     &:hover {
-        background-color: darken($backgroundLightGrey, 5%);
+        background-color: darken(white, 5%);
     }
 }

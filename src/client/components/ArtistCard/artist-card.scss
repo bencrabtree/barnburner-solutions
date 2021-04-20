@@ -50,6 +50,8 @@
 .artist-card-content {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
 
     h1 {
         font-size: 1.5rem;

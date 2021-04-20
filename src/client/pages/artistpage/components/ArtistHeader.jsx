@@ -116,9 +116,9 @@ const ArtistHeader = ({
             { id: 'relationship', label: "My Relationship", value: relationship, nullValue: 'N/A' }            
         ];
 
-        return stats.map((elt) => {
+        return stats.map((elt, key) => {
             return (
-                <div className='artist-stat' id={ elt.id }>
+                <div className='artist-stat' id={ elt.id } key={key}>
                     <h4 className='artist-stat-label'>{ elt.label }</h4>
                     <h3 className='artist-stat-value'>{ elt.value || elt.nullValue }</h3>
                 </div>
@@ -158,7 +158,7 @@ const ArtistHeader = ({
                         />
                         <BBSButton
                             label="Public View"
-                            type="tertiary"
+                            type="secondary"
                             onClick={ () => {} }
                         />
                 </div>

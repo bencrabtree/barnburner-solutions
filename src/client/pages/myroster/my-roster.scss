@@ -71,6 +71,11 @@
     border-radius: 50px;
     z-index: 1;
 
+    i {
+        font-size: .875rem;
+        margin-right: .5rem;
+    }
+
     &:hover {
         background-color: $borderGrey;
     }

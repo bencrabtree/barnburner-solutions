@@ -4,6 +4,7 @@ import './my-roster.scss';
 import { ArtistStatus, Tags, UserArtistRelation } from '../../../shared/util/types';
 import ArtistCard from '../../components/ArtistCard/ArtistCard';
 import BBSButton from '../../components/common/BBSButton/BBSButton';
+import { update } from 'lodash';
 
 const MyRoster = ({
 
@@ -39,6 +40,7 @@ const MyRoster = ({
         let temp = filters;
         temp.tags = temp.tags.filter(x => x != tag);
         setFilters(temp);
+        updateArtists('tags');
     }
 
     const handleUserScroll = () => {
@@ -97,11 +99,11 @@ const MyRoster = ({
                 }
                 break;
         }
+        tempartists.sort((a,b) => a.full_name < b.full_name);
         setArtists(tempartists)
     }
 
     const renderTagSystem = () => {
-        console.log(filters)
         return filters.tags.map((tag, key) => {
                 return (
                     <div className='pill withRemove' key={key}>
@@ -139,7 +141,7 @@ const MyRoster = ({
                                 { visibleTags.map((tag, key) => {
                                     return (
                                         <>
-                                            <input type="checkbox" id={tag} name="tags" value={tag} onChange={handleInputChange} key={key} />
+                                            <input type="checkbox" id={tag} checked={!!filters.tags.includes(tag)} name="tags" value={tag} onChange={handleInputChange} key={key} />
                                             <label for={tag}>{tag}</label><br/>
                                         </>
                                     )
@@ -164,7 +166,8 @@ const MyRoster = ({
                 <div className="roster-content">
                     { scrollTopButtonIsVisible && 
                         <div className='scroll-to-top' onClick={handleScrollToTop}>
-                            Scroll To Top   
+                            <i class="fas fa-long-arrow-alt-up"></i>
+                            Scroll to top   
                         </div>
                     }
                     <div className="roster-head card-rounded">

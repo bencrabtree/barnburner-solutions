@@ -41,7 +41,7 @@ const SideMenu = ({
     return (
         <div className={`side-menu ${sideMenuOpen ? 'visible' : 'notVisible'}`}>
             <BBSButton
-                label="Add New Lead"
+                label="Add a new lead"
                 type="tertiary"
                 onClick={() => setNewLeadModalIsOpen(true) }
             />
