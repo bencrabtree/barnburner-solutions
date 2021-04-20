@@ -36,7 +36,7 @@ export class Artist extends BaseEntity {
     @Column({ nullable: false, type: "enum", enum: ArtistStatus, default: ArtistStatus.New })
     status: string;
 
-    @ManyToOne(type => File, file => file.artist)
+    @ManyToOne(type => File, file => file.artist, { onDelete: 'CASCADE' })
     photo: File;
 
     @Column({ nullable: true, type: "character varying" })

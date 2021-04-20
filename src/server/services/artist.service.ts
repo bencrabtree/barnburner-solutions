@@ -2,6 +2,7 @@ import { File, Artist, UserArtist, User } from "../../shared/dao";
 import { getConnection, getRepository } from "typeorm";
 import { UserArtistRelation } from "../../shared/util/types";
 import { userService } from "./user.service";
+import { fileService } from "./file.service";
 
 class ArtistService {
     constructor() {}
@@ -11,7 +12,7 @@ class ArtistService {
         try {
             let roster = await getRepository(Artist)
             .find({ relations: ['photo', 'files'] });
-            return roster;
+            return roster.sort((a, b) => a.full_name < b.full_name ? -1 : 1);
         } catch (error) {
             console.log("[ArtistService] GetAll:", error);
             return null;
@@ -76,6 +77,30 @@ class ArtistService {
             return artist;
         } catch (error) {
             console.log("[ArtistService] AddArtist:", error);
+            return null;
+        }
+    }
+
+    //
+    uploadPhoto = async (artistId: string, photo_uri: object[]): Promise<Artist> => {
+        try {
+            let artist: Artist = await this.getArtistById(artistId);
+            try {
+                await fileService.deletePhoto(artist.photo.id, artist.full_name);
+                // console.log('successfully removed photo')
+            } catch (err) {
+                console.log('Could not remove photo from', artist.full_name)
+            }
+
+            let photo = new File();
+            await photo.upload(photo_uri[0], artist.full_name);
+            // console.log('successfully uploaded photo', photo)
+            artist.photo = photo;
+            await artist.save();
+            // console.log('successfully updated photo', artist)
+            return artist;
+        } catch (error) {
+            console.log('[ArtistService] UploadPhoto:', error);
             return null;
         }
     }

@@ -1,7 +1,6 @@
-import { Client } from '../../shared/dto';
 import { http } from '../util/api';
 
-const getArtist = async (artistName): Promise<Client> => {
+const getArtist = async (artistName) => {
     try {
         const { data, status } = await http.get('/roster/' + artistName);
         if (status === 200) {
@@ -16,6 +15,25 @@ const getArtist = async (artistName): Promise<Client> => {
     }
 }
 
+const uploadPhoto = async (artistId, photoUri) => {
+    try {
+        let formData = new FormData();
+        formData.append('photo_uri', photoUri[0], photoUri[0].name);
+        console.log(formData)
+        const { data, status } = await http.put(`/roster/uploadPhoto/${artistId}`, formData);
+        if (status === 200) {
+            console.log('UploadPhoto: Success:', status);
+            return data;
+        } else {
+            console.log('UploadPhoto: BadResponse:', status);
+        }
+    } catch (error) {
+        console.log('UploadPhoto:', error);
+        return null;
+    }
+}
+
 export {
-    getArtist
+    getArtist,
+    uploadPhoto
 };

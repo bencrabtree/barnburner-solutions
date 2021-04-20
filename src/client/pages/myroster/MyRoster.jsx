@@ -9,16 +9,16 @@ import { update } from 'lodash';
 const MyRoster = ({
 
 }) => {
-    const { artistRelationships } = useAppState();
+    const { artistRelationships, fullRoster, getArtistRelationship } = useAppState();
     const [ scrollTopButtonIsVisible, setScrollTopButtonIsVisible ] = useState(false);
     const [ filters, setFilters ] = useState({
-        relationship: [UserArtistRelation.Favorited, UserArtistRelation.Owner],
+        relationship: [UserArtistRelation.Favorited, UserArtistRelation.Owner, UserArtistRelation.None],
         tags: [],
         status: [ArtistStatus.Signed, ArtistStatus.Negotiating, ArtistStatus.Approached, ArtistStatus.New]
     });
     const [ searchValue, setSearchValue ] = useState("");
     const [ visibleTags, setVisibleTags ] = useState(Tags);
-    const [ artists, setArtists ] = useState(artistRelationships);
+    const [ artists, setArtists ] = useState(fullRoster);
 
     useEffect(() => {
         document.addEventListener("scroll", handleUserScroll);
@@ -31,7 +31,7 @@ const MyRoster = ({
     const generateArtistCards = () => {
         return artists.map((artist, key) => {
             return (
-                <ArtistCard key={key} artist={artist} />
+                <ArtistCard key={key} artist={artist} photo_path={artist?.photo?.file_path} />
             )
         })
     }
@@ -84,10 +84,12 @@ const MyRoster = ({
     }
 
     const updateArtists = (eventName) => {
-        let tempartists = artistRelationships;
+        let tempartists = fullRoster;
         switch (eventName) {
             case 'relationship':
-                tempartists = tempartists.filter(x => filters.relationship.includes(x.relation));
+                if (filters.relationship.length > 0) {
+                    tempartists = tempartists.filter(artist => filters.relationship.includes(getArtistRelationship(artist.id) || UserArtistRelation.None));
+                }
                 break;
             case 'status':
                 tempartists = tempartists.filter(x => filters.status.includes(x.status));
@@ -129,10 +131,14 @@ const MyRoster = ({
                     <form >
                         <fieldset>
                             <legend>My Relationship:</legend>
-                            <input type="checkbox" checked={!!filters.relationship.includes('owner')} id="owner" name="relationship" value="owner" onChange={handleInputChange}></input>
-                            <label for="owner">Owner</label><br/>
-                            <input type="checkbox" checked={!!filters.relationship.includes('favorited')} id="favorited" name="relationship" value="favorited" onChange={handleInputChange}></input>
-                            <label for="favorited">Favorited</label>
+                            { Object.values(UserArtistRelation).map((relation, key) => {
+                                return (
+                                    <>
+                                        <input type="checkbox" checked={!!filters.relationship.includes(relation)} id={relation} name="relationship" value={relation} onChange={handleInputChange} key={key}></input>
+                                        <label htmlFor={relation}>{ relation }</label><br/>
+                                    </>
+                                )
+                            })}
                         </fieldset>
                         <fieldset>
                             <legend>Tags:</legend>
@@ -142,7 +148,7 @@ const MyRoster = ({
                                     return (
                                         <>
                                             <input type="checkbox" id={tag} checked={!!filters.tags.includes(tag)} name="tags" value={tag} onChange={handleInputChange} key={key} />
-                                            <label for={tag}>{tag}</label><br/>
+                                            <label htmlFor={tag}>{tag}</label><br/>
                                         </>
                                     )
                                 })}
@@ -155,7 +161,7 @@ const MyRoster = ({
                                     return (
                                         <>
                                             <input type="checkbox" checked={!!filters.status.includes(status)} id={status} name="status" value={status} onChange={handleInputChange} key={key} />
-                                            <label for={status}>{status}</label><br/>
+                                            <label htmlFor={status}>{status}</label><br/>
                                         </>
                                     )
                                 })}
@@ -166,12 +172,12 @@ const MyRoster = ({
                 <div className="roster-content">
                     { scrollTopButtonIsVisible && 
                         <div className='scroll-to-top' onClick={handleScrollToTop}>
-                            <i class="fas fa-long-arrow-alt-up"></i>
+                            <i className="fas fa-long-arrow-alt-up"></i>
                             Scroll to top   
                         </div>
                     }
                     <div className="roster-head card-rounded">
-                        <h1>Roster</h1>
+                        <h1>Roster <small>({ artists.length })</small></h1>
                         <div className='pill-container'>
                             { renderTagSystem() }
                         </div>

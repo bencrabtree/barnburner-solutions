@@ -50,6 +50,10 @@ const useAppState = () => {
         setState(state => ({ ...state, artistRelationships: data }))
     }
 
+    const getArtistRelationship = artistId => {
+        return state.artistRelationships.find(artist => artist.id === artistId)?.relation;
+    }
+
     const getArtistById = id => {
         return state.fullRoster.find(artist => artist.id === id);
     }
@@ -75,6 +79,7 @@ const useAppState = () => {
         setArtistRelationships,
         addNewClient,
         getArtistById,
+        getArtistRelationship,
         getRosterValues,
         //
         selectedArtist: state.selectedArtist,

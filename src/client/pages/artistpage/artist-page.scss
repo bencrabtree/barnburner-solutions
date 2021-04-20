@@ -165,6 +165,14 @@
     }
 }
 
+.form-column {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 40%;
+    padding: 1rem;
+}
+
 .artist-status-pill {
     padding: .125rem .5rem;
 

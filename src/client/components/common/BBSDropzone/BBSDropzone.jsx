@@ -9,7 +9,8 @@ const BBSDropzone = ({
     label,
     message,
     maxFileCount,
-    onChange
+    onChange,
+    onError
 }) => {
     const [ acceptedFiles, setAcceptedFiles ] = useState([]);
 
@@ -27,6 +28,10 @@ const BBSDropzone = ({
             console.log(tempFiles)
         });
     };
+
+    const onDropRejected = async () => {
+        onError("Maximum file upload size is 5mb")
+    }
 
     const generateAcceptedFiles = () => {
         return acceptedFiles.map((file, key) => {
@@ -51,7 +56,7 @@ const BBSDropzone = ({
         setAcceptedFiles(tempFiles);
     }
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, maxFiles: maxFileCount, maxSize: 2097152 * 2.5, onDropRejected });
 
     return (
         <div className='bbs-dropzone'>

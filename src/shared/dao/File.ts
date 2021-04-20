@@ -7,10 +7,13 @@ import { FileTypes } from "../util/types";
 export class File extends BaseEntity {
 
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
     @Column("character varying")
     file_path: string;
+
+    @Column("character varying", { nullable: true })
+    name: string;
 
     @Column({ type: "enum", enum: FileTypes, nullable: false })
     type: FileTypes;
@@ -18,12 +21,13 @@ export class File extends BaseEntity {
     @UpdateDateColumn({ type: "timestamp without time zone"})
     upload_date;
 
-    @ManyToOne(type => Artist, artist => (artist.files || artist.photo))
+    @ManyToOne(type => Artist, artist => artist.photo)
     artist: Artist;
 
     async upload(file: any, artistName?: string) {
         this.type = file.mimetype;
         this.file_path = await fileService.uploadPhoto(file, this.artist?.full_name || artistName);
+        this.name = encodeURIComponent(this.artist?.full_name || artistName) + '/' + file.originalname;
         this.save();
     }
 

@@ -46,11 +46,11 @@ const NewLeadModal = ({
      */
     const handleSubmit = () => {
         if (!validateTab(0)) {
-            setErrorMessage('Artist name and photo are required.')
+            handleError('Artist name and photo are required.')
         } else if (!validateTab(1)) {
-            setErrorMessage('At least one social is required.')
+            handleError('At least one social is required.')
         } else if (!validateTab(2)) {
-            setErrorMessage('At least one artist tag is required.')
+            handleError('At least one artist tag is required.')
         } else {
             onSubmit(newLead);
             onClose();
@@ -69,13 +69,13 @@ const NewLeadModal = ({
      */
     const handleInputChange = (id, value) => {
         let tempModel = cloneDeep(newLead);
-        if (id === 'photo_uri') {
-            console.log('photo val', value)
-        }
         tempModel[id] = value;
-        console.log(id, value)
-        if (validateTab(currentTab)) setErrorMessage();
+        if (validateTab(currentTab)) handleError();
         setNewLead(tempModel);
+    }
+
+    const handleError = message => {
+        setErrorMessage(message);
     }
 
     //
@@ -195,6 +195,7 @@ const NewLeadModal = ({
                                 message="Drag or Select Artist Photo"
                                 maxFileCount={1}
                                 onChange={ handleInputChange }
+                                onError={ handleError }
                             />
                         </div>
                     );

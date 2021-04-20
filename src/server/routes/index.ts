@@ -37,6 +37,7 @@ export default (app, passport, settings) => {
     router.get('/roster/new-lead-model', passport.authenticate('jwt', { session: false }), ArtistController.getNewLeadModel);
     router.post('/roster/favorite', ArtistController.favoriteArtist);
     router.post('/roster/unfavorite', ArtistController.unfavoriteArtist);
+    router.put('/roster/uploadPhoto/:artistId', upload.fields([{ name: 'photo_uri', maxCount: 1 }]), ArtistController.uploadPhoto);
     router.get('/roster/relationships/:artistName', ArtistController.getRelationships)
     router.get('/roster/:artistName', ArtistController.getByName);
     router.put('/roster/:artistId', ArtistController.updateArtist); // authenticate me

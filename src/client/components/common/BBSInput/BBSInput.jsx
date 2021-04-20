@@ -70,7 +70,7 @@ const BBSInput = ({
 
 BBSInput.propTypes = {
     id: PropTypes.string.isRequired,
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     type: PropTypes.oneOf(['text', 'textarea']),
     onChange: PropTypes.func.isRequired,

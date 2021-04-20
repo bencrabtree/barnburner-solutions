@@ -93,6 +93,16 @@ const getRelationships = async (req: Request, res: Response) => {
     } 
 }
 
+const uploadPhoto = async (req: Request, res: Response) => {
+    try {
+        let artist = await artistService.uploadPhoto(req.params.artistId, req.files.photo_uri);
+        res.status(200).send(artist);
+    } catch (error) {
+        console.log('ArtistController: uploadPhoto:', error);
+        res.status(400).send(`Unable to upload photo for ${req.params.artistId}`)
+    } 
+}
+
 export default {
     getFullRoster,
     addArtist,
@@ -102,5 +112,6 @@ export default {
     favoriteArtist,
     unfavoriteArtist,
     getRelationships,
-    getNewLeadModel
+    getNewLeadModel,
+    uploadPhoto
 }

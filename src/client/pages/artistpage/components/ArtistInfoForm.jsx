@@ -103,7 +103,10 @@ const ArtistInfoForm = forwardRef(({
 });
 
 ArtistInfoForm.propTypes = {
-    artistName: PropTypes.string.isRequired
+    info: PropTypes.shape({
+        data: PropTypes.object,
+        loading: PropTypes.bool
+    })
 }
 
 export default ArtistInfoForm;

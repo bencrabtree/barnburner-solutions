@@ -30,10 +30,10 @@ const AppContextProvider = ({ children }) => {
                 
                 setState({
                     userProfile: user,
-                    fullRoster: roster.sort((a,b) => a.full_name < b.full_name),
+                    fullRoster: roster,
                     allUsers: allUsers,
                     selectedArtist: null,
-                    artistRelationships: relationship.sort((a,b) => a.full_name < b.full_name),
+                    artistRelationships: relationship,
                     loading: false,
                     sideMenuOpen: true
                 })

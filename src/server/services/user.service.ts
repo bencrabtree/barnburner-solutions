@@ -118,7 +118,7 @@ class UserService {
             .leftJoinAndSelect('artist.photo', 'photo')
             .where("ua.u_id = :userId", { userId })
             .andWhere("artist.id = ua.a_id")
-            .select("artist.id as artist_id, ua.relation, artist.full_name, artist.status, artist.tags, artist.updated_on, photo.file_path as artist_photo")
+            .select("artist.id as id, ua.relation, artist.full_name, artist.status, artist.tags, artist.updated_on, photo.file_path as artist_photo")
             .execute();
         return artists;
     }

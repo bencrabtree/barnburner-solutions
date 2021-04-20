@@ -3,6 +3,8 @@ import {
     S3ClientConfig,
     PutObjectCommandInput
 } from "@aws-sdk/client-s3";
+import { getConnection } from "typeorm";
+import { File } from '../../shared/dao/';
 
 class FileService {
     s3: S3;
@@ -80,6 +82,28 @@ class FileService {
         } catch (error) {
             console.log('[FileService] uploadPhoto:', error)
         }
+    }
+
+    async deletePhoto(id: string, artistName: string) {
+        try {
+            let file: File = await getConnection()
+                .getRepository(File)
+                .createQueryBuilder('file')
+                .where({ id })
+                .execute();
+
+            let params = {
+                Bucket: this.bucketName,
+                Key: encodeURIComponent(artistName) + '/' + file.name
+            };
+
+            this.s3.deleteObject(params);
+            return true;
+        } catch (error) {
+            console.log('[FileService] Delete:', error);
+            return null;
+        }
+
     }
 
     uploadFile(buff: Buffer) {

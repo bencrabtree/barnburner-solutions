@@ -9,8 +9,9 @@ import HeartIcon from '../HeartIcon/HeartIcon';
 
 const ArtistCard = ({
     artist,
+    photo_path
 }) => {
-    const { useProfile, artistRelationships } = useAppState();
+    const { getArtistRelationship } = useAppState();
     const [ data, setData ] = useState(artist);
     const history = useHistory();
 
@@ -26,11 +27,11 @@ const ArtistCard = ({
     return (
         <div className={`artist-card card ${data.status}`} onClick={handleArtistSelection}>
             <div className='artist-photo-wrap'>
-                <img src={ getArtistImageSrc(data.artist_photo) } />
+                <img src={ getArtistImageSrc(photo_path) } />
             </div>
             <div className="artist-card-content">
                 <div className="artist-card-extras">
-                    { data.relation === UserArtistRelation.Favorited ?
+                    { getArtistRelationship(artist.id) === UserArtistRelation.Favorited ?
                         <HeartIcon isLiked={true} /> :
                         <h2 className="normal-weight capitalize">{ data.relation }</h2>
                     }

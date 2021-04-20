@@ -7,6 +7,9 @@ import BBSPills from '../../../components/common/BBSPills/BBSPills';
 import { clientStatus } from '../../../../shared/util/constants';
 import { Tags } from '../../../../shared/util/types';
 import { http } from '../../../util/api';
+import { getArtistImageSrc } from '../../../util/constants';
+import { artistService } from '../../../services/';
+import BBSDropzone from '../../../components/common/BBSDropzone/BBSDropzone';
 
 const EditArtistModal = ({
     artist,
@@ -14,6 +17,7 @@ const EditArtistModal = ({
     onClose
 }) => {
     const [ formValues, setFormValues ] = useState(artist);
+    const [ errorMessage, setErrorMessage ] = useState();
 
     useEffect(() => {
         setFormValues(artist)
@@ -21,6 +25,15 @@ const EditArtistModal = ({
 
     const handleClose = () => {
         onClose();
+    }
+
+    const handlePhotoSelection = async (id, value) => {
+        setErrorMessage();
+        await artistService.uploadPhoto(artist.id, value);
+    }
+
+    const handlePhotoError = (message) => {
+        setErrorMessage(message);
     }
 
     const handleSubmit = async () => {
@@ -43,11 +56,9 @@ const EditArtistModal = ({
     }
 
     const handleChange = (id, value) => {
-        console.log(id, value)
         let tempValues = formValues;
         tempValues[id] = value;
         setFormValues(tempValues);
-        console.log(tempValues)
     }
 
     const renderArtistContent = () => {
@@ -57,22 +68,36 @@ const EditArtistModal = ({
                 <div className='form'>
                     <h2>Artist Info</h2>
                     <div className='form-content'>
-                        <BBSInput
-                            id="full_name"
-                            value={formValues.full_name}
-                            label="Artist Name"
-                            onChange={ handleChange }
-                        />
-                        <div className="bbs-select">
-                            <label for="status">Change Status:</label>
-                            <select id="status" value={formValues.status} onChange={(e) => handleChange(e.target.id, e.target.value)}>
-                                { clientStatus.map((status, key) => {
-                                    return (
-                                        <option key={key} id={status.id} value={ status.id }>{ status.label }</option>
-                                    )
-                                })}
-                            </select>
+                        <div className='form-column'>
+                            <img src={ getArtistImageSrc(formValues.photo?.file_path) } />
+                            <BBSDropzone
+                                id="file_path"
+                                message="Select a new photo"
+                                maxFileCount={1}
+                                onChange={ handlePhotoSelection }
+                                onError={ handlePhotoError }
+                            />
+                            <p>Max file size is 5mb</p>
                         </div>
+                        <div className='form-column'>
+                            <BBSInput
+                                id="full_name"
+                                value={formValues.full_name}
+                                label="Artist Name"
+                                onChange={ handleChange }
+                            />
+                            <div className="bbs-select">
+                                <label for="status">Change Status:</label>
+                                <select id="status" value={formValues.status} onChange={(e) => handleChange(e.target.id, e.target.value)}>
+                                    { clientStatus.map((status, key) => {
+                                        return (
+                                            <option key={key} id={status.id} value={ status.id }>{ status.label }</option>
+                                        )
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 <div className='form'>
@@ -114,6 +139,7 @@ const EditArtistModal = ({
                 content={renderArtistContent()}
                 footerElts={renderFooter()}
                 disableBackdropClick={true}
+                errorMessage={errorMessage}
             />
         </div>
     )
