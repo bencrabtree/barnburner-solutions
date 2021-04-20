@@ -3,10 +3,11 @@ import { getArtistImageSrc, toReadableDate } from '../../../util/constants';
 import ProgressStepper from '../../../components/common/ProgressStepper/ProgressStepper';
 import BBSButton from '../../../components/common/BBSButton/BBSButton';
 import { clientStatus } from '../../../../shared/util/constants';
-import BBSIcon from '../../../components/common/BBSIcon/BBSIcon';
+import HeartIcon from '../../../components/HeartIcon/HeartIcon';
 import { useAppState } from '../../../store';
 import { http } from '../../../util/api';
 import { UserArtistRelation } from '../../../../shared/util/types';
+import EditArtistModal from './EditArtistModal';
 
 const ArtistHeader = ({
     artist,
@@ -14,6 +15,7 @@ const ArtistHeader = ({
     relationship
 }) => {
     const { userProfile, artistRelationships, setArtistRelationships } = useAppState();
+    const [ editArtistModal, setEditArtistModal ] = useState(false);
 
     const handleInfoSelect = () => {
         alert(`Selected ${artist.full_name}`)
@@ -25,6 +27,10 @@ const ArtistHeader = ({
         } else {
             alert('You do not have permissions to update the status of this lead. Please contact an account owner or system administrator.')
         }
+    }
+
+    const openEditArtistModal = () => {
+        setEditArtistModal(true);
     }
 
     const updateStep = async (step) => {
@@ -46,23 +52,6 @@ const ArtistHeader = ({
 
     const onFollowToggle = async () => {
         switch (relationship) {
-            case UserArtistRelation.None:
-                try {
-                    const { data, status } = await http.post('/roster/favorite', {
-                        userId: userProfile.id,
-                        artistId: artist.id
-                    });
-        
-                    if (data && status === 200) {
-                        setArtistRelationships(data);
-                        console.log('Favorited: Success:', status)
-                    } else {
-                        console.log('Favorited: BadResponse:', status)
-                    }
-                } catch (error) {
-                    console.log('Favorited:', error)
-                }
-                break;
             case UserArtistRelation.Favorited:
                 try {
                     const { data, status } = await http.post('/roster/unfavorite', {
@@ -71,6 +60,7 @@ const ArtistHeader = ({
                     });
         
                     if (data && status === 200) {
+                        console.log(data)
                         setArtistRelationships(data);
                         console.log('unfavorite: Success:', status)
                     } else {
@@ -80,9 +70,29 @@ const ArtistHeader = ({
                     console.log('unfavorite:', error)
                 }
                 break;
+
             case UserArtistRelation.Owner:
-            default:
                 alert('You are the account owner of this artist. You cannot unfollow')
+                break;
+
+            case UserArtistRelation.None:
+            default:
+                try {
+                    const { data, status } = await http.post('/roster/favorite', {
+                        userId: userProfile.id,
+                        artistId: artist.id
+                    });
+        
+                    if (data && status === 200) {
+                        console.log(data)
+                        setArtistRelationships(data);
+                        console.log('Favorited: Success:', status)
+                    } else {
+                        console.log('Favorited: BadResponse:', status)
+                    }
+                } catch (error) {
+                    console.log('Favorited:', error)
+                }
                 break;
         }
     }
@@ -90,23 +100,13 @@ const ArtistHeader = ({
     const generateFollowBtn = () => {
         // make this filled in/empty heart ( or something else idk )
         // if owner, don't let them unfollow (x when hovering with title explaining)
-        if (artistRelationships.find(x => x.id = artist.id)) {
-            return (
-                <BBSButton
-                    label="Unfollow -"
-                    type="secondary"
-                    onClick={ onFollowToggle }
-                />
-            );
-        } else {
-            return (
-                <BBSButton
-                    label="Follow +"
-                    type="secondary"
-                    onClick={ onFollowToggle }
-                />
-            );
-        }
+        return (
+            <HeartIcon
+                disabled={relationship === UserArtistRelation.Owner}
+                isLiked={relationship != UserArtistRelation.None}
+                onClick={ onFollowToggle }
+            />
+        );
     }
 
     const renderArtistStats = () => {
@@ -142,12 +142,6 @@ const ArtistHeader = ({
                         </div>
                         <span>
                             <h1>{ artist.full_name }</h1>
-                            {/* <BBSIcon
-                                type='info'
-                                style='round'
-                                onClick={ handleInfoSelect }
-                                title="More info"
-                            /> */}
                         </span>
                     </div>
                 </div>
@@ -160,7 +154,7 @@ const ArtistHeader = ({
                         <BBSButton
                             label="Edit"
                             type="primary"
-                            onClick={ () => {} }
+                            onClick={ openEditArtistModal }
                         />
                         <BBSButton
                             label="Public View"
@@ -169,6 +163,11 @@ const ArtistHeader = ({
                         />
                 </div>
             </div>
+            { editArtistModal && <EditArtistModal
+                isOpen={ editArtistModal }
+                onClose={ () => setEditArtistModal(false) }
+                artist={artist}
+            /> }
         </div>
     )
 }

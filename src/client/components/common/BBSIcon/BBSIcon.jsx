@@ -2,10 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './bbs-icon.scss';
 
-const BBSIcon = ({ type, style, onClick, title }) => {
+const BBSIcon = ({
+    type,
+    style,
+    onClick,
+    title,
+    disabled
+}) => {
 
     return (
-        <div className={`bbs-icon ${style}`} onClick={ onClick } title={title}>
+        <div className={`bbs-icon ${style} ${onClick ? disabled ? "disabled" : 'clickable' : ""}`} onClick={ onClick } title={title}>
             <div className={ type } />
         </div>
     )
@@ -23,7 +29,13 @@ BBSIcon.propTypes = {
         'under-construction',
         'info',
         'save',
-        'edit'
+        'edit',
+        "new-lead",
+        "my-roster",
+        "my-calendar",
+        "hamburger",
+        "heart-filled",
+        "heart-empty"
     ]).isRequired,
     style: PropTypes.oneOf([
         "round",

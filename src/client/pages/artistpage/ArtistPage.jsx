@@ -30,7 +30,7 @@ const ArtistPage = ({
 }) => {
     const artistInfoRef = useRef();
     const { fullRoster, userProfile, artistRelationships, setArtistRelationships } = useAppState();
-    const [ selectedArtist, setSelectedArtist ] = useState();
+    const [ selectedArtist, setSelectedArtist ] = useState({});
     const [ selectedTab, setSelectedTab ] = useState('account');
     const [ isEditing, setIsEditing ] = useState(false);
     //
@@ -38,11 +38,7 @@ const ArtistPage = ({
     //
     const [ teamsTabInfo, setTeamsTabInfo ] = useState({ data: [], loading: true });
     const [ artistFormInfo, setArtistFormInfo ] = useState({ data: [], loading: true });
-    // const [ teamsTabInfo, setTeamsTabInfo ] = useState({ data: [], loading: true });
 
-    useEffect(() => {
-        setRelationship(artistRelationships.find(x => x.id = selectedArtist?.id)?.relation || UserArtistRelation.None)
-    }, [ artistRelationships, selectedArtist ])
 
     useEffect(() => {
         changeSelectedArtist();
@@ -53,6 +49,10 @@ const ArtistPage = ({
         fillArtistInfo();
         getArtistRelationships();
     }
+
+    useEffect(() => {
+        setRelationship(artistRelationships.find(x => x.full_name === selectedArtist?.full_name)?.relation);
+    }, [ artistRelationships ]);
 
     const fillArtistInfo = async () => {
         try {
@@ -73,6 +73,7 @@ const ArtistPage = ({
         try {
             const { data, status } = await http.get(`/roster/relationships/${match.params.artistName}`);
             if (data && status === 200) {
+                setRelationship(data.find(x => x.email === userProfile.email)?.relation || UserArtistRelation.None);
                 setTeamsTabInfo({ data: data, loading: false });
                 console.log('GetArtistRelationships: Success:', status);
             } else {
@@ -118,9 +119,9 @@ const ArtistPage = ({
             switch (selectedTab) {
                 case 'account':
                     return isEditing ? [
-                        { name: 'save', onClick: handleArtistContentSubmit, title: 'Save Content' }
+                        <i className="fas fa-save" onClick={handleArtistContentSubmit} title="Save Content"></i>
                     ] : [
-                        { name: 'edit', onClick: () => setIsEditing(true), title: 'Edit Content' }
+                        <i className="fas fa-edit" onClick={() => setIsEditing(true)} title="Edit Content"></i>
                     ];
             }
         }

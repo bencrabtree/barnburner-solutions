@@ -35,7 +35,7 @@ const start = async () => {
         entities: [
             User,
             Artist,
-            Tag,
+            // Tag,
             File,
             Contact,
             Feed,

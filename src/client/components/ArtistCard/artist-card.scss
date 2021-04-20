@@ -4,21 +4,33 @@
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    width: 25%;
+    flex-grow: 1;
+    max-width: 25%;
     margin: 1rem;
-    min-height: 23rem;
     cursor: pointer;
 
     &:hover {
-        box-shadow: 0px 8px 16px 3px rgba(0,0,0,.25);
+        box-shadow: 0px 4px 10px 1px rgba(0,0,0,.25);
+    }
 
-        // .artist-name {
-        //     text-decoration: underline;
-        // }
+    .artist-photo-wrap {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        height: 10rem;
     }
 
     img {
         margin-bottom: 1rem;
+        flex: 0 0 auto;
+        max-width: 100%;
+        max-height: 100%;
+        align-self: center;
+        -webkit-align-self: center;
+        margin: auto;
+        object-fit: scale-down;
     }
 
     &.New {
@@ -39,9 +51,58 @@
     display: flex;
     flex-direction: column;
 
+    h1 {
+        font-size: 1.5rem;
+    }
+
     .artist-card-extras {
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+}
+
+.artist-bites {
+    overflow: scroll;
+    width: 100%;
+    margin-top: .5rem;
+    display: flex;
+    padding-bottom: 1rem;
+}
+
+.pill-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.pill {
+    width: fit-content;
+    padding: .25rem .5rem;
+    border: 1px solid $notFullyBlack;
+    border-radius: 24px;
+    white-space: nowrap;
+    margin-right: .25rem;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+
+    &.withRemove {
+        padding-right: 2rem;
+    }
+}
+
+.pill-remove {
+    border-radius: 24px;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    padding: .25rem;
+    height: 1rem;
+    width: 1rem;
+    text-align: center;
+
+    &:hover {
+        background: $backgroundGrey;
     }
 }

@@ -77,7 +77,7 @@ BBSInput.propTypes = {
     placeholder: PropTypes.string,
     isValid: PropTypes.bool,
     isDisabled: PropTypes.bool,
-    rows: PropTypes.string
+    rows: PropTypes.number
 }
 
 BBSInput.defaultProps = {
@@ -85,7 +85,7 @@ BBSInput.defaultProps = {
     placeholder: "--",
     isValid: true,
     isDisabled: false,
-    rows: '8'
+    rows: 8
 }
 
 export default BBSInput;

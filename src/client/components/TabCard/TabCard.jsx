@@ -30,11 +30,7 @@ const TabCard = ({
                     { actions.map((action, key) => {
                         return (
                             <div className='tab-action' key={key}>
-                                <BBSIcon
-                                    type={action.name}
-                                    onClick={action.onClick}
-                                    title={action.title}
-                                />
+                                { action }
                             </div>
                         )
                     }) }
@@ -44,7 +40,7 @@ const TabCard = ({
     }
 
     return (
-        <div className='tab-card card'>
+        <div className='tab-card card-rounded'>
             <div className='tab-container'>
                 <div className='tab-labels'>
                     { renderTabs() }
@@ -64,11 +60,7 @@ TabCard.propTypes = {
         label: PropTypes.string.isRequired,
         onClick: PropTypes.func
     })).isRequired,
-    actions: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        onClick: PropTypes.func.isRequired,
-        title: PropTypes.string
-    })),
+    actions: PropTypes.arrayOf(PropTypes.node),
     activeTab: PropTypes.string.isRequired
 }
 

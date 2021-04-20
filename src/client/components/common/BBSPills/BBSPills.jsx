@@ -13,6 +13,10 @@ const BBSPills = ({
     label
 }) => {
 
+    const handleChange = (e, value) => {
+        onChange(id, value)
+    }
+
     return (
         <div className='bbs-pills'>
             { label && <label>
@@ -23,7 +27,7 @@ const BBSPills = ({
                 id={id}
                 disabled={disabled}
                 options={options.filter(x => !defaultValue.find(elt => elt === x))}
-                onChange={(e, val) => onChange(id, val)}
+                onChange={handleChange}
                 defaultValue={defaultValue}
                 renderTags={(value, getTagProps) =>
                     value.map((option, index) => (

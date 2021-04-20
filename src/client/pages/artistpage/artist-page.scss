@@ -58,7 +58,7 @@
         align-items: center;
 
         .artist-picture {
-            width: 5rem;
+            width: 10rem;
         }
 
         .artist-name {
@@ -68,6 +68,7 @@
 
             h2 {
                 font-weight: normal;
+                margin-right: 1rem;
             }
         }
     }
@@ -144,7 +145,7 @@
 .form-content {
     flex-wrap: wrap;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: baseline;
 
     &.tags {
@@ -166,28 +167,37 @@
 }
 
 .artist-status-pill {
-    border-radius: 20px;
-    margin-left: 1rem;
-    padding: 0rem .5rem;
+    padding: .125rem .5rem;
 
     &.New {
-        border: 2px solid $highlightNew;
         background-color: $lightHighlightNew;
         color: $highlightNew;
     }
     &.Approached {
-        border: 2px solid $highlightApproached;
         background-color: $lightHighlightApproached;
         color: $highlightApproached;
     }
     &.Negotiating {
-        border: 2px solid $highlightNegotiating;
         background-color: $lightHighlightNegotiating;
         color: $highlightNegotiating;
     }
     &.Signed {
-        border: 2px solid $highlightSigned;
         background-color: $lightHighlightSigned;
         color: $highlightSigned;
+    }
+}
+
+.bbs-select {
+    display: flex;
+    flex-direction: column;
+    margin: .5rem 0rem;
+
+    select {
+        padding: .25rem;
+        font-size: 1.2rem;
+    }
+    label {
+        font-size: 1rem;
+        margin-bottom: .5rem;
     }
 }

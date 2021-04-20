@@ -12,6 +12,7 @@ import BBSPills from '../common/BBSPills/BBSPills';
 import { cloneDeep } from 'lodash';
 import { getSocial, getLabel } from '../../../shared/util/constants';
 import { Client } from '../../../shared/dto';
+import { Tags } from '../../../shared/util/types';
 
 const NewLeadModal = ({
     isOpen,
@@ -26,7 +27,7 @@ const NewLeadModal = ({
     const [ loading, setLoading ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState();
     const [ currentTab, setCurrentTab ] = useState(0);
-    const { allTags, fullRoster } = useAppState();
+    const { fullRoster } = useAppState();
     const tabs = [
         { id: 0, label: "Info" },
         { id: 1, label: "Social" },
@@ -151,7 +152,7 @@ const NewLeadModal = ({
                         <div className='new-lead-form'>
                             <BBSPills
                                 id="tags"
-                                options={allTags}
+                                options={Tags}
                                 onChange={ handleInputChange }
                                 defaultValue={newLead.tags}
                                 placeholder="Artist Tags"

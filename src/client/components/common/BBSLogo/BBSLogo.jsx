@@ -6,7 +6,14 @@ const BBSLogo = ({ onClick }) => {
 
     return (
         <div className={`bbs-logo ${ onClick ? 'clickable' : ''}`} onClick={ onClick }>
-            <div className='bbs-logo-svg'><h1>barnburner</h1></div>
+            
+            <div className='bbs-logo-svg'>
+                <div className='imglogo'/>
+                <div className='bbs-copy'>
+                    <h1>barnburner</h1>
+                    {/* <h2>Solutions</h2> */}
+                </div>
+            </div>
         </div>
     )
 }

@@ -23,6 +23,7 @@ export class Artist extends BaseEntity {
             this.soundcloud = params.soundcloud;
             this.tiktok = params.tiktok;
             this.youtube = params.youtube;
+            this.tags = params.tags.split(',');
         }
     }
 
@@ -86,21 +87,10 @@ export class Artist extends BaseEntity {
     })
     files: File[];
 
-    @ManyToMany(type => Tag, {
-        cascade: true
-    })
-    @JoinTable({
-        name: "artist_tags",
-        joinColumn: {
-            name: "artist_id",
-            referencedColumnName: "id"
-        },
-        inverseJoinColumn: {
-            name: "tag_id",
-            referencedColumnName: "id"
-        }
-    })
-    tags: Tag[];
+    // @ManyToMany(type => Tag)
+    // @JoinTable({ name: "artist_tags" })
+    @Column({ array: true, type: "character varying" })
+    tags: string[];
 
     ///
 

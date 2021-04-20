@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToOne } from "typeorm";
-import { User } from ".";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToOne, ManyToMany } from "typeorm";
+import { Artist, User } from ".";
 
 @Entity()
 export class Tag extends BaseEntity {
@@ -10,6 +10,7 @@ export class Tag extends BaseEntity {
     }
 
     @PrimaryGeneratedColumn()
+    @ManyToMany(type => Artist, artist => artist.tags)
     id: number;
 
     @Column("character varying")

@@ -1,6 +1,6 @@
 @import '../../../assets/sass/colors.scss';
 
-@mixin bbsIcon($name, $height:2, $width:2) {
+@mixin bbsIcon($name, $height:1.5, $width:1.5) {
     background-image: url("../../../assets/images/#{$name}.svg");
     background-position: center;
     background-repeat: no-repeat;
@@ -20,9 +20,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: .25rem;
+    padding: .5rem;
     
     &.round {
         border-radius: 50%;
+
+        &:hover {
+            background-color: $backgroundLightGrey;
+        }
+    }
+
+    &.clickable {
+        cursor: pointer;
+    }
+
+    &.disabled {
+        cursor: not-allowed
     }
 
     .under-construction {
@@ -57,5 +71,23 @@
     }
     .edit {
         @include bbsIcon('edit-black');
+    }
+    .my-roster {
+        @include bbsIcon('roster-black')
+    }
+    .new-lead {
+        @include bbsIcon('add-new-lead-black')
+    }
+    .my-calendar {
+        @include bbsIcon('calendar-black')
+    }
+    .hamburger {
+        @include bbsIcon('hamburger-icon')
+    }
+    .heart-filled {
+        @include bbsIcon('heart-filled')
+    }
+    .heart-empty {
+        @include bbsIcon('heart-empty')
     }
 }

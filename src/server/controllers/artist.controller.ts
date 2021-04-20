@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Artist } from '../../shared/dao';
+import { UserArtistRelation } from '../../shared/util/types';
 import { artistService } from '../services/artist.service';
 
 const getFullRoster = async (req: Request, res: Response) => {
@@ -24,7 +25,6 @@ const addArtist = async (req: Request, res: Response) => {
 
 const updateArtist = async (req:Request, res: Response) => {
     try {
-        console.log(req.body)
         let artist = await artistService.updateArtist(req.params.artistId, req.body);
         res.status(200).send(artist);
     } catch (error) {
@@ -65,7 +65,7 @@ const getNewLeadModel = async (req: Request, res: Response) => {
 
 const favoriteArtist = async (req: Request, res: Response) => {
     try {
-        let newRelationships = await artistService.favoriteArtist(req.body.artistId, req.body.userId);
+        let newRelationships = await artistService.updateRelationship(req.body.artistId, req.body.userId, UserArtistRelation.Favorited);
         res.status(200).send(newRelationships);
     } catch (error) {
         console.log('ArtistController: favoriteArtist:', error);
@@ -75,7 +75,7 @@ const favoriteArtist = async (req: Request, res: Response) => {
 
 const unfavoriteArtist = async (req: Request, res: Response) => {
     try {
-        let newRelationships = await artistService.unfavoriteArtist(req.body.artistId, req.body.userId);
+        let newRelationships = await artistService.updateRelationship(req.body.artistId, req.body.userId, UserArtistRelation.None);
         res.status(200).send(newRelationships);
     } catch (error) {
         console.log('ArtistController: unfavoriteArtist:', error);

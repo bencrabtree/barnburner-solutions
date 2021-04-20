@@ -112,16 +112,14 @@ class UserService {
 
     //
     getArtistRelationships = async (userId: string) => {
-        let artists: Artist[] = await getRepository(UserArtist)
+        const artists: Artist[] = await getRepository(UserArtist)
             .createQueryBuilder('ua')
             .leftJoinAndSelect('ua.artist', 'artist')
             .leftJoinAndSelect('artist.photo', 'photo')
-            .where("artist.id = ua.a_id")
-            .andWhere("ua.relation = :fav OR ua.relation = :owner", { fav: UserArtistRelation.Favorited, owner: UserArtistRelation.Owner })
-            .andWhere("ua.u_id = :userId", { userId })
-            .select("artist.id as artist_id, ua.relation, artist.full_name, artist.status, artist.updated_on, photo.file_path as artist_photo")
+            .where("ua.u_id = :userId", { userId })
+            .andWhere("artist.id = ua.a_id")
+            .select("artist.id as artist_id, ua.relation, artist.full_name, artist.status, artist.tags, artist.updated_on, photo.file_path as artist_photo")
             .execute();
-
         return artists;
     }
 }

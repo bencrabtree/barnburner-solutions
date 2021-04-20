@@ -1,22 +1,47 @@
 @import '../../../assets/sass/colors.scss';
 
 .bbs-logo {
+    display: flex;
+    flex-direction: row;
+
     .bbs-logo-svg {
         display: flex;
         justify-content: flex-start;
         align-items: center;
+
         h1 {
             font-family: Helvetica;
-            color: white;
+            color: $baseColor;
             font-weight: normal;
+            font-size: 1.5rem;
         }
 
-        // background: url('../../../assets/images/barnburner.png') center center no-repeat;
-        // background-size: contain;
-        // &:hover {
-        //     background: url('../../assets/images/mtg-logo-green.svg') center center no-repeat;
-        // }
+        h2 {
+            font-family: Helvetica;
+            color: $baseColor;
+            font-weight: normal;
+            font-size: 1rem;
+        }
+
     }
+
+    .bbs-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .imglogo {
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+        margin: .5rem;
+        background-image: url('../../../assets/images/barnburner.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
     &.clickable {
         cursor: pointer;
     }

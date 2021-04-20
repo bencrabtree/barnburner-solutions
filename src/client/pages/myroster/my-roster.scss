@@ -5,23 +5,50 @@
     flex-direction: row;
 }
 
+.my-roster-layout {
+    display: grid;
+    grid-column: 1/span 12;
+    grid-template-columns: repeat(12,minmax(0,1fr));
+    grid-gap: 16px 32px;
+    width: 100%;
+}
+
 .roster-filters {
-    display: flex;
     flex-direction: column;
-    position: fixed;
     padding: 1rem;
-    width: 30%;
+    grid-column: span 4;
+    height: fit-content;
+    position: fixed;
+    width: 25%;
+    transition: width .2s;
+
+    fieldset {
+        margin-top: 1rem;
+        max-height: 12rem;
+        overflow: scroll;
+    }
+
+    .tag-filter-input {
+        font-size: 1rem;
+        padding: .25rem .5rem;
+    }
+}
+
+.main-app.smaller {
+    .roster-filters {
+        width: 20%;
+    }
 }
 
 .roster-content {
     display: flex;
     flex-direction: column;
-    width: 65%;
-    margin-left: 34%;
+    grid-column: span 8;
+    position: relative;
+    grid-column-end: -1;
 
     .roster-head {
         padding: 1rem;
-        margin-bottom: 2rem;
     }
 }
 
@@ -30,4 +57,21 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+.scroll-to-top {
+    cursor: pointer;
+    font-size: .875rem;
+    position: fixed;
+    right: 40%;
+    padding: .5rem 1rem;
+    border: 1px solid $borderGrey;
+    background-color: $backgroundGrey;
+    color: $notFullyBlack;
+    border-radius: 50px;
+    z-index: 1;
+
+    &:hover {
+        background-color: $borderGrey;
+    }
 }

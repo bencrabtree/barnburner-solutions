@@ -1,0 +1,65 @@
+@import "../../assets/sass/colors.scss";
+
+.side-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1.5rem;
+    background-color: $baseColor;
+    // border-right: 1px solid $borderGrey;
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    height: 100%;
+
+    &.visible {
+        margin-left: 0;
+        min-width: 250px;
+        max-width: 250px;
+        transition: margin-left .25s;
+    }
+    &.notVisible {
+        margin-left: -250px;
+        transition: margin-left .25s;
+    }
+}
+
+.side-menu-item {
+    cursor: pointer;
+    margin: .5rem 0rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: .5rem 1rem;
+    color: white;
+
+    i {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        margin-left: 2rem;
+    }
+
+    h2 {
+        font-weight: normal;
+        // color: $baseColor;
+    }
+
+    &.active {
+        background-color: $lightBaseColor;
+        // color: $baseColor;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+
+        &:hover {
+            
+        }
+    }
+
+    &:hover {
+        background-color: $lightBaseColor;
+        // color: $baseColor;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+}

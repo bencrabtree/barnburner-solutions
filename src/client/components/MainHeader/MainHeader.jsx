@@ -12,12 +12,15 @@ import { useAppState } from '../../store';
 import BBSButton from '../common/BBSButton/BBSButton';
 import Avatar from '../common/Avatar/Avatar';
 
-const MainHeader = ({ }) => {
+const MainHeader = ({
+    newLeadModalIsOpen,
+    setNewLeadModalIsOpen
+}) => {
     const history = useHistory();
-    const { addNewClient, userProfile, setLoading } = useAppState();
+    const { addNewClient, userProfile, setLoading, toggleSideMenu } = useAppState();
     const [ userMenuRef, setUserMenuRef ] = useState();
     const [ searchAddArtist, setSearchAddArtist ] = useState();
-    const [ newLeadModalIsOpen, setNewLeadModalIsOpen ] = useState(false);
+    // const [ newLeadModalIsOpen, setNewLeadModalIsOpen ] = useState(false);
     const [ selectedTab, setSelectedTab ] = useState('')
 
     const navigateBackHome = () => {
@@ -77,13 +80,6 @@ const MainHeader = ({ }) => {
         if (isLoggedIn()) {
             return (
                 <div className='action-bar'>
-                    <BBSButton
-                        label="New Lead"
-                        type="tertiary"
-                        onClick={ () => setNewLeadModalIsOpen(true) }
-                        title="Create new lead"
-                    />
-                    <span className='divider-bar dark-background' />
                     <div className='user-profile-dropdown' onClick={ handleUserMenuToggle }>
                         <Avatar uri={ userProfile?.photo?.file_path } title="My account" />
                     </div>
@@ -97,8 +93,8 @@ const MainHeader = ({ }) => {
                         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                     >
                         <MenuItem onClick={handleUserMenuClose}>Preferences</MenuItem>
-                        <MenuItem onClick={handleUserMenuClose}>Roster</MenuItem>
-                        <MenuItem onClick={handleUserMenuClose}>Calendar</MenuItem>
+                        <MenuItem onClick={() => handleTabSelection('myroster')}>Roster</MenuItem>
+                        <MenuItem onClick={() => handleTabSelection('calendar')}>Calendar</MenuItem>
                         <MenuItem onClick={handleUserLogout} className="logout-menu-item" >Log Out</MenuItem>
                     </Menu>
                     <NewLeadModal
@@ -122,32 +118,16 @@ const MainHeader = ({ }) => {
         }
     }
 
-    const generateSubTabs = () => {
-        const tabs = [
-            { id: 'myroster', label: 'Roster' },
-            { id: 'calendar', label: 'Calendar' },
-            // { id: 'settings', label: 'Settings' },
-        ];
-
-        return (
-            <div className='subtab-container'>
-                { tabs.map((tab, key) => {
-                    return (
-                        <div key={key} className={`sub-tab ${selectedTab === tab.id ? 'active' : 'notactive'}`} onClick={() => handleTabSelection(tab.id)}>
-                            <p>{ tab.label }</p>
-                        </div>
-                    )
-                })}
-            </div>
-        )
-    }
-
     return (
         <div className='header'>
             <div className='main-header'>
             <div className='sub-header'>
+                { isLoggedIn() && <BBSIcon
+                    type="hamburger"
+                    style="round"
+                    onClick={() => toggleSideMenu()}
+                /> }
                 <BBSLogo onClick={ navigateBackHome } />
-                { generateSubTabs() }
             </div>
                 <SearchBar onSubmit={ handleSearchBarSubmit } onAddNewLead={ onAddNewLead } />
                 { renderMenu() }

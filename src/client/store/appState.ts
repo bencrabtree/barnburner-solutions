@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { AppContext } from './appContext';
 import { cloneDeep } from 'lodash';
 import { http } from '../util/api';
-import { AxiosRequestConfig } from 'axios';
 
 const useAppState = () => {
     const [ state, setState ] = useContext(AppContext);
@@ -11,7 +10,6 @@ const useAppState = () => {
         try {
             let formData = new FormData();
             Object.keys(client).forEach(key => {
-                console.log(key, client[key])
                 if (key === 'photo_uri') {
                     formData.append(key, client[key][0], client[key][0].name)
                 } else {
@@ -38,6 +36,10 @@ const useAppState = () => {
         setState(state => ({ ...state, loading: isLoading }))
     }
 
+    const toggleSideMenu = () => {
+        setState(state => ({ ...state, sideMenuOpen: !state.sideMenuOpen }))
+    }
+
     const setSelectedArtist = artistName => {
         if (state.fullRoster.find(x => x.full_name === artistName)) {
             setState(state => ({ ...state, selectedArtist: artistName }));
@@ -48,16 +50,32 @@ const useAppState = () => {
         setState(state => ({ ...state, artistRelationships: data }))
     }
 
+    const getArtistById = id => {
+        return state.fullRoster.find(artist => artist.id === id);
+    }
+
+    const getRosterValues = () => {
+        return state.artistRelationships.map(artist => {
+            return {
+                ...artist,
+                tags: getArtistById(artist.id)?.tags
+            }
+        })
+    }
+
     return {
         loading: state.loading,
         setLoading,
+        sideMenuOpen: state.sideMenuOpen,
+        toggleSideMenu,
         userProfile: state.userProfile,
         allUsers: state.allUsers,
         fullRoster: state.fullRoster,
-        allTags: state.allTags,
         artistRelationships: state.artistRelationships,
         setArtistRelationships,
         addNewClient,
+        getArtistById,
+        getRosterValues,
         //
         selectedArtist: state.selectedArtist,
         setSelectedArtist

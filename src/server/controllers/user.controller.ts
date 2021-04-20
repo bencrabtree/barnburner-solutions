@@ -48,7 +48,7 @@ const getArtistRelationships = async (req: Request, res: Response) => {
         res.status(200).send(artists);
     } catch (error) {
         console.log("UserController: updateUser:", error);
-        res.status(400).send(`Unable to favorited user ${req.body.userId}`)
+        res.status(400).send(`Unable to get relationships for user ${req.params.userId}`)
     }
 }
 

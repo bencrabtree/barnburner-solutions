@@ -12,14 +12,18 @@ const ArtistInfoForm = forwardRef(({
     info,
     disabled
 }, ref) => {
-    const { allTags, allUsers } = useAppState();
+    const { allUsers } = useAppState();
     const [ loading, setLoading ] = useState(info.loading);
     const [ artist, setArtist ] = useState(info.data);
 
     useImperativeHandle(ref, () => ({
         getNewInfo() {
-            console.log(artist)
-            return artist;
+            return Object.keys(artist)
+            .filter(key => Object.keys(getLabel).includes(key))
+            .reduce((acc, key) => {
+                acc[key] = artist[key];
+                return acc;
+            }, {});
         }
     }));
 
@@ -31,7 +35,6 @@ const ArtistInfoForm = forwardRef(({
     const handleInputChange = (id, value) => {
         let tempArtist = clone(artist);
         tempArtist[id] = value;
-        console.log(id, value)
         setArtist(tempArtist);
     }
 
@@ -78,19 +81,6 @@ const ArtistInfoForm = forwardRef(({
                         <div className='form-content columns socials'>
                             { generateSocialValues() }
                         </div>
-                    </div>
-                    <div className='form'>
-                        <h2>Artist Tags</h2>
-                        <div className='form-content tags'>
-                            <BBSPills
-                                options={allTags}
-                                onChange={ handleInputChange }
-                                defaultValue={artist.tags}
-                                placeholder="Artist Tags"
-                                disabled={ disabled }
-                            />
-                        </div>
-
                     </div>
                 </div>
             )

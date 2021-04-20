@@ -1,9 +1,17 @@
-$baseColor: #212856;
+$baseColor: #212756;
+//2c2156;
+// #212856;
+
 $accentColor: #ef6a4d;
+//#ef4040;
+
+$base2: #2c2156;
+$accent2: #ef4040;
 
 $superLightGrey: #fbfbfb;
+$borderGrey: #dadce0;
 
-$superLightBase: #dee2ff;
+$superLightBaseColor: #dee2ff;
 $lightBaseColor: #596198;
 
 $backgroundLightGrey: #F2F2F2;
@@ -20,6 +28,6 @@ $highlightNegotiating: #aea2fb;
 $highlightSigned: #3dcfa2;
 
 $lightHighlightNew: #f0fafc;
-$lightHighlightApproached: lighten($highlightApproached, 35%);
-$lightHighlightNegotiating: lighten($highlightNegotiating, 35%);
-$lightHighlightSigned: lighten($highlightSigned, 35%);
+$lightHighlightApproached: #fff0cf;
+$lightHighlightNegotiating: #e4e0ff;
+$lightHighlightSigned: #e1f5ef;

@@ -1,7 +1,7 @@
 @import '../../assets/sass/colors.scss';
 
 .header {
-    background-color: $baseColor;
+    background-color: white;
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -9,10 +9,13 @@
     box-sizing: border-box;
     z-index: 100;
     padding: .5rem 2rem;
+    -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .20);
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .20);
 }
 
 .sub-header {
     display: flex;
+    align-items: center;
 }
 
 .subtab-container {
@@ -22,14 +25,14 @@
 
     .sub-tab {
         padding: .5rem .5rem;
-        color: white;
+        color: $baseColor;
         cursor: pointer;
         margin-left: 1rem;
         display: flex;
         align-items: flex-end;
 
         p {
-            font-size: 1.25rem;
+            font-size: 1rem;
         }
 
         &.notactive {
@@ -37,7 +40,7 @@
         }
 
         &:hover, &.active {
-            border-bottom: 3px solid $backgroundLightGrey;
+            border-bottom: 3px solid $baseColor;
         }
     }
 }
@@ -75,9 +78,13 @@
             cursor: pointer;
             padding: .25rem;
             border-radius: 50%;
+            
+            img {
+                height: 2rem;
+            }
 
             &:hover {
-                background: $lightBaseColor;
+                background: $backgroundLightGrey;
             }
         }
     }
