@@ -8,50 +8,69 @@ import { getArtistImageSrc } from '../../util/constants';
 import HeartIcon from '../HeartIcon/HeartIcon';
 
 const ArtistCard = ({
-    artist,
-    photo_path
+    artistId,
+    photo_path,
+    onClick,
+    className
 }) => {
-    const { getArtistRelationship } = useAppState();
-    const [ data, setData ] = useState(artist);
+    const { getArtistRelationship, getArtistById } = useAppState();
+    const [ artist, setArtist ] = useState();
     const history = useHistory();
 
     useEffect(() => {
-        setData(artist);
-    }, [artist])
+        setArtist(getArtistById(artistId));
+    }, [artistId])
 
     const handleArtistSelection = () => {
-        history.push(`/artists/${encodeURIComponent(data.full_name)}`);
-        history.go(0);
+        onClick(artistId);
     }
 
-    return (
-        <div className={`artist-card card ${data.status}`} onClick={handleArtistSelection}>
-            <div className='artist-photo-wrap'>
-                <img src={ getArtistImageSrc(photo_path) } />
-            </div>
-            <div className="artist-card-content">
-                <div className="artist-card-extras">
-                    { getArtistRelationship(artist.id) === UserArtistRelation.Favorited ?
-                        <HeartIcon isLiked={true} /> :
-                        <h2 className="normal-weight capitalize">{ data.relation }</h2>
-                    }
-                    <span className={`artist-status-pill ${data.status}`}>
-                        { data.status }
-                    </span>
+    const renderContent = () => {
+        if (artist) {
+            return (
+                <div className={`artist-card card ${artist.status} ${className}`} onClick={handleArtistSelection}>
+                    <div className='artist-image-wrapper'>
+                        <img src={ getArtistImageSrc(photo_path) } />
+                    </div>
+                    <div className="artist-card-content">
+                        <div className="artist-card-extras">
+                            { getArtistRelationship(artist.id) === UserArtistRelation.Favorited ?
+                                <HeartIcon isLiked={true} /> :
+                                <h2 className="normal-weight capitalize">{ getArtistRelationship(artist.id) }</h2>
+                            }
+                            <span className={`artist-status-pill ${artist.status}`}>
+                                { artist.status }
+                            </span>
+                        </div>
+                        <h1 className='artist-name'>{ artist.full_name }</h1>
+                        <div className="artist-bites">
+                            { artist.tags.map((tag, key) => {
+                                return (
+                                    <div className='pill' key={key}>
+                                        { tag }
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
                 </div>
-                <h1 className='artist-name'>{ data.full_name }</h1>
-                <div className="artist-bites">
-                    { data.tags.map((tag, key) => {
-                        return (
-                            <div className='pill' key={key}>
-                                { tag }
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
-        </div>
-    )
+            )
+        } else {
+            return (
+                <div />
+            )
+        }
+    }
+
+    return renderContent();
+
+}
+
+ArtistCard.defaultProps = {
+    onClick: () => {
+        history.push(`/artists/${encodeURIComponent(artist.full_name)}`);
+        history.go(0);
+    }
 }
 
 export default ArtistCard;

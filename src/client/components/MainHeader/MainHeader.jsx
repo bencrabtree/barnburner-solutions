@@ -17,7 +17,7 @@ const MainHeader = ({
     setNewLeadModalIsOpen
 }) => {
     const history = useHistory();
-    const { addNewClient, userProfile, setLoading, toggleSideMenu } = useAppState();
+    const { addNewClient, userProfile, setLoading, toggleSideMenu, toggleMode } = useAppState();
     const [ userMenuRef, setUserMenuRef ] = useState();
     const [ searchAddArtist, setSearchAddArtist ] = useState();
     // const [ newLeadModalIsOpen, setNewLeadModalIsOpen ] = useState(false);
@@ -95,6 +95,7 @@ const MainHeader = ({
                         <MenuItem onClick={handleUserMenuClose}>Preferences</MenuItem>
                         <MenuItem onClick={() => handleTabSelection('myroster')}>Roster</MenuItem>
                         <MenuItem onClick={() => handleTabSelection('calendar')}>Calendar</MenuItem>
+                        <MenuItem onClick={toggleMode}>Toggle Mode</MenuItem>
                         <MenuItem onClick={handleUserLogout} className="logout-menu-item" >Log Out</MenuItem>
                     </Menu>
                     <NewLeadModal

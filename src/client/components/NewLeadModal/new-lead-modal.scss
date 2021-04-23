@@ -44,12 +44,15 @@
         text-align: center;
         text-transform: uppercase;
         font-weight: bold;
-        color: $notFullyBlack;
-        background-color: $backgroundGrey;
-        border: 2px solid $backgroundDarkGrey;
         padding: 1.5rem 1rem;
         font-size: 1.5rem;
         cursor: pointer;
+
+        @include themed() {
+            color: t($lighterBlack);
+            background-color: t($background);
+            border: 2px solid t($borderDark);
+        }
 
         &:first-child {
             border-top-left-radius: 6px;
@@ -59,13 +62,18 @@
         }
 
         &.active {
-            background-color: $backgroundLightGrey;
             border: none;
-            color: black;
+
+            @include themed() {
+                background-color: t($backgroundLight);
+                color: t($darkText);
+            }
         }
 
         &.invalid {
-            color: $errorRed;
+            @include themed() {
+                color: t($error);
+            }
         }
     }
 }

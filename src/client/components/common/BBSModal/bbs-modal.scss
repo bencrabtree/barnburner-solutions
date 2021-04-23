@@ -11,17 +11,29 @@
     }
 }
 
-.bbs-modal-content {
-    height: 70vh;
+.bbs-modal-container {
     width: 50vw;
-    background-color: $backgroundLightGrey;
+    background-color: $lightText;
     padding: 2rem;
     position: relative;
     padding-bottom: 6rem;
     border-radius: 6px;
 
+    @include themed() {
+        background-color: t($lightText);
+    }
+
     h1 {
         margin-bottom: 1rem;
+    }
+}
+
+.bbs-modal-content {
+    height: 60vh;
+    overflow: scroll;
+
+    @include themed() {
+        background-color: t($lightText);
     }
 }
 
@@ -37,6 +49,8 @@
     .error-box {
         display: flex;
         align-items: center;
-        color: $errorRed;
+        @include themed() {
+            color: t($error);
+        }
     }
 }

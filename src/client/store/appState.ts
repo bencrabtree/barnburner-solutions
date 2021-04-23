@@ -6,6 +6,10 @@ import { http } from '../util/api';
 const useAppState = () => {
     const [ state, setState ] = useContext(AppContext);
 
+    const toggleMode = () => {
+        setState(state => ({ ...state, lightMode: !state.lightMode }));
+    }
+
     const addNewClient = async (client) => {
         try {
             let formData = new FormData();
@@ -68,6 +72,8 @@ const useAppState = () => {
     }
 
     return {
+        lightMode: state.lightMode,
+        toggleMode,
         loading: state.loading,
         setLoading,
         sideMenuOpen: state.sideMenuOpen,

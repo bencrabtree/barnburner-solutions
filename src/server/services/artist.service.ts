@@ -12,7 +12,7 @@ class ArtistService {
         try {
             let roster = await getRepository(Artist)
             .find({ relations: ['photo', 'files'] });
-            return roster.sort((a, b) => a.full_name < b.full_name ? -1 : 1);
+            return roster.sort((a, b) => a.full_name.toLowerCase() < b.full_name.toLowerCase() ? -1 : 1);
         } catch (error) {
             console.log("[ArtistService] GetAll:", error);
             return null;
@@ -38,15 +38,17 @@ class ArtistService {
     }
 
     //
-    getArtistByName = async (fullName: string): Promise<Artist> => {
+    getArtistByName = async (full_name: string): Promise<Artist> => {
         try {
+            console.log(full_name)
             let artist: Artist = await getRepository(Artist)
                 .createQueryBuilder('artist')
-                .where({ full_name: fullName })
+                .where({ full_name })
                 .leftJoinAndSelect('artist.photo', 'photo')
                 .leftJoinAndSelect('artist.files', 'files')
                 // .leftJoinAndSelect('artist.tags', 'tags')
                 .getOne();
+            console.log(artist)
             return artist;
         } catch (error) {
             console.log("[ArtistService] GetArtistByName:", error);
@@ -94,10 +96,10 @@ class ArtistService {
 
             let photo = new File();
             await photo.upload(photo_uri[0], artist.full_name);
-            // console.log('successfully uploaded photo', photo)
+            console.log('successfully uploaded photo', photo)
             artist.photo = photo;
             await artist.save();
-            // console.log('successfully updated photo', artist)
+            console.log('successfully updated photo', artist)
             return artist;
         } catch (error) {
             console.log('[ArtistService] UploadPhoto:', error);

@@ -11,16 +11,22 @@
 
         h1 {
             font-family: Helvetica;
-            color: $baseColor;
             font-weight: normal;
             font-size: 1.5rem;
+
+            @include themed() {
+                color: t($base);
+            }
         }
 
         h2 {
             font-family: Helvetica;
-            color: $baseColor;
             font-weight: normal;
             font-size: 1rem;
+
+            @include themed() {
+                color: t($base);
+            }
         }
 
     }

@@ -4,8 +4,11 @@ html, body, #root, .app {
     height: 100%;
     width: 100%;
     font-size: 1rem;
-    background: $superLightGrey;
     margin: 0;
+
+    @include themed() {
+        background: t($app-background);
+    }
 }
 
 .main-container {
@@ -14,6 +17,10 @@ html, body, #root, .app {
     flex-direction: row;
     justify-content: center;
     padding-top: 5rem;
+
+    @include themed() {
+        background-color: t($app-background);
+    }
 }
 
 .main-app {
@@ -32,8 +39,11 @@ html, body, textarea {
     font-family: Helvetica; //"Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;;
 }
 
-h1, h2, h3, h4, h5, p {
+h1, h2, h3, h4, h5, p, span, div {
     margin: 0;
+    @include themed() {
+        color: t($darkText)
+    }
 }
 
 i {
@@ -41,7 +51,9 @@ i {
 }
 
 a:hover {
-    color: $baseColor;
+    @include themed() {
+        color: t($base);
+    }
 }
 
 :focus {
@@ -49,12 +61,15 @@ a:hover {
 }
 
 .card {
-    background-color: white;
-    border: 1px solid $borderGrey;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     padding: 1rem;
     margin: .5rem;
+
+    @include themed() {
+        background-color: t($lightText);
+        border: 1px solid t($border);
+    }
 
     &-rounded {
         @extend .card;
@@ -63,16 +78,14 @@ a:hover {
 }
 
 .divider-bar {
-    border: 2px solid $backgroundGrey;
-    background-color: $backgroundGrey;
     height: 4rem;
     width: 0px;
     border-radius: 6px;
     margin: 0rem 1rem;
 
-    &.dark-background {
-        border: 2px solid $lightBaseColor;
-        background-color: $lightBaseColor;
+    @include themed() {
+        border: 2px solid t($border);
+        background-color: t($border);
     }
 }
 

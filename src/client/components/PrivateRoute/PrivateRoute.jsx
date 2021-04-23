@@ -21,7 +21,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 const LoginPage = () => {
     // http.get('/auth/signin')
     return (
-        <Redirect to='/auth/signin' />
+        <Redirect to='/signin' />
     )
 }
 

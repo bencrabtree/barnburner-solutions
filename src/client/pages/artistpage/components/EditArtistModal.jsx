@@ -62,7 +62,6 @@ const EditArtistModal = ({
     }
 
     const renderArtistContent = () => {
-        console.log(formValues)
         return (
             <div className="edit-artist-content">
                 <div className='form'>
@@ -88,16 +87,15 @@ const EditArtistModal = ({
                             />
                             <div className="bbs-select">
                                 <label for="status">Change Status:</label>
-                                <select id="status" value={formValues.status} onChange={(e) => handleChange(e.target.id, e.target.value)}>
+                                <select id="status" onChange={(e) => handleChange(e.target.id, e.target.value)}>
                                     { clientStatus.map((status, key) => {
                                         return (
-                                            <option key={key} id={status.id} value={ status.id }>{ status.label }</option>
+                                            <option selected={formValues.status === status.id} key={key} id={status.id} value={ status.id }>{ status.label }</option>
                                         )
                                     })}
                                 </select>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
                 <div className='form'>
@@ -120,12 +118,13 @@ const EditArtistModal = ({
     const renderFooter = () => {
         return [
             <BBSButton
-                label="Save"
-                onClick={ handleSubmit }
+                label="Cancel"
+                type="secondary"
+                onClick={ handleClose }
             />,
             <BBSButton
-                label="Cancel"
-                onClick={ handleClose }
+                label="Save"
+                onClick={ handleSubmit }
             />
         ]
     }

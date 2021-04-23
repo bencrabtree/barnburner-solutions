@@ -41,57 +41,25 @@ const ArtistPage = ({
 
 
     useEffect(() => {
-        changeSelectedArtist();
         getData();
     }, [ match.params.artistName ]);
 
     const getData = () => {
-        fillArtistInfo();
-        getArtistRelationships();
+        getArtistInfo();
     }
 
     useEffect(() => {
         setRelationship(artistRelationships.find(x => x.full_name === selectedArtist?.full_name)?.relation);
     }, [ artistRelationships ]);
 
-    const fillArtistInfo = async () => {
+    const getArtistInfo = async () => {
         try {
-            // sub out match.params to find artist id in fullRoster
-            const { data, status } = await http.get(`/roster/${match.params.artistName}`);
-            if (data && status === 200) {
-                setArtistFormInfo({ data: data, loading: false });
-                console.log('FillArtistInfo: Success:', status);
-            } else {
-                console.log('FillArtistInfo: BadResponse:', status)
-            }
+            const artist = await artistService.getArtist(match.params.artistName);
+            setArtistFormInfo({ data: artist, loading: false });
+            setRelationship(artistRelationships.find(x => x.full_name === artist.full_name)?.relation)
+            setSelectedArtist(artist);
         } catch (error) {
             console.log('FillArtistInfo:', error);
-        }
-    }
-
-    const getArtistRelationships = async () => {
-        try {
-            const { data, status } = await http.get(`/roster/relationships/${match.params.artistName}`);
-            if (data && status === 200) {
-                setRelationship(data.find(x => x.email === userProfile.email)?.relation || UserArtistRelation.None);
-                setTeamsTabInfo({ data: data, loading: false });
-                console.log('GetArtistRelationships: Success:', status);
-            } else {
-                console.log('GetArtistRelationships: BadResponse:', status)
-            }
-        } catch (error) {
-            console.log('GetArtistRelationships:', error);
-        } 
-    }
-
-    const changeSelectedArtist = async () => {
-        let found = fullRoster.find(x => x.full_name.toLowerCase() === match.params.artistName.toLowerCase());
-        if (
-            match.params.artistName && 
-            found
-        ) {
-            let artist = await artistService.getArtist(found.full_name);
-            setSelectedArtist(artist);
         }
     }
 

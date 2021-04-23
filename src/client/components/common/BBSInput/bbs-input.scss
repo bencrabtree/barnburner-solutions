@@ -16,7 +16,9 @@
             margin-right: .5rem;
 
             &.fa-desktop {
-                color: $baseColor;
+                @include themed() {
+                    color: t($base);
+                }
             }
             &.fa-spotify {
                 color: #1DB954

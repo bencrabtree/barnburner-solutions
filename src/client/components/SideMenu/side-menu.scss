@@ -5,12 +5,15 @@
     flex-direction: column;
     align-items: center;
     padding-top: 1.5rem;
-    background-color: $baseColor;
-    // border-right: 1px solid $borderGrey;
+    // border-right: 1px solid $border--grey;
     position: fixed;
     top: 4rem;
     left: 0;
     height: 100%;
+
+    @include themed() {
+        background-color: t($lightText);
+    }
 
     &.visible {
         margin-left: 0;
@@ -32,7 +35,10 @@
     align-items: center;
     width: 100%;
     padding: .5rem 1rem;
-    color: white;
+
+    @include themed() {
+        color: t($darkText);
+    }
 
     i {
         font-size: 1.5rem;
@@ -42,23 +48,37 @@
 
     h2 {
         font-weight: normal;
-        // color: $baseColor;
+        @include themed() {
+            color: t($darkText);
+        }
     }
 
-    &.active {
-        background-color: $lightBaseColor;
-        // color: $baseColor;
+    &.active, &.active:hover {
         border-top-right-radius: 6px;
         border-bottom-right-radius: 6px;
 
-        &:hover {
-            
+        @include themed() {
+            background-color: t($baseLight);
+            color: t($base);
+        }
+
+        h2 {
+            @include themed() {
+                color: t($base);
+            }
         }
     }
 
     &:hover {
-        background-color: $lightBaseColor;
-        // color: $baseColor;
+        @include themed() {
+            background-color: t($background);
+            color: t($darkText);
+        }
+        h2 {
+            @include themed() {
+                color: t($darkText);
+            }
+        }
         border-top-right-radius: 6px;
         border-bottom-right-radius: 6px;
     }

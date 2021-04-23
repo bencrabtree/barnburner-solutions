@@ -9,20 +9,20 @@ export class Artist extends BaseEntity {
         super();
 
         if (params) {
-            this.full_name = params.full_name;
-            this.status = params.status;
+            this.full_name = params.full_name.trim();
+            this.status = params.status?.trim();
             this.photo = params.photo;
-            this.description = params.description;
-            this.website = params.website;
-            this.twitter = params.twitter;
-            this.facebook = params.facebook;
-            this.apple_music = params.apple_music;
-            this.spotify = params.spotify;
-            this.snapchat = params.snapchat;
-            this.instagram = params.instagram;
-            this.soundcloud = params.soundcloud;
-            this.tiktok = params.tiktok;
-            this.youtube = params.youtube;
+            this.description = params.description?.trim();
+            this.website = params.website?.trim();
+            this.twitter = params.twitter?.trim();
+            this.facebook = params.facebook?.trim();
+            this.apple_music = params.apple_music?.trim();
+            this.spotify = params.spotify?.trim();
+            this.snapchat = params.snapchat?.trim();
+            this.instagram = params.instagram?.trim();
+            this.soundcloud = params.soundcloud?.trim();
+            this.tiktok = params.tiktok?.trim();
+            this.youtube = params.youtube?.trim();
             this.tags = params.tags.split(',');
         }
     }

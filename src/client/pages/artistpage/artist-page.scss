@@ -16,16 +16,24 @@
         padding: 1rem 2rem;
 
         &.New {
-            border-top: 4px solid $highlightNew;
+            @include themed() {
+                border-top: 4px solid t($newColor);
+            }
         }
         &.Approached {
-            border-top: 4px solid $highlightApproached;
+            @include themed() {
+                border-top: 4px solid t($approachedColor);
+            }
         }
         &.Negotiating {
-            border-top: 4px solid $highlightNegotiating;
+            @include themed() {
+                border-top: 4px solid t($negotiatingColor);
+            }
         }
         &.Signed {
-            border-top: 4px solid $highlightSigned;
+            @include themed() {
+                border-top: 4px solid t($signedColor);
+            }
         }
 
         .artist-name {
@@ -101,7 +109,7 @@
         width: 100%;
         margin-top: 1rem;
         padding-top: 1rem;
-        border-top: 2px solid $backgroundGrey;
+        border-top: 2px solid $bg--grey;
     }
 
     .artist-stat {
@@ -133,12 +141,6 @@
 
     .tab-card:last-child {
         width: 33%;
-    }
-}
-
-.form {
-    h2 {
-        margin-bottom: 1rem;
     }
 }
 .form-content {
@@ -177,20 +179,28 @@
     padding: .125rem .5rem;
 
     &.New {
-        background-color: $lightHighlightNew;
-        color: $highlightNew;
+        @include themed() {
+            background-color: t($newLight);
+            color: t($newColor);
+        }
     }
     &.Approached {
-        background-color: $lightHighlightApproached;
-        color: $highlightApproached;
+        @include themed() {
+            background-color: t($approachedLight);
+            color: t($approachedColor);
+        }
     }
     &.Negotiating {
-        background-color: $lightHighlightNegotiating;
-        color: $highlightNegotiating;
+        @include themed() {
+            background-color: t($negotiatingLight);
+            color: t($negotiatingColor);
+        }
     }
     &.Signed {
-        background-color: $lightHighlightSigned;
-        color: $highlightSigned;
+        @include themed() {
+            background-color: t($signedLight);
+            color: t($signedColor);
+        }
     }
 }
 

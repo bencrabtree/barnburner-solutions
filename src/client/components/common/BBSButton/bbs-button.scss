@@ -13,34 +13,71 @@
 
     &.primary .MuiButton-root {
         cursor: pointer;
-        color: white;
-        background-color: $baseColor;
-        border: 2px solid $baseColor;
+
+        @include themed() {
+            color: t($lightText);
+            background-color: t($base);
+            border: 2px solid t($base);
+        }
+
+        .MuiButton-label {
+            @include themed() {
+                color: t($lightText);
+            }
+        }
+
 
         &:hover {
-            background-color: darken($baseColor, 5%);
+            @include themed() {
+                background-color: darken(t($base), 5%);
+            }
         }
     }
 
     &.secondary .MuiButton-root {
         cursor: pointer;
-        color: $notFullyBlack;
         background-color: transparent;
-        border: 2px solid $backgroundDarkGrey;
+
+        @include themed() {
+            color: t($lighterBlack);
+            border: 2px solid t($borderDark);
+        }
+
+        .MuiButton-label {
+            @include themed() {
+                color: t($lighterBlack);
+            }
+        }
+
 
         &:hover {
-            background-color: rgba(0,0,0,.04) !important;
+            @include themed() {
+                background-color: t($boxShadowLight) !important;
+            }
         }
+
+
     }
 
     &.tertiary .MuiButton-root {
         cursor: pointer;
-        color: white;
-        background-color: $accentColor;
-        border: 2px solid $accentColor;
+
+        @include themed() {
+            color: t($lightText);
+            background-color: t($accent);
+            border: 2px solid t($accent);
+        }
+
+        .MuiButton-label {
+            @include themed() {
+                color: t($lightText);
+            }
+        }
 
         &:hover {
-            background-color: darken($accentColor, 5%);
+            @include themed() {
+                background-color: darken(t($accent), 5%);
+            }
         }
     }
 

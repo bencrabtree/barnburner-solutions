@@ -19,7 +19,6 @@ const uploadPhoto = async (artistId, photoUri) => {
     try {
         let formData = new FormData();
         formData.append('photo_uri', photoUri[0], photoUri[0].name);
-        console.log(formData)
         const { data, status } = await http.put(`/roster/uploadPhoto/${artistId}`, formData);
         if (status === 200) {
             console.log('UploadPhoto: Success:', status);

@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useAppState } from '../../store';
 import './my-roster.scss';
 import { ArtistStatus, Tags, UserArtistRelation } from '../../../shared/util/types';
 import ArtistCard from '../../components/ArtistCard/ArtistCard';
 import BBSButton from '../../components/common/BBSButton/BBSButton';
-import { update } from 'lodash';
+import { Menu, MenuItem } from '@material-ui/core';
+import TabCard from '../../components/TabCard/TabCard';
+import ArtistDetails from './components/ArtistDetails';
+import { getArtistImageSrc } from '../../util/constants';
+import HeartIcon from '../../components/HeartIcon/HeartIcon';
+import ArtistIconList from '../../components/ArtistIconList/ArtistIconList';
+import Measure from 'react-measure';
+import { FixedSizeGrid as Grid, areEqual } from 'react-window'; 
+import { memoize } from 'lodash';
 
 const MyRoster = ({
 
@@ -19,21 +27,70 @@ const MyRoster = ({
     const [ searchValue, setSearchValue ] = useState("");
     const [ visibleTags, setVisibleTags ] = useState(Tags);
     const [ artists, setArtists ] = useState(fullRoster);
+    const [ activeTab, setActiveTab ] = useState('filters');
+    const [ selectedArtist, setSelectedArtist ] = useState();
+    const [ rosterLayout, setRosterLayout ] = useState('icon');
+    const [ rosterBounds, setRosterBounds ] = useState({ height: -1, width: -1 });
 
     useEffect(() => {
         document.addEventListener("scroll", handleUserScroll);
+        setSelectedArtist();
 
         return () => {
             document.removeEventListener("scroll", handleUserScroll)
         }
     }, []);
 
-    const generateArtistCards = () => {
+    const generatedArtistCards = useMemo(() => {
         return artists.map((artist, key) => {
-            return (
-                <ArtistCard key={key} artist={artist} photo_path={artist?.photo?.file_path} />
-            )
+
+            switch (rosterLayout) {
+                case 'tiles':
+                    return (
+                        <ArtistCard 
+                            artistId={artist?.id}
+                            photo_path={artist?.photo?.file_path}
+                            onClick={ handleArtistSelection }
+                            // className={selectedArtist === artist?.id ? 'selected' : ''}
+                            // style={style}
+                        />
+                    );
+                case 'icon':
+                    return (
+                        <ArtistIconList
+                            artistId={ artist?.id }
+                            handleArtistSelection={handleArtistSelection}
+                            // className={ selectedArtist === artist?.id ? 'selected' : '' }
+                            // style={ style }
+                        />
+                    );
+                    break;
+                case 'list':
+                    return (
+                        // <div className="artist-row" style={style}>
+                        <div className='artist-row'>
+                            <div className='artist-cell'>
+                                { artist?.full_name }
+                            </div>
+                            <div className={`artist-status-pill ${artist?.status}`}>
+                                { artist?.status }
+                            </div>
+                            <div className='artist-cell'>
+                                { artist?.website || artist?.facebook }
+                            </div>
+                            <div className='artist-cell'>
+                                More info!
+                            </div>
+                        </div>
+                    );
+                    break;
+            }
         })
+    });
+
+    const handleArtistSelection = id => {
+        setSelectedArtist(selectedArtist === id ? undefined : id);
+        setActiveTab('details');
     }
 
     const removeTagFilter = tag => {
@@ -118,17 +175,11 @@ const MyRoster = ({
             })
     }
 
-    /**
-     * Filters
-     * 
-     * Pills with Artist Status, Pills with Artist Relation, Pills with Artist Tags
-     */
-    return (
-        <div className="my-roster-container">
-            <div className="my-roster-layout">
-                <div className="roster-filters card-rounded">
-                    <h1>Filters</h1>
-                    <form >
+    const renderTabContent = () => {
+        switch (activeTab) {
+            case 'filters':
+                return (
+                    <div className='roster-side-panel'>
                         <fieldset>
                             <legend>My Relationship:</legend>
                             { Object.values(UserArtistRelation).map((relation, key) => {
@@ -167,8 +218,38 @@ const MyRoster = ({
                                 })}
                             </div>
                         </fieldset>
-                    </form>
-                </div>
+                    </div>
+                )
+            case 'details':
+                return (
+                    <div className='roster-side-panel'>
+                        <ArtistDetails artistId={ selectedArtist } />
+                    </div>
+                )
+        }
+    }
+
+    /**
+     * Filters
+     * 
+     * Pills with Artist Status, Pills with Artist Relation, Pills with Artist Tags
+     */
+    const rowHeights = new Array(1000)
+        .fill(true)
+        .map(() => 25 + Math.round(Math.random() * 50));
+
+    return (
+        <div className="my-roster-container">
+            <div className="my-roster-layout">
+                <TabCard
+                    tabs={[
+                        { id: 'filters', label: 'Filters', onClick: () => setActiveTab('filters') },
+                        { id: 'details', label: 'Details', onClick: () => setActiveTab('details') }
+                    ]}
+                    activeTab={activeTab}
+                >
+                    { renderTabContent() }
+                </TabCard>
                 <div className="roster-content">
                     { scrollTopButtonIsVisible && 
                         <div className='scroll-to-top' onClick={handleScrollToTop}>
@@ -177,14 +258,41 @@ const MyRoster = ({
                         </div>
                     }
                     <div className="roster-head card-rounded">
-                        <h1>Roster <small>({ artists.length })</small></h1>
+                        <div className='top-content'>
+                            <h1>{ artists.length } <small>artists match your search criteria</small></h1>
+                            <div className='top-content-actions'>
+                                <i className={`fas fa-th ${rosterLayout === 'tiles' ? 'active' : ''}`} onClick={() => setRosterLayout('tiles') }></i>
+                                <i className={`fas fa-th-list ${rosterLayout === 'icon' ? 'active' : ''}`} onClick={() => setRosterLayout('icon') }></i>
+                                <i className={`fas fa-bars ${rosterLayout === 'list' ? 'active' : ''}`} onClick={() => setRosterLayout('list') }></i>
+                            </div>
+                        </div>
                         <div className='pill-container'>
                             { renderTagSystem() }
                         </div>
                     </div>
-                    <div className="roster-cards">
-                        { generateArtistCards() }
-                    </div>
+                    {/* <Measure
+                        bounds
+                        onResize={(contentRect) => {
+                            console.log(contentRect)
+                            setRosterBounds(contentRect.bounds);
+                        }}
+                    >
+                    {({ measureRef }) => */}
+                            <div className={`roster-cards ${rosterLayout}`}>
+                                {/* //</div></div> <Grid
+                                //     height={rosterBounds.height}
+                                //     rowCount={artists.length}
+                                //     width={rosterBounds.width}
+                                //     columnCount={2}
+                                //     columnWidth={rosterBounds.width / 2}
+                                //     rowHeight={300}
+                                //     itemData={artists}
+                                // > */}
+                                    { generatedArtistCards }
+                                {/* // </Grid> */}
+                            </div>
+                        {/*  }
+                    </Measure> */}
                 </div>
             </div>
         </div>

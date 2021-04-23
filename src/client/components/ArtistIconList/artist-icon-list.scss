@@ -1,0 +1,94 @@
+@import "../../assets/sass/colors.scss";
+
+.artist-icon-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 40%;
+    position: relative;
+
+    &.selected {
+        @include themed() {
+            box-shadow: 0px 4px 10px 1px t($boxShadow);
+        }
+    }
+
+    .artist-menu-toggle {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin: .5rem;
+        font-size: 1rem;
+        border-radius: 50%;
+        width: 1rem;
+        height: 1rem;
+        padding: .25rem;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            @include themed() {
+                background-color: t($backgroundLight);
+            }
+        }
+    }
+
+    &.New {
+        @include themed() {
+            border-top: 4px solid t($newColor);
+        }
+    }
+    &.Approached {
+        @include themed() {
+            border-top: 4px solid t($approachedColor);
+        }
+    }
+    &.Negotiating {
+        @include themed() {
+            border-top: 4px solid t($negotiatingColor);
+        }
+    }
+    &.Signed {
+        @include themed() {
+            border-top: 4px solid t($signedColor);
+        }
+    }
+
+    .artist-icon-list-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+
+        h2:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+    .artist-icon-list-extras {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .artist-image-wrapper {
+        height: 10rem;
+        width: 10rem;
+        margin-right: 1rem;
+        display: flex;
+        cursor: pointer;
+
+        img {
+            margin-bottom: 1rem;
+            flex: 0 0 auto;
+            width: 10rem;
+            height: 10rem;
+            align-self: center;
+            -webkit-align-self: center;
+            margin: auto;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    }
+}

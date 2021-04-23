@@ -9,6 +9,8 @@
     align-items: center;
 
     .MuiCircularProgress-colorPrimary {
-        color: $baseColor;
+        @include themed() {
+            color: t($base);
+        }
     }
 }

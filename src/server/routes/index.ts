@@ -16,7 +16,7 @@ export default (app, passport, settings) => {
     app.use((req, res, next) => {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-        // res.header('Content-Type', 'text/plain')
+        res.header("Cache-Control", "public, max-age=31536000");
         next();
     });
     app.use(cookieParser());

@@ -11,17 +11,23 @@
     grid-template-columns: repeat(12,minmax(0,1fr));
     grid-gap: 16px 32px;
     width: 100%;
+
+    .tab-card {
+        flex-direction: column;
+        padding: 1rem;
+        grid-column: span 4;
+        height: fit-content;
+        position: fixed;
+        width: 25%;
+        transition: width .2s;
+    }
 }
 
-.roster-filters {
-    flex-direction: column;
-    padding: 1rem;
-    grid-column: span 4;
-    height: fit-content;
-    position: fixed;
-    width: 25%;
-    transition: width .2s;
+.artist-card.selected {
+    box-shadow: 0px 4px 10px 1px rgba(0,0,0,.25);
+}
 
+.roster-side-panel {
     fieldset {
         margin-top: 1rem;
         max-height: 12rem;
@@ -39,7 +45,7 @@
 }
 
 .main-app.smaller {
-    .roster-filters {
+    .my-roster-layout .tab-card {
         width: 20%;
     }
 }
@@ -53,14 +59,56 @@
 
     .roster-head {
         padding: 1rem;
+        small {
+            font-weight: normal;
+            .extras {
+                font-size: 1rem;
+            }
+        }
     }
+}
+
+.top-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .top-content-actions {
+        display: flex;
+        flex-direction: row;
+
+        i {
+            margin-left: .5rem;
+            color: $dark--grey;
+            cursor: pointer;
+
+            &:hover, &.active {
+                color: $base--blue;
+            }
+        }
+    }
+}
+
+.artist-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .roster-cards {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
+
+    &.list {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &.tiles, &.icon {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
 }
 
 .scroll-to-top {
@@ -69,11 +117,14 @@
     position: fixed;
     right: 40%;
     padding: .5rem 1rem;
-    border: 1px solid $borderGrey;
-    background-color: $backgroundGrey;
-    color: $notFullyBlack;
     border-radius: 50px;
     z-index: 1;
+
+    @include themed() {
+        border: 1px solid t($border);
+        background-color: t($background);
+        color: t($lighterBlack);
+    }
 
     i {
         font-size: .875rem;
@@ -81,6 +132,33 @@
     }
 
     &:hover {
-        background-color: $borderGrey;
+        @include themed() {
+            background-color: t($border);
+        }
+    }
+}
+
+.artist-name-link {
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.artist-details {
+    .artist-header {
+        text-align: center;
+
+        img {
+            margin-bottom: 1rem;
+            flex: 0 0 auto;
+            max-width: 100%;
+            max-height: 15rem;
+            align-self: center;
+            -webkit-align-self: center;
+            margin: auto;
+            object-fit: scale-down;
+        }
     }
 }

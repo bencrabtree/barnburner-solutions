@@ -19,9 +19,11 @@ const BBSModal = ({
             className='bbs-modal-wrapper'
             disableBackdropClick={disableBackdropClick}
         >
-                <div className="bbs-modal-content">
+                <div className="bbs-modal-container">
                     { title && <h1>{ title }</h1> }
-                    { content }
+                    <div className='bbs-modal-content'>
+                        { content }
+                    </div>
                     { footerElts && footerElts.length > 0 &&
                         <div className='bbs-modal-footer'>
                             <div className='error-box'>
@@ -35,6 +37,7 @@ const BBSModal = ({
                         </div>
                     }
                 </div>
+
         </Modal>
     )
 }

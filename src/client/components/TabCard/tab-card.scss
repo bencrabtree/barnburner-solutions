@@ -7,7 +7,7 @@
 
     .tab-container {
         display: flex;
-        border-bottom: 2px solid $backgroundGrey;
+        border-bottom: 2px solid $bg--grey;
         justify-content: space-between;
 
         .tab-labels {
@@ -32,18 +32,18 @@
             padding: .5rem 1rem;
 
             &:hover h2 {
-                color: black;
+                color: $darkText;
             }
 
             h2 {
-                color: $notFullyBlack;
+                color: $dark--grey;
             }
 
             &.active {
-                border-bottom: 4px solid $baseColor;
+                border-bottom: 4px solid $base--blue;
 
                 h2 {
-                    color: black;
+                    color: $darkText;
                 }
             }
         }

@@ -63,7 +63,9 @@
 
     &.active, &.complete {
         h1 {
-            color: white;
+            @include themed() {
+                color: t($error);
+            }
         }
     }
 
@@ -75,11 +77,17 @@
 }
 
 .step.active:before, .step.active:after {
-    background: $accentColor;
+    @include themed() {
+        background: t($accent);
+    }
 }
 .step.complete:before, .step.complete:after {
-    background: $baseColor;
+    @include themed() {
+        background: t($base);
+    }
 }
 .step.todo:before, .step.todo:after {
-    background: $backgroundGrey;
+    @include themed() {
+        background: t($background);
+    }
 }

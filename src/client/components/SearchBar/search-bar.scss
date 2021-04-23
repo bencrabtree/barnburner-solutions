@@ -4,10 +4,10 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    // border: 1px solid $lightBaseColor;
+    // border: 1px solid $light--base;
     align-items: center;
     border-radius: 6px;
-    background-color: $backgroundLightGrey;
+    background-color: $bg--light--grey;
 
     i {
         margin-left: 1rem;
@@ -19,6 +19,6 @@
         font-size: 1.25rem;
         padding: .5rem 1rem !important;
         width: 24rem;
-        color: black;
+        color: $darkText;
     }
 }

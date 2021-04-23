@@ -1,33 +1,149 @@
-$baseColor: #212756;
-//2c2156;
-// #212856;
+// default themes
+$base--blue: #212756;
+$light--base: #596198;
+$accent--orange: #ef6a4d;
 
-$accentColor: #ef6a4d;
-//#ef4040;
+$light--text: #ffffff;
+$dark--text: #000000;
 
-$base2: #2c2156;
-$accent2: #ef4040;
+$dark--background: #1c1e21;
+$dark--grey: #616161;
 
-$superLightGrey: #fbfbfb;
-$borderGrey: #dadce0;
+$bg--light--light--grey: #fbfbfb;
+$bg--light--grey: #F2F2F2;
+$bg--grey: #E5E5E5;
 
-$superLightBaseColor: #dee2ff;
-$lightBaseColor: #596198;
+$border--grey: #dadce0;
+$border--dark--grey: #c4c4c4;
 
-$backgroundLightGrey: #F2F2F2;
-$backgroundGrey: #E5E5E5;
-$backgroundDarkGrey: #C4C4C4;
+$error--red: #DF0000;
 
-$notFullyBlack: #616161;
+$new--highlight: #5dcddc;
+$approached--highlight: #fec043;
+$negotiating--highlight: #aea2fb;
+$signed--highlight: #3dcfa2;
 
-$errorRed: #DF0000;
+$new--highlight--light: #f0fafc;
+$approached--highlight--light: #fff0cf;
+$negotiating--highlight--light: #e4e0ff;
+$signed--highlight--light: #e1f5ef;
 
-$highlightNew: #5dcddc;
-$highlightApproached: #fec043;
-$highlightNegotiating: #aea2fb;
-$highlightSigned: #3dcfa2;
+$new--highlight--dark: #262829;
+$approached--highlight--dark: #4b463a;
+$negotiating--highlight--dark: #3c3a44;
+$signed--highlight--dark: #343a38;
 
-$lightHighlightNew: #f0fafc;
-$lightHighlightApproached: #fff0cf;
-$lightHighlightNegotiating: #e4e0ff;
-$lightHighlightSigned: #e1f5ef;
+// dark themes
+
+
+///////////////////
+
+$logo: 'logo';
+$base: 'base';
+$accent: 'accent';
+$baseLight: 'baseLight';
+$lightText: 'lightText';
+$darkText: 'darkText';
+$lighterBlack: 'ligherBlack';
+$app-background: 'app-background';
+$backgroundLight: 'backgroundLight';
+$background: 'background';
+$border: 'border';
+$borderDark: 'borderDark';
+
+$boxShadow: 'boxShadow';
+$boxShadowLight: 'boxShadowLight';
+
+$error: 'error';
+
+$newColor: 'newColor';
+$newLight: 'newLight';
+$approachedColor: 'approachedColor';
+$approachedLight: 'approachedLight';
+$negotiatingColor: 'negotiatingColor';
+$negotiatingLight: 'negotiatingLight';
+$signedColor: 'signedColor';
+$signedLight: 'signedLight';
+
+
+$themes: (
+    default: (
+        logo: url('../images/barnburner.svg'),
+        base: $base--blue,
+        accent: $accent--orange,
+        baseLight: $light--base,
+
+        lightText: $light--text,
+        darkText: $dark--text,
+        lighterBlack: $dark--grey,
+
+        app-background: $bg--light--light--grey,
+        backgroundLight: $bg--light--grey,
+        background: $bg--grey,
+        
+        border: $border--grey,
+        borderDark: $border--dark--grey,
+
+        boxShadow: rgba(0,0,0,.25),
+        boxShadowLight: rgba(0,0,0,.04),
+
+        error: $error--red,
+
+        newColor: $new--highlight,
+        newLight: $new--highlight--light,
+        approachedColor: $approached--highlight,
+        approachedLight: $approached--highlight--light,
+        negotiatingColor: $negotiating--highlight,
+        negotiatingLight: $negotiating--highlight--light,
+        signedColor: $signed--highlight,
+        signedLight: $signed--highlight--light
+    ),
+    dark: (
+        logo: url('../images/barnburner.svg'),
+        base: $base--blue,
+        accent: $accent--orange,
+        baseLight: $light--base,
+
+        lightText: $dark--background,
+        lightIcon: $light--text,
+        darkText: $light--text,
+        darkIcon: $dark--grey,
+        lighterBlack: $dark--grey,
+
+        app-background: $dark--background,
+        backgroundLight: $dark--grey,
+        background: $bg--grey,
+        
+        border: $dark--text,
+        borderDark: $border--dark--grey,
+
+        error: $error--red,
+
+        newColor: $new--highlight,
+        newLight: $new--highlight--dark,
+        approachedColor: $approached--highlight,
+        approachedLight: $approached--highlight--dark,
+        negotiatingColor: $negotiating--highlight,
+        negotiatingLight: $negotiating--highlight--dark,
+        signedColor: $signed--highlight,
+        signedLight: $signed--highlight--dark
+    )
+);
+
+@mixin themed() {
+    @each $theme, $map in $themes {
+      .theme--#{$theme} & {
+        $theme-map: () !global;
+        @each $key, $submap in $map {
+          $value: map-get(map-get($themes, $theme), "#{$key}");
+          $theme-map: map-merge($theme-map, ($key: $value)) !global;
+        }
+        @content;
+        $theme-map: null !global;
+      }
+    }
+}
+
+@function t($key) {
+    @return map-get($theme-map, $key);
+}

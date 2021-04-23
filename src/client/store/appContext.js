@@ -12,7 +12,8 @@ const AppContextProvider = ({ children }) => {
         allUsers: [],
         fullRoster: [],
         selectedArtist: null,
-        artistRelationships: []
+        artistRelationships: [],
+        lightMode: null
     });
 
     useEffect(() => {
@@ -35,7 +36,8 @@ const AppContextProvider = ({ children }) => {
                     selectedArtist: null,
                     artistRelationships: relationship,
                     loading: false,
-                    sideMenuOpen: true
+                    sideMenuOpen: true,
+                    lightMode: true
                 })
             } catch (error) {
                 console.log("Unable to set UserState:", error)
