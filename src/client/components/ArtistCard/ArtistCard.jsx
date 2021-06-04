@@ -30,20 +30,16 @@ const ArtistCard = ({
             return (
                 <div className={`artist-card card ${artist.status} ${className}`} onClick={handleArtistSelection}>
                     <div className='artist-image-wrapper'>
-                        <img src={ getArtistImageSrc(photo_path) } />
+                        {/* <img src={ getArtistImageSrc(photo_path) } /> */}
                     </div>
                     <div className="artist-card-content">
+                        <h1 className='artist-name'>{ artist.full_name }</h1>
                         <div className="artist-card-extras">
-                            { getArtistRelationship(artist.id) === UserArtistRelation.Favorited ?
-                                <HeartIcon isLiked={true} /> :
-                                <h2 className="normal-weight capitalize">{ getArtistRelationship(artist.id) }</h2>
-                            }
                             <span className={`artist-status-pill ${artist.status}`}>
                                 { artist.status }
                             </span>
                         </div>
-                        <h1 className='artist-name'>{ artist.full_name }</h1>
-                        <div className="artist-bites">
+                        {/* <div className="artist-bites">
                             { artist.tags.map((tag, key) => {
                                 return (
                                     <div className='pill' key={key}>
@@ -51,7 +47,7 @@ const ArtistCard = ({
                                     </div>
                                 )
                             })}
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             )

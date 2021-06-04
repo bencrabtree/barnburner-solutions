@@ -40,7 +40,6 @@
 
         @include themed() {
             color: t($lighterBlack);
-            border: 2px solid t($borderDark);
         }
 
         .MuiButton-label {

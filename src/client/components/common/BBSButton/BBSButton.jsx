@@ -10,10 +10,11 @@ const BBSButton = ({
     endIcon,
     title,
     type,
-    disabled
+    disabled,
+    className
 }) => {
     return (
-        <div className={`bbs-button ${type} ${disabled ? 'disabled' : 'active'}`} onClick={onClick} title={title}>
+        <div className={`bbs-button ${type} ${disabled ? 'disabled' : 'active'} ${className}`} onClick={onClick} title={title}>
             <Button
                 startIcon={ startIcon }
                 endIcon={ endIcon }

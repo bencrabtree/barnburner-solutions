@@ -1,4 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
+// import sharp from "sharp";
+import axios from 'axios';
 import { http } from "../util/api";
 import { isLoggedIn } from "../util/auth";
 
@@ -7,13 +9,13 @@ const AppContext = createContext([{}, () => {}]);
 const AppContextProvider = ({ children }) => {
     const [ state, setState ] = useState({
         loading: true,
-        sideMenuOpen: true,
+        sideMenuOpen: false,
         userProfile: {},
         allUsers: [],
         fullRoster: [],
         selectedArtist: null,
         artistRelationships: [],
-        lightMode: null
+        lightMode: true
     });
 
     useEffect(() => {
@@ -28,6 +30,17 @@ const AppContextProvider = ({ children }) => {
                     const { data } = await http.get(`/user/relationships/${user.id}`);
                     relationship = data;
                 }
+                roster.forEach(async artist => {
+                    // console.log(artist.photo.file_path)
+                    try {
+                        // let input = (await axios({ url: artist.photo.file_path, responseType: "arraybuffer" })).data;
+                        // sharp(input)
+                        //     .resize(300, 300)
+                        //     .toFile(`./artistImages/${artist.full_name}.png`)
+                    } catch (err) {
+                        console.log(err)
+                    }
+                })
                 
                 setState({
                     userProfile: user,
@@ -36,7 +49,7 @@ const AppContextProvider = ({ children }) => {
                     selectedArtist: null,
                     artistRelationships: relationship,
                     loading: false,
-                    sideMenuOpen: true,
+                    sideMenuOpen: false,
                     lightMode: true
                 })
             } catch (error) {

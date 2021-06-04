@@ -134,15 +134,9 @@
 .artist-content {
     display: flex;
     flex-direction: row;
-
-    .tab-card:first-child {
-        width: 66%;
-    }
-
-    .tab-card:last-child {
-        width: 33%;
-    }
+    width: 100%;
 }
+
 .form-content {
     flex-wrap: wrap;
     display: flex;

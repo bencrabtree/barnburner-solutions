@@ -4,6 +4,8 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    width: 100%;
+    position: relative;
 
     .tab-container {
         display: flex;
@@ -52,4 +54,19 @@
     .tab-card-content {
         padding: 1rem;
     }
+}
+
+.loading-overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    padding: 0;
+    top: -.5rem;
+    right: -.5rem;
+
+    @include themed() {
+        background-color: rgba(red(t($background)), green(t($background)), blue(t($background)), 0.5);
+    }
+    
 }

@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './tab-card.scss';
-import BBSIcon from '../common/BBSIcon/BBSIcon';
+import BBSLoading from '../common/BBSLoading/BBSLoading';
 
 const TabCard = ({
     tabs,
     activeTab,
     actions,
+    loading,
     children
 }) => {
 
@@ -41,6 +42,11 @@ const TabCard = ({
 
     return (
         <div className='tab-card card-rounded'>
+            { loading &&
+                <div className='loading-overlay card-rounded'>
+                    <BBSLoading />
+                </div>
+            }
             <div className='tab-container'>
                 <div className='tab-labels'>
                     { renderTabs() }

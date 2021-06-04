@@ -41,6 +41,11 @@ const MyRoster = ({
         }
     }, []);
 
+    const handleArtistSelection = id => {
+        setSelectedArtist(selectedArtist === id ? undefined : id);
+        setActiveTab('details');
+    }
+
     const generatedArtistCards = useMemo(() => {
         return artists.map((artist, key) => {
 
@@ -48,6 +53,7 @@ const MyRoster = ({
                 case 'tiles':
                     return (
                         <ArtistCard 
+                            key={key}
                             artistId={artist?.id}
                             photo_path={artist?.photo?.file_path}
                             onClick={ handleArtistSelection }
@@ -58,8 +64,9 @@ const MyRoster = ({
                 case 'icon':
                     return (
                         <ArtistIconList
+                            key={key}
                             artistId={ artist?.id }
-                            handleArtistSelection={handleArtistSelection}
+                            handleArtistSelection={ handleArtistSelection }
                             // className={ selectedArtist === artist?.id ? 'selected' : '' }
                             // style={ style }
                         />
@@ -68,7 +75,7 @@ const MyRoster = ({
                 case 'list':
                     return (
                         // <div className="artist-row" style={style}>
-                        <div className='artist-row'>
+                        <div className='artist-row' key={key}>
                             <div className='artist-cell'>
                                 { artist?.full_name }
                             </div>
@@ -87,11 +94,6 @@ const MyRoster = ({
             }
         })
     });
-
-    const handleArtistSelection = id => {
-        setSelectedArtist(selectedArtist === id ? undefined : id);
-        setActiveTab('details');
-    }
 
     const removeTagFilter = tag => {
         let temp = filters;

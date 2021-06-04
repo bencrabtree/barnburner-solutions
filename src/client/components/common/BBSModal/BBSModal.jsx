@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './bbs-modal.scss';
 import { Modal, TextField, Chip } from '@material-ui/core';
+import { useAppState } from '../../../store';
 
 const BBSModal = ({
     isOpen,
@@ -12,11 +13,13 @@ const BBSModal = ({
     errorMessage,
     disableBackdropClick
 }) => {
+    const { lightMode } = useAppState();
+    
     return (
         <Modal
             open={isOpen}
             onClose={onClose}
-            className='bbs-modal-wrapper'
+            className={`bbs-modal-wrapper ${lightMode ? 'theme--default' : 'theme--dark'}`}
             disableBackdropClick={disableBackdropClick}
         >
                 <div className="bbs-modal-container">

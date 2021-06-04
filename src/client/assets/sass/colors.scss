@@ -7,6 +7,7 @@ $light--text: #ffffff;
 $dark--text: #000000;
 
 $dark--background: #1c1e21;
+$dark--background-hover: #24272b;
 $dark--grey: #616161;
 
 $bg--light--light--grey: #fbfbfb;
@@ -46,6 +47,7 @@ $lightText: 'lightText';
 $darkText: 'darkText';
 $lighterBlack: 'ligherBlack';
 $app-background: 'app-background';
+$app-background-hover: 'app-background-hover';
 $backgroundLight: 'backgroundLight';
 $background: 'background';
 $border: 'border';
@@ -78,6 +80,7 @@ $themes: (
         lighterBlack: $dark--grey,
 
         app-background: $bg--light--light--grey,
+        app-background-hover: $light--text,
         backgroundLight: $bg--light--grey,
         background: $bg--grey,
         
@@ -111,6 +114,7 @@ $themes: (
         lighterBlack: $dark--grey,
 
         app-background: $dark--background,
+        app-background-hover: $dark--background-hover,
         backgroundLight: $dark--grey,
         background: $bg--grey,
         

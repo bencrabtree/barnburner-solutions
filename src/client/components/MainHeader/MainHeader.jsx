@@ -10,22 +10,32 @@ import { Menu, MenuItem } from '@material-ui/core';
 import { isLoggedIn, logOut } from '../../util/auth';
 import { useAppState } from '../../store';
 import BBSButton from '../common/BBSButton/BBSButton';
+import Drawer from '@material-ui/core/Drawer';
 import Avatar from '../common/Avatar/Avatar';
 
 const MainHeader = ({
     newLeadModalIsOpen,
-    setNewLeadModalIsOpen
+    setNewLeadModalIsOpen,
+    darkBackground
 }) => {
     const history = useHistory();
-    const { addNewClient, userProfile, setLoading, toggleSideMenu, toggleMode } = useAppState();
+    const {
+        lightMode,
+        addNewClient,
+        userProfile,
+        setLoading,
+        toggleSideMenu,
+        toggleMode,
+        sideMenuOpen
+    } = useAppState();
     const [ userMenuRef, setUserMenuRef ] = useState();
     const [ searchAddArtist, setSearchAddArtist ] = useState();
     // const [ newLeadModalIsOpen, setNewLeadModalIsOpen ] = useState(false);
     const [ selectedTab, setSelectedTab ] = useState('')
 
     const navigateBackHome = () => {
-        if (history.location.pathname != "/home") {
-            history.push("/home");
+        if (history.location.pathname != "/") {
+            history.push("/");
             history.go(0);
         }
     }
@@ -33,13 +43,17 @@ const MainHeader = ({
     const handleUserLogout = async () => {
         setLoading(true);
         logOut();
-        history.push('/home');
+        history.push('/');
         history.go(0)
     }
 
     const handleUserLogin = () => {
         history.push('/signin');
         history.go(0);
+    }
+
+    const handleUserSignUp = () => {
+        alert('Sign Up not available yet. Please contact a system administrator for details.')
     }
 
     const handleTabSelection = id => {
@@ -74,6 +88,28 @@ const MainHeader = ({
 
     const handleUserMenuClose = () => {
         setUserMenuRef(null);
+    }
+
+    const generateTabItems = () => {
+        const tabs = [
+            { id: 'myroster', label: 'Roster', icon: 'fas fa-address-book' },
+            { id: 'calendar', label: 'Calendar', icon: 'fas fa-calendar' },
+            { id: 'intranet', label: 'Intranet', icon: 'fas fa-network-wired' }
+        ];
+
+        return tabs.map((elt, key) => {
+            return (
+                <div className={
+                    `side-menu-item
+                    ${history.location.pathname === "/" + elt.id ? 'active' : 'inactive'}`}
+                    onClick={() => handleTabSelection(elt.id)}
+                    key={key}
+                >
+                    <i className={elt.icon}></i>
+                    <h2>{ elt.label }</h2>
+                </div>
+            )
+        })
     }
 
     const renderMenu = () => {
@@ -112,6 +148,11 @@ const MainHeader = ({
                     <BBSButton
                         label="Login"
                         onClick={ handleUserLogin }
+                        type="secondary"
+                    />
+                    <BBSButton
+                        label="Sign Up"
+                        onClick={ handleUserSignUp }
                         type="tertiary"
                     />
                 </div>
@@ -120,7 +161,7 @@ const MainHeader = ({
     }
 
     return (
-        <div className='header'>
+        <div className={`header ${darkBackground ? 'blue' : ''}`} key="main-header">
             <div className='main-header'>
             <div className='sub-header'>
                 { isLoggedIn() && <BBSIcon
@@ -130,10 +171,20 @@ const MainHeader = ({
                 /> }
                 <BBSLogo onClick={ navigateBackHome } />
             </div>
-                <SearchBar onSubmit={ handleSearchBarSubmit } onAddNewLead={ onAddNewLead } />
+                { isLoggedIn() && <SearchBar onSubmit={ handleSearchBarSubmit } onAddNewLead={ onAddNewLead } /> }
                 { renderMenu() }
             </div>
-
+            <Drawer anchor="left" open={sideMenuOpen} onClose={ toggleSideMenu }>
+                <div className={`side-menu ${lightMode ? 'theme--default' : 'theme--dark'}`}>
+                    <BBSButton
+                        className="add-new-lead-button"
+                        label="Add a new lead"
+                        type="tertiary"
+                        onClick={() => setNewLeadModalIsOpen(true) }
+                    />
+                    { generateTabItems() }
+                </div>
+            </Drawer>
         </div>
     )
 }

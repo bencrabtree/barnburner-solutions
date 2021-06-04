@@ -1,0 +1,84 @@
+@import '../../assets/sass/colors.scss';
+
+.bbs-home {
+    .bbs-home-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 14rem;
+        padding-bottom: 15rem;
+        margin-top: -1rem;
+        
+        @include themed() {
+            background-color: t($base);
+        }
+
+        .home-text {
+            padding-top: 3rem;
+            width: 50%;
+            text-align: center;
+
+            p {
+                font-size: 1.5rem;
+
+                @include themed() {
+                    color: t($lightText)
+                }
+            }
+        }
+
+        h2 {
+            font-size: 3rem;
+
+            @include themed() {
+                color: t($lightText)
+            }
+        }
+
+        h1 {
+            font-weight: normal;
+            font-size: 8rem;
+            z-index: 5;
+
+            @include themed() {
+                color: t($accent)
+            }
+        }
+    }
+
+    .bbs-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 5rem 0;
+        margin: 0rem 8rem;
+
+        .home-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            border-radius: 8px;
+            padding: 2rem;
+            width: 20%;
+
+            @include themed() {
+                border: 1px solid t($base);
+            }
+
+            h2 {
+                font-weight: normal;
+
+                @include themed() {
+                    color: t($base)
+                }
+            }
+
+            p {
+                @include themed() {
+                    color: t($base)
+                }
+            }
+        }
+    }
+}

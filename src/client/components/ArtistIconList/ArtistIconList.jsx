@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import './artist-icon-list.scss';
+import PropTypes from 'prop-types';
 import { useAppState } from '../../store';
 import { ArtistStatus, Tags, UserArtistRelation } from '../../../shared/util/types';
 import { Menu, MenuItem } from '@material-ui/core';
@@ -53,7 +54,7 @@ const ArtistIconList = ({
                             <MenuItem onClick={handleArtistMenuClose}>Agents</MenuItem>
                         </Menu>
                         <div className='artist-image-wrapper' onClick={ () => handleArtistSelection(artist.id)  }>
-                            <img src={ getArtistImageSrc(artist?.photo?.file_path) } />
+                            {/* <img src={ getArtistImageSrc(artist?.photo?.file_path) } /> */}
                         </div>
                         <div className='artist-icon-list-content'>
                             <h2 onClick={ () => handleArtistSelection(artist.id) }>{ artist.full_name }</h2>
@@ -79,5 +80,9 @@ const ArtistIconList = ({
     return renderContent();
 
 };
+
+ArtistIconList.propTypes = {
+    handleArtistSelection: PropTypes.func.isRequired
+}
 
 export default ArtistIconList;

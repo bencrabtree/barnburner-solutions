@@ -3,27 +3,16 @@
 .side-menu {
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding-top: 1.5rem;
-    // border-right: 1px solid $border--grey;
-    position: fixed;
-    top: 4rem;
-    left: 0;
     height: 100%;
 
     @include themed() {
         background-color: t($lightText);
     }
 
-    &.visible {
-        margin-left: 0;
-        min-width: 250px;
-        max-width: 250px;
-        transition: margin-left .25s;
-    }
-    &.notVisible {
-        margin-left: -250px;
-        transition: margin-left .25s;
+    .add-new-lead-button {
+        margin: 0 auto;
+        margin-bottom: 1rem;
     }
 }
 
@@ -32,9 +21,9 @@
     margin: .5rem 0rem;
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    width: 100%;
-    padding: .5rem 1rem;
+    padding: .5rem 6rem .5rem 1rem;
 
     @include themed() {
         color: t($darkText);
@@ -43,7 +32,6 @@
     i {
         font-size: 1.5rem;
         margin-right: 1rem;
-        margin-left: 2rem;
     }
 
     h2 {
@@ -53,33 +41,16 @@
         }
     }
 
-    &.active, &.active:hover {
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
-
-        @include themed() {
-            background-color: t($baseLight);
-            color: t($base);
-        }
-
-        h2 {
-            @include themed() {
-                color: t($base);
-            }
-        }
-    }
-
-    &:hover {
+    &:hover, &.active, &.active:hover {
         @include themed() {
             background-color: t($background);
             color: t($darkText);
         }
+
         h2 {
             @include themed() {
                 color: t($darkText);
             }
         }
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
     }
 }

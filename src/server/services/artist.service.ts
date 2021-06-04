@@ -40,7 +40,7 @@ class ArtistService {
     //
     getArtistByName = async (full_name: string): Promise<Artist> => {
         try {
-            console.log(full_name)
+            // console.log(full_name)
             let artist: Artist = await getRepository(Artist)
                 .createQueryBuilder('artist')
                 .where({ full_name })
@@ -48,7 +48,7 @@ class ArtistService {
                 .leftJoinAndSelect('artist.files', 'files')
                 // .leftJoinAndSelect('artist.tags', 'tags')
                 .getOne();
-            console.log(artist)
+            // console.log(artist)
             return artist;
         } catch (error) {
             console.log("[ArtistService] GetArtistByName:", error);
@@ -96,10 +96,10 @@ class ArtistService {
 
             let photo = new File();
             await photo.upload(photo_uri[0], artist.full_name);
-            console.log('successfully uploaded photo', photo)
+            // console.log('successfully uploaded photo', photo)
             artist.photo = photo;
             await artist.save();
-            console.log('successfully updated photo', artist)
+            // console.log('successfully updated photo', artist)
             return artist;
         } catch (error) {
             console.log('[ArtistService] UploadPhoto:', error);

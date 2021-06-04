@@ -8,6 +8,7 @@ export enum ArtistStatus {
 }
 
 export enum UserArtistRelation {
+    Admin = "admin",
     Owner = "owner",
     Favorited = "favorited",
     None = "none"

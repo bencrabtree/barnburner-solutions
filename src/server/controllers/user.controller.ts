@@ -47,7 +47,7 @@ const getArtistRelationships = async (req: Request, res: Response) => {
         let artists: Artist[] = await userService.getArtistRelationships(req.params.userId);
         res.status(200).send(artists);
     } catch (error) {
-        console.log("UserController: updateUser:", error);
+        console.log("UserController: getArtistRelationships:", error);
         res.status(400).send(`Unable to get relationships for user ${req.params.userId}`)
     }
 }

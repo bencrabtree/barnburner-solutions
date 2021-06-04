@@ -33,12 +33,12 @@ const ArtistPage = ({
     const [ selectedArtist, setSelectedArtist ] = useState({});
     const [ selectedTab, setSelectedTab ] = useState('account');
     const [ isEditing, setIsEditing ] = useState(false);
+    const [ loading, setLoading ] = useState(false);
     //
     const [ relationship, setRelationship ] = useState();
     //
     const [ teamsTabInfo, setTeamsTabInfo ] = useState({ data: [], loading: true });
     const [ artistFormInfo, setArtistFormInfo ] = useState({ data: [], loading: true });
-
 
     useEffect(() => {
         getData();
@@ -65,9 +65,11 @@ const ArtistPage = ({
 
     const handleArtistContentSubmit = async () => {
         try {
+            setLoading(true);
             let newInfo = artistInfoRef.current.getNewInfo();
             const { data, status } = await http.put(`/roster/${selectedArtist.id}`, newInfo );
             if (data && status === 200) {
+                setLoading(false);
                 setIsEditing(false);
                 setSelectedArtist(data);
                 console.log('UpdateArtist: Success:', status);
@@ -114,11 +116,13 @@ const ArtistPage = ({
                     { id: 'contact', label: 'Contact', onClick: () => setSelectedTab('contact') },
                     { id: 'files', label: 'Files', onClick: () => setSelectedTab('files') },
                     { id: 'team', label: 'Team', onClick: () => setSelectedTab('team') },
+                    { id: 'posts', label: 'Posts', onClick: () => setSelectedTab('posts')  }
                 ]}
                 actions={
                     generateArtistContentTabActions()
                 }
                 activeTab={selectedTab}
+                loading={loading}
             >
                 { generateAritstContent() }
             </TabCard>
@@ -135,30 +139,16 @@ const ArtistPage = ({
                         disabled={!isEditing}
                         ref={artistInfoRef}
                     />
-                )
+                );
+            case 'posts':
+                return "Notify team members of any updates to the lead. Post a message to all agents or just the lead agents for this act."
+            case 'schedule':
+            case 'contact':
             case 'team':
-                // return (
-                //     <TeamTab
-                //         info={teamsTabInfo}
-                //     />
-                // )
+            case 'files':
             default:
                 return `Selected ${selectedTab}`
         }
-    }
-
-    const renderArtistPosts = () => {
-        return (
-            <TabCard
-                tabs={[
-                    { id: 'posts', label: 'Posts' },
-                    { id: 'timeline', label: 'Timeline' },
-                ]}
-                activeTab='posts'
-            >
-                Notify team members of any updates to the lead. Post a message to all agents or just the lead agents for this act.
-            </TabCard>
-        )
     }
 
     const renderArtistPage = () => {
@@ -168,9 +158,8 @@ const ArtistPage = ({
             return (
                 <div className="artist-page">
                     { renderArtistHeader() }
-                    <div className='artist-content'>
+                    <div className={`artist-content`}>
                         { renderArtistContent() }
-                        { renderArtistPosts() }
                     </div>
                 </div>
             )

@@ -22,7 +22,7 @@ export default function(googleAuth, settings) {
                     }
                     // generate a signed json web token with the contents of user object and return it in the response
                     await generateToken(res, settings, user);
-                    return res.redirect('/home')
+                    return res.redirect('/')
                 })(req, res, next);
 
             } catch (error) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAppState } from '../../store';
 import BBSButton from '../common/BBSButton/BBSButton';
-import BBSIcon from '../common/BBSIcon/BBSIcon';
+import Drawer from '@material-ui/core/Drawer';
 import './side-menu.scss';
 
 const SideMenu = ({
@@ -39,14 +39,10 @@ const SideMenu = ({
     }
 
     return (
-        <div className={`side-menu ${sideMenuOpen ? 'visible' : 'notVisible'}`}>
-            <BBSButton
-                label="Add a new lead"
-                type="tertiary"
-                onClick={() => setNewLeadModalIsOpen(true) }
-            />
-            { generateTabItems() }
-        </div>
+        <>
+
+        </>
+
     )
 }
 
