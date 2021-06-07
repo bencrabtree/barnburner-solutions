@@ -23,7 +23,7 @@ const App = ({}) => {
     })
 
     const listenToScroll = () => {
-        setHeaderBarOffset(window.pageYOffset < 1)
+        setHeaderBarOffset(window.pageYOffset < 24)
     }
 
     const isHomePage = () => {

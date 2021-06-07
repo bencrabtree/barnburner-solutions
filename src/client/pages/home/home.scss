@@ -49,9 +49,50 @@
     .bbs-info {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        padding: 5rem 0;
-        margin: 0rem 8rem;
+
+        &.cards {
+            justify-content: space-between;
+            margin: 0rem 8rem;
+            padding: 5rem;
+        }
+
+        &.two-columns {
+            justify-content: center;
+            > div {
+                padding: 5rem;
+            }
+        }
+
+        .photo-and-text {
+            display: flex;
+            justify-content: center;
+
+            img {
+                width: 90%;
+            }
+        }
+
+        .bbs-text {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+
+            @include themed() {
+                background-color: t($base)
+            }
+
+            h1 {
+                margin-bottom: 1rem;
+                
+                @include themed() {
+                    color: t($accent);
+                }
+            }
+            p {
+                @include themed() {
+                    color: t($lightText);
+                }
+            }
+        }
 
         .home-card {
             display: flex;
@@ -81,4 +122,8 @@
             }
         }
     }
+}
+
+.bbs-home-footer {
+    padding: 5rem;
 }
