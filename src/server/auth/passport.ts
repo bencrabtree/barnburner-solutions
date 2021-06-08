@@ -12,7 +12,6 @@ export const clearUsersession = () => {
 export default function(settings: any) {
     const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
     const JWTStrategy = require('passport-jwt').Strategy;
-    const ExtractJwt = require('passport-jwt').ExtractJwt;
     const GOOGLE_CLIENT_ID = settings.auth.clientId;
     const GOOGLE_CLIENT_SECRET = settings.auth.clientSecret;
     console.log(process.env.NODE_ENV, process.env.NODE_ENV === 'none' ? settings.auth.devRedirect : settings.auth.prodRedirect)

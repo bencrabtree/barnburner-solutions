@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/sass/general.scss';
 import { AppContextProvider } from './store/appContext';
-import Root from './app.js';
+import App from './App';
 
-const BB = () => {
+const Root = () => {
     return (
         <AppContextProvider>
-            <Root />
+            <App />
         </AppContextProvider>
     )
 }
 
-ReactDOM.render(<BB />, document.getElementById('root'));
+ReactDOM.render(<Root />, document.getElementById('root'));

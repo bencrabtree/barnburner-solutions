@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { Home, ArtistPage } from './pages';
+import { Home, ArtistPage, SignIn, NotAuthorized, UnderConstruction } from './pages';
 import './assets/sass/general.scss';
 import MainHeader from './components/MainHeader/MainHeader';
 import { useAppState } from './store/index';
@@ -10,7 +10,7 @@ import ProtectedRoute from './util/ProtectedRoute';
 import { isLoggedIn } from './util/auth';
 
 const App = ({}) => {
-    const { loading } = useAppState();
+    const { loading, lightMode } = useAppState();
     const [ newLeadModalIsOpen, setNewLeadModalIsOpen ] = useState(false);
     const [ headerBarOffset, setHeaderBarOffset ] = useState(true);
 
@@ -39,10 +39,12 @@ const App = ({}) => {
             return (
                 <Router>
                     <Switch>
-                        <Route component={ ArtistPage } path="/artists/:artistName" />
+                        <Route exact path="/signin" component={ SignIn } />
+                        <Route exact path="/auth/error" component={ NotAuthorized } />
+                        <Route exact path="/under-construction" component={ UnderConstruction } />
+                        <Route path="/artists/:artistName" component={ ArtistPage } />
                         <ProtectedRoute exact path="/myroster" component={ MyRoster } />
-                        {/* <Route exact path="/calendar" component={ MyCalendar } /> */}
-                        <Route component={ Home } exact path="/" />
+                        <Route exact path="/" component={ Home } />
                         <Route path="/" render={() => (<Redirect to="/" />)} />  
                     </Switch>
                 </Router>
@@ -51,19 +53,25 @@ const App = ({}) => {
     }
 
     return (
-        <div className='app'>
+        <div className={`app ${lightMode ? 'theme--default' : 'theme--dark'}`}>
             <MainHeader
                 newLeadModalIsOpen={newLeadModalIsOpen}
                 setNewLeadModalIsOpen={setNewLeadModalIsOpen}
                 darkBackground={isHomePage() && headerBarOffset}
             />
-            <div className="main-container">
-                {/* { isLoggedIn() && <SideMenu setNewLeadModalIsOpen={setNewLeadModalIsOpen} /> } */}
-                <div className={`main-app`}>
-                    { renderApp() }
-                </div>
+            <div className="content">
+                { renderApp() }
             </div>
-
+            <footer className="main-footer">
+                <div className="text-column">
+                    <a href="mailto:ben@barnburner.solutions?subject=Reaching%20Out">
+                        Contact Us
+                    </a>
+                </div>
+                <div className="text-column">
+                    &copy;2021, BarnBurner Solutions, LLC. All rights reserved.
+                </div>
+            </footer>
         </div>
     );
 }

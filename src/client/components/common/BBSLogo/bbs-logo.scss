@@ -46,6 +46,10 @@
         background-image: url('../../../assets/images/barnburner.svg');
         background-position: center;
         background-repeat: no-repeat;
+
+        &.transparent {
+            background-image: url('../../../assets/images/barnburner logo_transparent.jpg');
+        }
     }
 
     &.clickable {

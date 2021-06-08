@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './main-header.scss';
 import BBSLogo from '../common/BBSLogo/BBSLogo';
@@ -12,13 +11,14 @@ import { useAppState } from '../../store';
 import BBSButton from '../common/BBSButton/BBSButton';
 import Drawer from '@material-ui/core/Drawer';
 import Avatar from '../common/Avatar/Avatar';
+import { createBrowserHistory } from 'history';
 
 const MainHeader = ({
     newLeadModalIsOpen,
     setNewLeadModalIsOpen,
     darkBackground
 }) => {
-    const history = useHistory();
+    const history = createBrowserHistory();
     const {
         lightMode,
         addNewClient,
@@ -30,7 +30,6 @@ const MainHeader = ({
     } = useAppState();
     const [ userMenuRef, setUserMenuRef ] = useState();
     const [ searchAddArtist, setSearchAddArtist ] = useState();
-    // const [ newLeadModalIsOpen, setNewLeadModalIsOpen ] = useState(false);
     const [ selectedTab, setSelectedTab ] = useState('')
 
     const navigateBackHome = () => {
@@ -53,7 +52,8 @@ const MainHeader = ({
     }
 
     const handleUserSignUp = () => {
-        alert('Sign Up not available yet. Please contact a system administrator for details.')
+        let body = `Hi!\n\nI'm interested in learning more about how I can streamline my operations with BarnBurner Solutions.\n\nThanks,`
+        window.location.href = `mailto:ben@barnburner.solutions?subject=Requesting%20A%20Demo&body=${encodeURI(body)}`
     }
 
     const handleTabSelection = id => {
@@ -101,7 +101,7 @@ const MainHeader = ({
             return (
                 <div className={
                     `side-menu-item
-                    ${history.location.pathname === "/" + elt.id ? 'active' : 'inactive'}`}
+                    ${history?.location.pathname === "/" + elt.id ? 'active' : 'inactive'}`}
                     onClick={() => handleTabSelection(elt.id)}
                     key={key}
                 >
@@ -151,7 +151,7 @@ const MainHeader = ({
                         type="secondary"
                     />
                     <BBSButton
-                        label="Sign Up"
+                        label="Request a Demo"
                         onClick={ handleUserSignUp }
                         type="tertiary"
                     />
@@ -161,16 +161,16 @@ const MainHeader = ({
     }
 
     return (
-        <div className={`header ${darkBackground ? 'blue' : ''}`} key="main-header">
+        <header className={`main-navigation ${darkBackground ? 'blue' : ''}`} key="main-header">
             <div className='main-header'>
-            <div className='sub-header'>
-                { isLoggedIn() && <BBSIcon
-                    type="hamburger"
-                    style="round"
-                    onClick={() => toggleSideMenu()}
-                /> }
-                <BBSLogo onClick={ navigateBackHome } />
-            </div>
+                <div className='sub-header'>
+                    { isLoggedIn() && <BBSIcon
+                        type="hamburger"
+                        style="round"
+                        onClick={() => toggleSideMenu()}
+                    /> }
+                    <BBSLogo onClick={ navigateBackHome } />
+                </div>
                 { isLoggedIn() && <SearchBar onSubmit={ handleSearchBarSubmit } onAddNewLead={ onAddNewLead } /> }
                 { renderMenu() }
             </div>
@@ -185,7 +185,7 @@ const MainHeader = ({
                     { generateTabItems() }
                 </div>
             </Drawer>
-        </div>
+        </header>
     )
 }
 

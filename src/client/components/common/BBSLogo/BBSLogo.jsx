@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './bbs-logo.scss';
 
-const BBSLogo = ({ onClick, showText }) => {
+const BBSLogo = ({ onClick, showText, transparent }) => {
 
     return (
         <div className={`bbs-logo ${ onClick ? 'clickable' : ''}`} onClick={ onClick }>
             
             <div className='bbs-logo-svg'>
-                <div className='imglogo'/>
+                <div className={`imglogo ${transparent ? 'transparent' : ''}`}/>
                 { showText && <div className='bbs-copy'>
                     <h1>barnburner</h1>
                     {/* <h2>Solutions</h2> */}

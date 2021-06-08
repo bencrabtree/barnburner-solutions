@@ -31,6 +31,7 @@ const ParticleBackground = () => {
             style={{
                 "position": "absolute"
             }}
+            height="90vh"
         />
     )
 }

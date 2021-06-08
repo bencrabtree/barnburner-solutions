@@ -5,13 +5,16 @@ import BBSLogo from '../../components/common/BBSLogo/BBSLogo'
 import ParticleBackground from './components/Particles';
 import { useAppState } from '../../store';
 import DemoPage from '../../assets/images/demo-page.png';
+import Company from './components/Company';
 
 const Home = ({ }) => {
     const { userProfile } = useAppState();
 
     const renderContent = () => {
+        console.log(userProfile)
         switch (userProfile.company) {
             case 'BarnBurner':
+                return <Company />
             default:
                 return renderDefaultContent();
         }
@@ -20,12 +23,16 @@ const Home = ({ }) => {
     const renderDefaultContent = () => {
         return (
             <div className="bbs-home">
-                <ParticleBackground />
                 <div className="bbs-home-header">
-                    <h2>introducing</h2>
-                    <h1>BarnBurner Solutions</h1>
-                    <div className='home-text'>
-                        <p>The last artist management platform you will ever need.</p>
+                    <div className="particle-background">
+                        <ParticleBackground />
+                    </div>
+                    <div className="bbs-home-info">
+                        <h2>introducing</h2>
+                        <h1>BarnBurner Solutions</h1>
+                        <div className='home-text'>
+                            <p>The last artist management platform you will ever need.</p>
+                        </div>
                     </div>
                 </div>
                 <div className="bbs-info cards">
@@ -50,14 +57,14 @@ const Home = ({ }) => {
                         <img src={DemoPage} />
                     </div>
                     <div className="bbs-text">
+                        <div className="floating-logo">
+                            <BBSLogo showText={false} />
+                        </div>
                         <h1>A Modern Look for a Modern Approach</h1>
                         <p>
-                            With BarnBurner's state of the art interface, accessing your information as never been easier. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            With BarnBurner's state of the art interface, accessing your information has never been easier. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         </p>
                     </div>
-                </div>
-                <div className='bbs-home-footer'>
-                    <p>All rights reserved to BarnBurner Solutions, LLC</p>
                 </div>
             </div>
         )
