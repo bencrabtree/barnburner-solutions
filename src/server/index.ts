@@ -1,5 +1,4 @@
 import http from 'http';
-import pem from 'pem';
 import expressSession from 'express-session';
 import app from './app';
 import settings from './config/settings.json';

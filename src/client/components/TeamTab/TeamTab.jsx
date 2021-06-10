@@ -29,7 +29,7 @@ const TeamTab = ({
                             return (
                                 <TeamCard key={key}
                                     photo={elt.user_photo}
-                                    name={elt.first_name + "  " + elt.last_name}
+                                    name={elt.full_name}
                                     email={elt.email}
                                     role={elt.relation}
                                 />
@@ -44,7 +44,7 @@ const TeamTab = ({
                             return (
                                 <TeamCard key={key}
                                     photo={elt.user_photo}
-                                    name={elt.first_name + "  " + elt.last_name}
+                                    name={elt.full_name}
                                     email={elt.email}
                                     role={elt.relation}
                                 />

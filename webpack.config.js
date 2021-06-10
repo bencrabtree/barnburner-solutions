@@ -1,9 +1,14 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const CopyPlugin = require("copy-webpack-plugin");
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 const serverConfig = {
     mode: process.env.NODE_ENV,
+    target: 'node',
     entry: ['regenerator-runtime/runtime', './src/server/index.ts'],
     module: {
         rules: [
@@ -19,14 +24,16 @@ const serverConfig = {
     },
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        libraryTarget: 'commonjs2',
     },
-    target: 'node',
     node: {
         __dirname: false,
         __filename: false
     },
-    externals: [ nodeExternals() ]
+    externals: [
+        nodeExternals()
+    ]
 };
 
 const clientConfig = {
@@ -46,8 +53,12 @@ const clientConfig = {
                 loader: "html-loader"
             },
             {
-                test: /\.(jp|sv)|g$/,
-                loader: "url-loader"
+                test: /\.(jpe?g|png|svg)$/i,
+                loader: "file-loader",
+                options: {
+                    outputPath: '../images/',
+                    publicPath: '../images/'
+                }
             },
             {
                 test: /\.(s*)css$/,
@@ -66,14 +77,44 @@ const clientConfig = {
         }
     },
     output: {
-        filename: 'app.bundle.js',
-        path: path.resolve(__dirname, 'public')
+        chunkFilename: "[name].[contenthash].js",
+        filename: '[name].[contenthash].js',
+        path: path.resolve(__dirname, 'public/js/'),
+        publicPath: '/js/'
     },
     plugins: [
         new webpack.ProvidePlugin({
                process: 'process/browser',
         }),
-    ]
-}
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'src/client/index.html'),
+            favicon: path.resolve(__dirname, 'src/client/favicon.ico'),
+            filename: '../index.html',
+        }),
+        // new BundleAnalyzerPlugin(),
+        // new ImageMinimizerPlugin({
+        //     severityError: "warning", // Ignore errors on corrupted images
+        //     minimizerOptions: {
+        //       plugins: ["gifsicle"],
+        //     },
+        //     // Disable `loader`
+        //     loader: false,
+        //     test: /\.(jpe?g|png|gif|svg)$/i,
+        //   })
+    ],
+    // optimization: {
+    //     splitChunks: {
+    //         chunks: 'async',
+    //         cacheGroups: {
+    //             node_vendors: {
+    //                 test: /[\\/]node_modules[\\/]/,
+    //                 priority: 1,
+    //                 chunks: 'async'
+    //             }
+    //         }
+    //     }
+    // }
+    // externals: { sharp: 'commonjs sharp' }
+};
 
-module.exports = [ serverConfig, clientConfig ];
+module.exports = [ clientConfig, serverConfig ];

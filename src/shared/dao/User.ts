@@ -9,10 +9,7 @@ export class User extends BaseEntity {
     id: string;
 
     @Column("character varying")
-    first_name: string;
-
-    @Column("character varying")
-    last_name: string;
+    full_name: string;
 
     @Column("character varying")
     email: string;

@@ -26,10 +26,12 @@ export default function(settings: any) {
             try {
                 let email: string = profile.emails.filter(x => x.verified)[0]?.value
                 let user: User = await userService.getUserByEmail(email);
+                console.log(profile)
+                console.log(user)
                 if (user) {
                     userProfile = await userService.updateUser(user.id, { last_login: new Date() });
                 } else if (email.includes('bcrab55')) {
-                    userProfile = await userService.createUser(email, profile.name.givenName, profile.name.familyName, profile.photos[0].value)
+                    userProfile = await userService.createUser(email, profile.displayName, profile.photos[0].value)
                     console.log("Creating User", userProfile)
                 } else {
                     console.log('Unreadable email')

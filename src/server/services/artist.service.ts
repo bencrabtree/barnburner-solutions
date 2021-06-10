@@ -155,7 +155,7 @@ class ArtistService {
                 .andWhere("artist.full_name = :artistName", { artistName })
                 .andWhere("ua.a_id = artist.id")
                 .andWhere("ua.relation = :fav OR ua.relation = :owner", { fav: UserArtistRelation.Favorited, owner: UserArtistRelation.Owner })
-                .select("user.id, user.email, photo.file_path as user_photo, user.first_name, user.last_name, user.role, artist.full_name as artist_name, artist.tags, ua.relation")
+                .select("user.id, user.email, photo.file_path as user_photo, user.full_name, user.role, artist.full_name as artist_name, artist.tags, ua.relation")
                 .execute();
             return users;
         } catch (error) {

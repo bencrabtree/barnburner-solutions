@@ -72,7 +72,7 @@ class UserService {
     }
 
     //
-    createUser = async (email: string, first_name: string, last_name: string, photo_uri: string, role: UserRole = UserRole.Regular) => {
+    createUser = async (email: string, full_name: string, photo_uri: string, role: UserRole = UserRole.Regular) => {
         try {
             let user = new User();
             let photo = new File();
@@ -86,8 +86,7 @@ class UserService {
             photo.type = FileTypes.Jpg;
             user.photo = photo;
             user.email = email;
-            user.first_name = first_name;
-            user.last_name = last_name;
+            user.full_name = full_name;
             user.role = role;
             await getConnection().manager.save(user);
             return user;

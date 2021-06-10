@@ -3,8 +3,7 @@ export class User {
 
     constructor(
         email,
-        first_name,
-        last_name,
+        full_name,
         photo_uri,
         last_login=new Date(),
         phone="N/A",
@@ -12,8 +11,7 @@ export class User {
         title="N/A"
     ) {
        this.email = email;
-       this.first_name = first_name;
-       this.last_name = last_name;
+       this.full_name = full_name;
        this.photo_uri = photo_uri;
        this.last_login = last_login;
        this.phone = phone;
@@ -22,8 +20,7 @@ export class User {
     }
 
     id: number;
-    first_name: string;
-    last_name: string;
+    full_name: string;
     email: string;
     last_login;
     phone: string;

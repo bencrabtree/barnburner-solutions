@@ -30,7 +30,7 @@ const ArtistCard = ({
             return (
                 <div className={`artist-card card ${artist.status} ${className}`} onClick={handleArtistSelection}>
                     <div className='artist-image-wrapper'>
-                        {/* <img src={ getArtistImageSrc(photo_path) } /> */}
+                        <img src={ getArtistImageSrc(photo_path) } />
                     </div>
                     <div className="artist-card-content">
                         <h1 className='artist-name'>{ artist.full_name }</h1>

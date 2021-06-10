@@ -42,23 +42,32 @@ const Company = ({
                 </div>
                 <div className='quick-links card-rounded'>
                     <h1>Quick Links</h1>
-                    <ul>
-                        <li>
+                    <div className="link-container">
+                        <div className='link'>
                             <p>Here's A Link</p>
-                        </li>
-                        <li>
+                        </div>
+                        <div className='link'>
                             <p>Here's A Link</p>
-                        </li>
-                        <li>
+                        </div>
+                        <div className='link'>
                             <p>Here's A Link</p>
-                        </li>
-                        <li>
+                        </div>
+                        <div className='link'>
                             <p>Here's A Link</p>
-                        </li>
-                        <li>
+                        </div>
+                        <div className='link'>
                             <p>Here's A Link</p>
-                        </li>
-                    </ul>
+                        </div>
+                        <div className='link'>
+                            <p>Here's A Link</p>
+                        </div>
+                        <div className='link'>
+                            <p>Here's A Link</p>
+                        </div>
+                        <div className='link'>
+                            <p>Here's A Link</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="company-banner">

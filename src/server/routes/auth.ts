@@ -3,10 +3,20 @@ import { clearUsersession } from '../auth/passport';
 import { generateToken } from '../auth/util';
 
 export default function(googleAuth, settings) {
+    // router.get('/',
+    //     (req, res, next) => {
+    //         googleAuth.authenticate('google', {
+    //             scope: "openid profile email https://www.googleapis.com/auth/calendar"
+    //         })
+    //     }
+    // )
+
     router.get('/signin', 
         (req, res, next) => {
             try {
-                googleAuth.authenticate('google', { scope : ['profile', 'email'] })(req, res, next);
+                googleAuth.authenticate('google', {
+                    scope: "openid profile email https://www.googleapis.com/auth/calendar"
+                })(req, res, next);
             } catch (error) {
                 console.log(error)
             }
@@ -16,7 +26,9 @@ export default function(googleAuth, settings) {
     router.get('/callback', 
         (req, res, next) => {
             try {
-                googleAuth.authenticate('google', { failureRedirect: '/auth/error' }, async (err, user, info) => {
+                googleAuth.authenticate('google', {
+                    failureRedirect: '/auth/error'
+                }, async (err, user, info) => {
                     if (err || !user) {
                         return res.redirect('/auth/error');
                     }
