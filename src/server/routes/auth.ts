@@ -15,7 +15,7 @@ export default function(googleAuth, settings) {
         (req, res, next) => {
             try {
                 googleAuth.authenticate('google', {
-                    scope: "openid profile email https://www.googleapis.com/auth/calendar"
+                    scope: "openid profile email"
                 })(req, res, next);
             } catch (error) {
                 console.log(error)

@@ -30,6 +30,23 @@
         }
 
     }
+    &.accent {
+        .bbs-copy h1 {
+            @include themed() {
+                color: t($accent);
+            }
+            
+        }
+    }
+    
+    &.whhite {
+        .bbs-copy h1 {
+            @include themed() {
+                color: t($lightText);
+            }
+            
+        }
+    }
 
     .bbs-copy {
         display: flex;

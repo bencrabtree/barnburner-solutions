@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/sass/general.scss';
 import { AppContextProvider } from './store/appContext';
-import App from './App';
+import Dispatch from './Dispatch';
 
 const Root = () => {
     return (
         <AppContextProvider>
-            <App />
+            <Dispatch />
         </AppContextProvider>
     )
 }

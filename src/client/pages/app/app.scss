@@ -1,0 +1,269 @@
+@import '../../assets/sass/colors.scss';
+
+.app {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    min-width: 100vw;
+    width: 100vw;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    z-index: 3;
+
+    @include themed() {
+        background-color: t($base);
+    }
+
+    .nav-logo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        transition: all .3s;
+        height: 3rem;
+        @include themed() {
+            background-color: t($baseDark);
+        }
+
+        i {
+            font-size: 2rem;
+
+            @include themed() {
+                color: t($lightText);
+            }
+        }
+    }
+
+    .expand-icon {
+        cursor: pointer;
+    }
+
+    &.expanded {
+        width: 15vw;
+        transition: all .2s;
+
+        .nav-label {
+            display: block;
+            transition: all .2s;
+        }
+    }
+
+    &.collapsed {
+        width: 5vw;
+        transition: all .2s;
+
+        .nav-logo {
+            flex-direction: column;
+        }
+
+        .nav-element {
+            justify-content: center;
+
+            .nav-label {
+                display: none;
+            }
+        }
+    }
+
+    .nav-element-list {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1;
+    }
+
+    .nav-element {
+        display: flex;
+        flex-direction: column;
+
+        &.active {
+            @include themed() {
+                background-color: t($baseDark);
+            }
+        }
+
+        .nav-main-container {
+            display: flex;
+            padding: 1rem .5rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: space-between;
+
+            @include themed() {
+                border-left: 4px solid t($base);
+            }
+
+            &:hover, &.active {
+                i {
+                    @include themed() {
+                        color: t($lightText)
+                    }
+                }
+    
+                @include themed() {
+                    background-color: t($baseDark);
+                    border-left: 4px solid t($baseDark);
+                }
+            }
+    
+            &.active {
+                @include themed() {
+                    border-left: 4px solid t($accent);
+                }
+            }
+        }
+
+        .nav-main {
+            display: flex;
+        }
+
+        .nav-label {
+            @include themed() {
+                color: t($lightText);
+            }
+        }
+
+        .nav-icon {
+            width: 2rem;
+            text-align: center;
+            margin-right: .5rem;
+
+            i {    
+                @include themed() {
+                    color: t($lightText);
+                }
+            }
+        }
+
+        .nav-toggle {
+            margin-right: .5rem;
+
+            @include themed() {
+                color: t($lightText);
+            }
+        }
+    }
+
+    .nav-subelement {
+        padding: .5rem 1rem;
+        padding-left: 3rem;
+        cursor: pointer;
+
+        &.active, &:hover {
+            .nav-label {
+                @include themed() {
+                    color: t($accent);
+                }
+            }
+        }
+    }
+}
+
+.nav-label {
+    font-size: 1.2rem;
+    white-space: nowrap;
+}
+
+.app-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 95vw;
+    flex-grow: 1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    height: 3rem;
+    -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .20);
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .20);
+    -moz-transition: all .1s ease-in;
+    -o-transition: all .1s ease-in;
+    -webkit-transition: all .1s ease-in;
+    transition: all .1s ease-in;
+    z-index: 2;
+
+    .header-container {
+        display: flex;
+    }
+
+    .header-navigation {
+        max-width: 20vw;
+        min-width: 20vw;
+        display: flex;
+
+        .header-nav-content {
+            display: flex;
+        }
+        
+        .header-nav-base {
+            display: flex;
+            align-items: center;
+
+            &.hasSubelt {
+                cursor: pointer;
+
+                i {
+                    @include themed() {
+                        color: t($backgroundDark);
+                    }
+                }
+
+                .nav-label {
+                    @include themed() {
+                        color: t($backgroundDark);
+                    }
+                }
+
+                &:hover .nav-label {
+                    text-decoration: underline;
+                }
+            }
+        
+            .nav-label {
+                font-weight: bold;
+            }
+        
+            i {
+                margin-right: .5rem;
+            }
+        }
+        
+        .header-nav-sub {
+            display: flex;
+            align-items: center;
+        
+            i {
+                margin: .5rem;
+                @include themed() {
+                    color: t($backgroundDark);
+                }
+            }
+        
+            .nav-label {
+                font-weight: bold;
+            }
+        }
+    }
+    
+    @include themed() {
+        background-color: t($app-background);
+    }
+}
+
+main {
+    padding-top: 2rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+}

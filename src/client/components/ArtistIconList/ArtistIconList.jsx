@@ -32,7 +32,7 @@ const ArtistIconList = ({
     }
 
     const handleArtistClick = () => {
-        history.push(`/artists/${encodeURIComponent(artist.full_name)}`);
+        history.push(`/app/roster/${encodeURIComponent(artist.full_name)}`);
         history.go(0);
     }
 
@@ -54,7 +54,7 @@ const ArtistIconList = ({
                             <MenuItem onClick={handleArtistMenuClose}>Agents</MenuItem>
                         </Menu>
                         <div className='artist-image-wrapper' onClick={ () => handleArtistSelection(artist.id)  }>
-                            <img src={ getArtistImageSrc(artist?.photo?.file_path) } />
+                            {/* <img src={ getArtistImageSrc(artist?.photo?.file_path) } /> */}
                         </div>
                         <div className='artist-icon-list-content'>
                             <h2 onClick={ () => handleArtistSelection(artist.id) }>{ artist.full_name }</h2>

@@ -1,6 +1,6 @@
 @import './colors.scss';
 
-html, body, #root, .app {
+html, body, #root, .dispatch {
     font-size: 1rem;
     margin: 0;
 
@@ -9,7 +9,7 @@ html, body, #root, .app {
     }
 }
 
-.app {
+.dispatch {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -22,7 +22,7 @@ html, body, #root, .app {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 5rem 0rem;
+    // padding: 5rem 0rem;
     flex: 1;
 
     @include themed() {

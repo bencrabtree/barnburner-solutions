@@ -1,7 +1,9 @@
 // default themes
+$dark--base: #1b2047;
 $base--blue: #212756;
 $light--base: #596198;
-$accent--orange: #ef6a4d;
+$light--light--base: #8d95d1;
+$accent--orange: #e36f51;
 
 $light--text: #ffffff;
 $dark--text: #000000;
@@ -13,6 +15,8 @@ $dark--grey: #616161;
 $bg--light--light--grey: #fbfbfb;
 $bg--light--grey: #F2F2F2;
 $bg--grey: #E5E5E5;
+$bg--dark--grey: #a5a5a5;
+$bg--dark--dark--grey: #848484;
 
 $border--grey: #dadce0;
 $border--dark--grey: #c4c4c4;
@@ -42,14 +46,17 @@ $signed--highlight--dark: #343a38;
 $logo: 'logo';
 $base: 'base';
 $accent: 'accent';
+$baseDark: 'baseDark';
 $baseLight: 'baseLight';
+$baseLightLight: 'baseLightLight';
 $lightText: 'lightText';
 $darkText: 'darkText';
-$lighterBlack: 'ligherBlack';
+$lighterBlack: 'lighterBlack';
 $app-background: 'app-background';
 $app-background-hover: 'app-background-hover';
 $backgroundLight: 'backgroundLight';
 $background: 'background';
+$backgroundDark: 'backgroundDark';
 $border: 'border';
 $borderDark: 'borderDark';
 
@@ -74,6 +81,8 @@ $themes: (
         base: $base--blue,
         accent: $accent--orange,
         baseLight: $light--base,
+        baseLightLight: $light--light--base,
+        baseDark: $dark--base,
 
         lightText: $light--text,
         darkText: $dark--text,
@@ -83,6 +92,7 @@ $themes: (
         app-background-hover: $light--text,
         backgroundLight: $bg--light--grey,
         background: $bg--grey,
+        backgroundDark: $bg--dark--grey,
         
         border: $border--grey,
         borderDark: $border--dark--grey,
@@ -106,6 +116,7 @@ $themes: (
         base: $base--blue,
         accent: $accent--orange,
         baseLight: $light--base,
+        baseDark: $dark--base,
 
         lightText: $dark--background,
         lightIcon: $light--text,
@@ -117,6 +128,7 @@ $themes: (
         app-background-hover: $dark--background-hover,
         backgroundLight: $dark--grey,
         background: $bg--grey,
+        backgroundDark: $dark--background,
         
         border: $dark--text,
         borderDark: $border--dark--grey,
